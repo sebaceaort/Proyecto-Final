@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { NavBar } from "./components";
 import { Home, Profile, Indicators } from "./views";
-import { ContextProvider } from "./context-provider";
+import { ContextProvider } from "./context/context-provider";
 import { PruebasScreen } from "./views/PruebasScreen";
 import agregarEje from "./views/agregarEje"
 import "./App.css";

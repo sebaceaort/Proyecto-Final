@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Form, Button, Image, Modal, Spinner } from "react-bootstrap";
 import login from "../services/auth";
-import { UserContext } from "../user-context";
+import { UserContext } from "../context/user-context";
 
 const LoginButton = () => {
   const [show, setShow] = useState(false);
