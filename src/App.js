@@ -2,10 +2,11 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { NavBar } from "./components";
-import { Home, Profile, Indicators } from "./views";
+import { Home, Profile, Indicators, AddUser, UsersDisabled } from "./views";
 import { ContextProvider } from "./context-provider";
 import { PruebasScreen } from "./views/PruebasScreen";
 import agregarEje from "./views/agregarEje"
+import NewIndicator from "./components/newIndicator";
 import "./App.css";
 
 const App = () => {
@@ -20,6 +21,9 @@ const App = () => {
             <Route path="/load-data" component={Indicators} />
             <Route path="/show-data" component={PruebasScreen} />
             <Route path="/load-indicators" component={agregarEje} />
+            <Route path="/newIndicator" component={NewIndicator} />
+            <Route path="/AddUser" component={AddUser} />
+            <Route path="/UsersDisabled" component={UsersDisabled} />
           </Switch>
         </Container>
       </div>

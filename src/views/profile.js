@@ -11,19 +11,19 @@ export const Profile = () => {
         <Col md={2}>
           <img
             src="https://pickaface.net/gallery/avatar/unr_standard_180203_0234_y7cln.png"
-            alt={user.displayName}
+            alt={user.usName}
             className="rounded-circle img-fluid profile-picture mb-3 mb-md-0"
           />
         </Col>
         <Col md>
           <pre>
-            <h2>Username: {user.displayName}</h2>
+            <h2>User: {user.usName} {user.usLastName}</h2>
           </pre>
           <pre>
-            <p className="lead text-muted">Email: {user.email}</p>
+            <p className="lead text-muted">Email: {user.usEmail}</p>
           </pre>
           <pre>
-            <p className="lead text-muted">Role: {user.roles[0].name}</p>
+            <p className="lead text-muted">Role: {user.usRole}</p>
           </pre>
           <pre>
             <i className="lead text-muted">Powered by</i>
