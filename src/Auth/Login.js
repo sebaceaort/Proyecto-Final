@@ -1,33 +1,41 @@
 import React, { useState, useContext } from "react";
 import { Form, Button, Image, Modal, Spinner } from "react-bootstrap";
-import login from "../services/auth";
 import { UserContext } from "../user-context";
+import login from "../services/authApi";
 
 const LoginButton = () => {
   const [show, setShow] = useState(false);
-  
   const { setUser } = useContext(UserContext);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  
+
   function LoginModal() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [animate, setAnimate] = useState(false);
 
     async function doLogin(usr, pass) {
-      return await login.login(usr, pass);
+      try {
+        return await login.login(usr, pass);
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     async function handleSubmit() {
       const data = await doLogin(username, password);
-      console.log(data);
-      if (!data.error) {
-        setUser(data);
-        window.localStorage.setItem("user", JSON.stringify(data));
-        handleClose();
-        
+      if (data) {
+        if (data.usActive) {
+          setUser(data);
+          window.localStorage.setItem("user", JSON.stringify(data));
+          handleClose();
+        } else {
+          setAnimate(false);
+          alert("Usuario Inhabilitado, contactese con un administrador");
+        }
       } else {
+        setAnimate(false);
         alert("Usuario o contraseña incorrectos");
       }
     }
@@ -52,6 +60,7 @@ const LoginButton = () => {
               required
               type="email"
               placeholder="Nombre de usuario"
+              autoComplete="username"
               onChange={(usr) => {
                 setUsername(usr.target.value);
               }}
@@ -63,6 +72,7 @@ const LoginButton = () => {
               required
               type="password"
               placeholder="Contraseña"
+              autoComplete="current-password"
               onChange={(pass) => {
                 setPassword(pass.target.value);
               }}
