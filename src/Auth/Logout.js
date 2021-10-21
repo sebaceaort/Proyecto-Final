@@ -11,11 +11,9 @@ const LogoutButton = () => {
 
   function closeSesion() {
     setAnimate(true);
-    setTimeout(() => {
-      setUser(null);
-      window.localStorage.clear("user");
-      history.push("/");
-    }, 2000);
+    setUser(null);
+    window.localStorage.clear("user");
+    history.push("/");
   }
 
   return (

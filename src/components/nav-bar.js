@@ -14,30 +14,6 @@ const MainNav = (props) => (
     >
       Home
     </Nav.Link>
-    <Nav.Link
-      as={RouterNavLink}
-      to="/load-data"
-      exact
-      activeClassName="router-link-exact-active"
-    >
-      Cargar Indicadores
-    </Nav.Link>
-    <Nav.Link
-      as={RouterNavLink}
-      to="/show-data"
-      exact
-      activeClassName="router-link-exact-active"
-    >
-      Mostrar Indicadores
-    </Nav.Link>
-    <Nav.Link
-      as={RouterNavLink}
-      to="/load-indicators"
-      exact
-      activeClassName="router-link-exact-active"
-    >
-      Crear Inidicadores
-    </Nav.Link>
     {props.user ? (
       <>
         <Nav.Link
@@ -56,6 +32,36 @@ const MainNav = (props) => (
         >
           Cargar Indicadores
         </Nav.Link>
+        <Nav.Link
+          as={RouterNavLink}
+          to="/show-data"
+          exact
+          activeClassName="router-link-exact-active"
+        >
+          Mostrar Indicadores
+        </Nav.Link>
+        {props.user.usRole === "admin" ? (
+          <>
+            <Nav.Link
+              as={RouterNavLink}
+              to="/load-indicators"
+              exact
+              activeClassName="router-link-exact-active"
+            >
+              Crear Inidicadores
+            </Nav.Link>
+            <Nav.Link
+              as={RouterNavLink}
+              to="/AddUser"
+              exact
+              activeClassName="router-link-exact-active"
+            >
+              Agregar Usuarios
+            </Nav.Link>
+          </>
+        ) : (
+          ""
+        )}
       </>
     ) : (
       ""
