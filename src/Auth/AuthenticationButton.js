@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import {UserContext} from "../user-context";
+import {UserContext} from "../context/user-context";
 import LoginButton from "./Login";
 import LogoutButton from "./Logout";
 

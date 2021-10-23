@@ -1,6 +1,6 @@
 import { Table, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import authApi from "../services/authApi";
+import authApi from "../../services/authApi";
 
 export default function UsersDisabled() {
   const [users, setUsers] = useState([]);

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Form, Button, Image, Modal, Spinner } from "react-bootstrap";
-import { UserContext } from "../user-context";
+import { UserContext } from "../context/user-context";
 import login from "../services/authApi";
 
 const LoginButton = () => {

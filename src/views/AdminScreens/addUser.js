@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router";
-import authApi from "../services/authApi";
+import authApi from "../../services/authApi";
 
 export default function AddUser() {
   const [username, setUsername] = useState("");
