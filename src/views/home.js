@@ -10,8 +10,11 @@ export default function Home() {
 
   useEffect(() => {
       async function getEntities() {
-        const entities = await fiwareApi.getEntities();
-        setEntities((oldEntities) => [...oldEntities, entities]);
+        if(user){
+          const entities = await fiwareApi.getEntities();
+          setEntities((oldEntities) => [...oldEntities, entities]);
+
+        }
       }
       getEntities()
   }, [user]);
