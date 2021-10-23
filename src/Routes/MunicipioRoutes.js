@@ -1,15 +1,14 @@
-import React from 'react'
-//import { Route, Switch } from 'react-router'
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import { Indicators, Profile } from "../views";
+import { PruebasScreen } from "../views/PruebasScreen";
 
 export const MunicipioRoutes = () => {
-    return (
-        <div></div>
-    //     <Switch>
-    //         <Route path="/" exact component={Home} />
-    //         <Route path="/profile" component={Profile} />
-    //         <Route path="/load-data" component={Indicators} />
-    //         <Route path="/show-data" component={PruebasScreen} />
-    //         <Route path="/load-indicators" component={agregarEje} />
-    //       </Switch>
-    )
-}
+  return (
+    <Switch>
+      <Route path="/profile" component={Profile} />
+      <Route path="/load-data" component={Indicators} />
+      <Route path="/show-data" component={PruebasScreen} />
+    </Switch>
+  );
+};

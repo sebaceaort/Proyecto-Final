@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { UserContext } from "../user-context";
+import { UserContext } from "../context/user-context";
 import fiwareApi from "../services/fiwareApi";
 import JSONPretty from "react-json-pretty";
 import "react-json-pretty/themes/monikai.css";

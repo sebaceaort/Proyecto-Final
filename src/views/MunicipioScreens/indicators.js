@@ -1,6 +1,6 @@
 import React from "react";
-import FormIndicador from "../components/nuevoIndicador";
-import FormMeta from "../components/nuevaMeta";
+import FormIndicador from "../../components/nuevoIndicador";
+import FormMeta from "../../components/nuevaMeta";
 
 export default function Indicators() {
   return (
