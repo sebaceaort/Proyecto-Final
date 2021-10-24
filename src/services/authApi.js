@@ -1,10 +1,11 @@
-const api = process.env.REACT_APP_MONGO_URL_DEV
+const api = process.env.REACT_APP_MONGO_URL
 
 async function login(usr, pass) {
   let user = "";
 
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
 
   var raw = JSON.stringify({
     usEmail: usr,
@@ -35,6 +36,7 @@ async function login(usr, pass) {
 async function addUser(usr, name, lastname, pass, role) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
   myHeaders.append("Authorization",window.localStorage.getItem("token"))
 
   var raw = JSON.stringify({
@@ -65,6 +67,7 @@ async function addUser(usr, name, lastname, pass, role) {
 async function getDisabledUsers() {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
   myHeaders.append("Authorization",window.localStorage.getItem("token"))
   let dUsers = [];
   var requestOptions = {
@@ -86,6 +89,7 @@ async function getDisabledUsers() {
 async function updateUsers(userId) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
   myHeaders.append("Authorization",window.localStorage.getItem("token"))
 
   var requestOptions = {

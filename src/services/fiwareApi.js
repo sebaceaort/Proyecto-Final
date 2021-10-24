@@ -4,6 +4,7 @@ async function getEntities() {
   let arr = [];
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
   myHeaders.append("Authorization",window.localStorage.getItem("token"))
 
   var requestOptions = {
@@ -16,7 +17,6 @@ async function getEntities() {
     .then((response) => response.json())
     .then((res) => {
       arr = res;
-      console.log(res);
     })
     .catch((err) => console.log(err));
 
