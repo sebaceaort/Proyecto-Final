@@ -1,4 +1,4 @@
-const api = process.env.REACT_APP_MONGO_URL_DEV
+const api = process.env.REACT_APP_MONGO_URL
 
 async function getEntities() {
   let arr = [];
