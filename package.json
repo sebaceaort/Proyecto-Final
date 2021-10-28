@@ -19,6 +19,7 @@
     "formik": "^2.2.9",
     "js-base64": "^3.7.2",
     "ngsi-parser": "^2.2.5",
+    "node-sass": "^6.0.1",
     "nodemon": "^2.0.13",
     "ocb-sender": "^2.4.4",
     "react": "^17.0.2",

@@ -1,3 +1,29 @@
 $yellow: #fdd208;
 
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+.btn-load-indicator {
+    background-color:$yellow-400;
+    color: black;
+    font-weight: bold;
+    border: none;
+    width: 100%;
+    &:hover{
+        background-color:$yellow-600;
+    }
+}
+
+.btn-load-goal {
+    background-color:$blue-400;
+    color: black;
+    font-weight: bold;
+    border: none;
+    width: 100%;
+    &:hover{
+        background-color:$blue-600;
+    }
+}
+
+.btnIndicators{
+    width: 50%;
+}

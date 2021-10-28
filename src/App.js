@@ -2,8 +2,9 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import { NavBar } from "./components";
 import { ContextProvider } from "./context/context-provider";
-import "./App.css";
 import { AppRoutes } from "./Routes/AppRoutes";
+import "./App.css";
+import "./scss/_bstheme.scss"
 
 const App = () => {
   return (
