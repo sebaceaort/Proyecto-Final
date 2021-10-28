@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router";
 import authApi from "../../services/authApi";
@@ -8,13 +8,33 @@ export default function AddUser() {
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
-
+  const [role, setRole] = useState({});
+  const [roles, setRoles] = useState([])
   const history = useHistory();
 
+  const tempRole = {}
+
   async function handleSubmit() {
-    await authApi.addUser(username, name, lastname, password, role);   
+    await authApi.addUser(username, name, lastname, password, role);
   }
+
+  useEffect(() => {
+    async function getRoles() {
+      const roles = await authApi.getRoles();
+      setRoles((oldRoles) => [...oldRoles, roles])
+    }
+    getRoles()
+  }, [])
+
+  // console.log(roles[0])
+  roles[0]?.find(r => { r.name === role ? console.log(r._id) : console.log("nada")
+    // console.log(r)
+    // console.log(role)
+    // if(r.name === role){
+    //   console.log(r._id)
+    // }
+  })
+
 
   return (
     <>
@@ -74,14 +94,24 @@ export default function AddUser() {
           <Form.Control
             required
             as="select"
-            value={role}
+            value={roles}
             onChange={(e) => {
               setRole(e.target.value);
             }}
           >
             <option>Selecciona un Rol</option>
-            <option value="admin">Administrador</option>
-            <option value="municipio">Municipio</option>
+            {
+                roles?.map((role,i) => {
+                  return (
+                    <>
+                      <option value={role[i].name}>Administrador</option>
+                      <option value={role[i+1].name}>Municipio</option>
+                    </>
+                  );
+                })
+              // <option value="admin">Administrador</option>
+              // <option value="municipio">Municipio</option>
+            }
           </Form.Control>
         </Form.Group>
         <Form.Group className="mb-3">

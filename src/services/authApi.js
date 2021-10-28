@@ -104,5 +104,27 @@ async function updateUsers(userId) {
     .catch((error) => console.log("error", error));
 }
 
+async function getRoles() {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization",window.localStorage.getItem("token"))
+  let roles = [];
+  var requestOptions = {
+    method: "GET",
+    redirect: "follow",
+    headers: myHeaders
+  };
+
+  await fetch(`${api}/roles`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      roles = result;
+    })
+    .catch((error) => console.log("error", error));
+
+  return roles;
+}
+
 //eslint-disable-next-line
-export default { login, addUser, getDisabledUsers, updateUsers };
+export default { login, addUser, getDisabledUsers, updateUsers, getRoles };
