@@ -102,21 +102,29 @@ export const ShowChildrenItem = ({ item }) => {
                       Descripcion: <b>{item.description.value}</b>
                     </div>
                     <hr />
-                    <div>
-                      <div>Hoy</div>
-                      28/10/2021
-                      <ProgressBar now={5} label={`${5}%`} variant="danger" />
-                    </div>
-                    <hr />
-                    <div>
-                      <div>Meta</div>
-                      27/10/2022
-                      <ProgressBar
-                        now={25}
-                        label={`${25}%`}
-                        variant="success"
-                      />
-                    </div>
+                    {user.usRole !== "admin" && (
+                      <div>
+                        <div>
+                          <div>Hoy</div>
+                          28/10/2021
+                          <ProgressBar
+                            now={5}
+                            label={`${5}%`}
+                            variant="danger"
+                          />
+                        </div>
+                        <hr />
+                        <div>
+                          <div>Meta</div>
+                          27/10/2022
+                          <ProgressBar
+                            now={25}
+                            label={`${25}%`}
+                            variant="success"
+                          />
+                        </div>
+                      </div>
+                    )}
                   </Card.Header>
                   {/* {user.usRole !== "admin" && (
                     <Card.Body>
