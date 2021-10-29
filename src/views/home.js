@@ -3,7 +3,7 @@ import { UserContext } from "../context/user-context";
 import fiwareApi from "../services/fiwareApi";
 //import JSONPretty from "react-json-pretty";
 import "react-json-pretty/themes/monikai.css";
-import { Container, Col, Row, Image  } from "react-bootstrap";
+import { Container, Col, Row, Image } from "react-bootstrap";
 
 export default function Home() {
   const { user } = useContext(UserContext);
@@ -22,15 +22,16 @@ export default function Home() {
   return (
     <>
       <Container>
- 
         <Row>
-          <Col className ="text-center">
+          <Col className="text-center smartFont">Ciudades Inteligentes</Col>
+          </Row>
+          <Row>
+          <Col className="text-center">
             <Image
               src="https://www.fiware.com.ar/wp-content/uploads/2019/06/LogoCiudades.png"
               alt="Ciudades del futuro"
               fluid
             />
-      
           </Col>
         </Row>
         <Row>
@@ -86,7 +87,6 @@ export default function Home() {
               Rackham.
             </p>
           </Col>
-         
         </Row>
       </Container>
 
