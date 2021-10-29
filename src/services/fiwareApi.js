@@ -5,7 +5,7 @@ async function getEntities() {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
-  myHeaders.append("Authorization",window.localStorage.getItem("token"))
+  myHeaders.append("Authorization", window.localStorage.getItem("token"))
 
   var requestOptions = {
     method: "GET",
@@ -28,7 +28,7 @@ async function getDataByType(type) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
-  myHeaders.append("Authorization",window.localStorage.getItem("token"))
+  myHeaders.append("Authorization", window.localStorage.getItem("token"))
 
   var requestOptions = {
     method: "GET",
@@ -50,7 +50,7 @@ async function getDataByQuery(query) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
-  myHeaders.append("Authorization",window.localStorage.getItem("token"))
+  myHeaders.append("Authorization", window.localStorage.getItem("token"))
 
   var requestOptions = {
     method: "GET",
@@ -67,5 +67,43 @@ async function getDataByQuery(query) {
 
   return arr;
 }
+
+async function postEntity(datos, tipo, id) {
+
+  let resp;
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization", window.localStorage.getItem("token"))
+
+  var myBody = {
+    name: datos.nombre,
+    type: tipo,
+  }
+  if (id) {
+    myBody.id = id
+  }
+  if (tipo == "Indicator") {
+    myBody.descripcion = datos.descripcion;
+    myBody.tipoDato = datos.tipoDato    
+  }
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: JSON.stringify(myBody),
+    redirect: "follow",
+  };
+
+  await fetch(`${api}/fiware/entities/add/add`, requestOptions)
+
+    .then((response) => response.json())
+    .then((res) => {
+      resp = res;
+    })
+    .catch((err) => console.log(err));
+
+  return resp;
+}
 //eslint-disable-next-line
-export default { getEntities, getDataByQuery, getDataByType};
+export default { getEntities, getDataByQuery, getDataByType, postEntity };
