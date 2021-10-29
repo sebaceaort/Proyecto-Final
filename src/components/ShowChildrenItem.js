@@ -8,6 +8,7 @@ import {
   Container,
   Row,
   Col,
+  ProgressBar,
 } from "react-bootstrap";
 import { UserContext } from "../context/user-context";
 
@@ -99,9 +100,29 @@ export const ShowChildrenItem = ({ item }) => {
                       Descripcion: <b>{item.description.value}</b>
                     </div>
                     <hr />
-                    <div>
-                      Valor actual: <b>{item.data.value}</b>
-                    </div>
+                    {user.usRole !== "admin" && (
+                      <div>
+                        <div>
+                          <div>Hoy</div>
+                          28/10/2021
+                          <ProgressBar
+                            now={5}
+                            label={`${5}%`}
+                            variant="danger"
+                          />
+                        </div>
+                        <hr />
+                        <div>
+                          <div>Meta</div>
+                          27/10/2022
+                          <ProgressBar
+                            now={25}
+                            label={`${25}%`}
+                            variant="success"
+                          />
+                        </div>
+                      </div>
+                    )}
                   </Card.Header>
                   {/* {user.usRole !== "admin" && (
                     <Card.Body>
@@ -125,13 +146,13 @@ export const ShowChildrenItem = ({ item }) => {
                   <Container className="p-0">
                     <Row>
                       <Col>
-                    <Button className="btn-load-indicator">
-                      Cargar indicador
-                    </Button>
-                    </Col>
-                    <Col>
-                    <Button className="btn-load-goal">Cargar Meta</Button>
-                    </Col>
+                        <Button className="btn-load-indicator">
+                          Cargar indicador
+                        </Button>
+                      </Col>
+                      <Col>
+                        <Button className="btn-load-goal">Cargar Meta</Button>
+                      </Col>
                     </Row>
                   </Container>
                 </Card>
