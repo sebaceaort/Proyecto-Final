@@ -9,6 +9,7 @@ const FormIndicador = () => {
         initialValues={{
           eje: "",
           subeje: "",
+          indicador: "",
           monto: "",
         }}
         validate={(valores) => {
@@ -23,6 +24,11 @@ const FormIndicador = () => {
             errores.subeje = "Por favor ingrese un subeje";
           } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.subeje)) {
             errores.subeje = "El subeje solo puede contener letras y espacios";
+          }
+          if (!valores.indicador) {
+            errores.indicador = "Por favor ingrese un indicador";
+          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.indicador)) {
+            errores.indicador = "El indicador solo puede contener letras y espacios";
           }
           if (!valores.monto) {
             errores.monto = "Por favor ingrese un monto";
@@ -74,6 +80,19 @@ const FormIndicador = () => {
               {touched.subeje && errors.subeje && (
                 <div className="error">{errors.subeje}</div>
               )}
+            </div>
+            <div className="row mb-3">
+              <label htmlFor="indicador">Indicador</label>
+              <input
+                type="text"
+                id="indicador"
+                name="indicador"
+                placeholder="Ingrese indicador"
+                value={values.indicador}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {touched.indicador && errors.indicador && <div className="error">{errors.indicador}</div>}
             </div>
             <div className="row mb-3">
               <label htmlFor="monto">Monto</label>
