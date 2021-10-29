@@ -1,12 +1,10 @@
 import React, { useState, useContext } from "react";
-import { BsFillCaretRightFill, BsFillCaretDownFill } from "react-icons/bs";
+//import { BsFillCaretRightFill, BsFillCaretDownFill } from "react-icons/bs";
 import { ShowChildrens } from "./ShowChildrens";
 import {
   Accordion,
   Card,
   Button,
-  Form,
-  Badge,
   Container,
   Row,
   Col,
@@ -15,7 +13,7 @@ import { UserContext } from "../context/user-context";
 
 export const ShowChildrenItem = ({ item }) => {
   const [show, setShow] = useState(false);
-  const [showMeta, setShowMeta] = useState(false);
+ // const [showMeta, setShowMeta] = useState(false);
   const { user } = useContext(UserContext);
 
   const handleClick = () => {
@@ -30,9 +28,9 @@ export const ShowChildrenItem = ({ item }) => {
     }
   };
 
-  const handleShowMeta = () => {
-    setShowMeta(!showMeta);
-  };
+  // const handleShowMeta = () => {
+  //   setShowMeta(!showMeta);
+  // };
 
   if (item.type !== "Indicator") {
     return (

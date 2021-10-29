@@ -1,8 +1,6 @@
 import React, { useState, useContext } from "react";
-import { BsFillCaretRightFill, BsFillCaretDownFill } from "react-icons/bs";
 import { ShowChildrens } from "./ShowChildrens";
 import { Accordion, Button } from "react-bootstrap";
-import { IoAddCircleOutline } from "react-icons/io5";
 import { UserContext } from "../context/user-context";
 
 export const ShowArrItem = ({ item }) => {

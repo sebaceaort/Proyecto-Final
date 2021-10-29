@@ -12,7 +12,7 @@ export default function AddUser() {
   const [roles, setRoles] = useState([])
   const history = useHistory();
 
-  const tempRole = {}
+  //const tempRole = {}
 
   async function handleSubmit() {
     await authApi.addUser(username, name, lastname, password, role);
