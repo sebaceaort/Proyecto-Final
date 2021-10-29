@@ -3,6 +3,7 @@ import { UserContext } from "../context/user-context";
 import { NavLink as RouterNavLink } from "react-router-dom";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import AuthNav from "../Auth/AuthNav";
+import { BsFillPersonFill } from "react-icons/bs";
 
 const MainNav = (props) => (
   <Nav className="mr-auto">
@@ -79,6 +80,14 @@ const NavBar = () => {
           <Navbar.Brand as={RouterNavLink} className="logo" to="/" />
           <MainNav user={user} />
           <AuthNav />
+          {user && (
+            <>
+              <div>
+               <BsFillPersonFill />
+               <span>{user.usName} {user.usLastName}</span>
+              </div>
+            </>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>

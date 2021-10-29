@@ -1,3 +1,39 @@
 $yellow: #fdd208;
 
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@700&display=swap');
+
+.btn-load-indicator {
+    background-color:$yellow-400;
+    color: black;
+    font-weight: bold;
+    border: none;
+    width: 100%;
+    &:hover{
+        background-color:$yellow-600;
+    }
+}
+
+.smartFont {
+    font-family: 'Dosis', sans-serif;
+    font-size: 50px;
+}
+
+h2, p {
+    font-family: 'Dosis', sans-serif;
+}
+
+.btn-load-goal {
+    background-color:$blue-400;
+    color: black;
+    font-weight: bold;
+    border: none;
+    width: 100%;
+    &:hover{
+        background-color:$blue-600;
+    }
+}
+
+.btnIndicators{
+    width: 50%;
+}
