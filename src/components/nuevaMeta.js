@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 
 const FormMeta = () => {
@@ -9,41 +9,47 @@ const FormMeta = () => {
                 initialValues={{
                     eje: '',
                     subeje: '',
+                    indicador: '',
                     monto: '',
-                    fecha:''
+                    fecha: ''
                 }}
-                validate={(valores)=>{
+                validate={(valores) => {
                     let errores = {};
                     let dias = Math.round((Date.now() - Date.parse(valores.fecha)) / (1000 * 60 * 60 * 24));
 
-                    if(!valores.eje){
+                    if (!valores.eje) {
                         errores.eje = ('Por favor ingrese un eje')
-                    }else if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.eje)){
+                    } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.eje)) {
                         errores.eje = ('El eje solo puede contener letras y espacios')
                     }
-                    if(!valores.subeje){
+                    if (!valores.subeje) {
                         errores.subeje = ('Por favor ingrese un subeje')
-                    }else if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.subeje)){
+                    } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.subeje)) {
                         errores.subeje = ('El subeje solo puede contener letras y espacios')
                     }
-                    if(!valores.monto){
+                    if (!valores.indicador) {
+                        errores.indicador = ('Por favor ingrese un indicador')
+                    } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.indicador)) {
+                        errores.indicador = ('El indicador solo puede contener letras y espacios')
+                    }
+                    if (!valores.monto) {
                         errores.monto = ('Por favor ingrese un monto')
                     }
-                    if(!valores.fecha){
+                    if (!valores.fecha) {
                         errores.fecha = ('Por favor ingrese una fecha')
-                    }else if(dias>0){
+                    } else if (dias > 0) {
                         errores.fecha = ('Por favor ingrese una fecha posterior a la actual')
                     }
                     return errores;
                 }}
-                onSubmit={(valores, {resetForm}) => {
+                onSubmit={(valores, { resetForm }) => {
                     resetForm();
                     console.log("Formulario enviado")
                     cambiarFormularioEnviado(true)
-                    setTimeout(()=>cambiarFormularioEnviado(false),5000)
+                    setTimeout(() => cambiarFormularioEnviado(false), 5000)
                 }}
             >
-                {({ values, errors,handleSubmit, handleChange, handleBlur, touched}) => (
+                {({ values, errors, handleSubmit, handleChange, handleBlur, touched }) => (
                     <form className="row" onSubmit={handleSubmit}>
                         <div className="row mb-3">
                             <label htmlFor="eje">Eje</label>
@@ -70,6 +76,19 @@ const FormMeta = () => {
                                 onBlur={handleBlur}
                             />
                             {touched.subeje && errors.subeje && <div className="error">{errors.subeje}</div>}
+                        </div>
+                        <div className="row mb-3">
+                            <label htmlFor="indicador">Indicador</label>
+                            <input
+                                type="text"
+                                id="indicador"
+                                name="indicador"
+                                placeholder="Ingrese indicador"
+                                value={values.indicador}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            />
+                            {touched.indicador && errors.indicador && <div className="error">{errors.indicador}</div>}
                         </div>
                         <div className="row mb-3">
                             <label htmlFor="monto">Monto esperado</label>
