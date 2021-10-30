@@ -7,7 +7,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 
 //agregar POST
 
-const AddMunButton = ({ item = {type : ""} }) => {
+const AddEntityButton = ({ item = {type : ""} }) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -15,7 +15,7 @@ const AddMunButton = ({ item = {type : ""} }) => {
 
 
 
-    function AddMunModal() {    
+    function AddEntityModal() {    
         const [animate, setAnimate] = useState(false);
 
         const [datos, setDatos] = useState({
@@ -160,10 +160,10 @@ const AddMunButton = ({ item = {type : ""} }) => {
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
-                    <AddMunModal />
+                    <AddEntityModal />
                 </Modal.Body>
             </Modal>
         </>
     );
 }
-export default AddMunButton;
+export default AddEntityButton;

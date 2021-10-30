@@ -4,6 +4,7 @@ import { ShowChildrens } from "./ShowChildrens";
 import { Accordion, Button } from "react-bootstrap";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { UserContext } from "../context/user-context";
+import AddEntityButton  from "./agregarEntidades";
 
 export const ShowArrItem = ({ item }) => {
   const [show, setShow] = useState(false);
@@ -18,14 +19,11 @@ export const ShowArrItem = ({ item }) => {
         <Accordion.Item eventKey="0">
           <Accordion.Header onClick={handleClick}>
             {type} - <b>{name.value}</b>
+           
           </Accordion.Header>
-          <Accordion.Body>
-            {user.usRole === "admin" && (
-              <Button style={{marginBottom: "15px"}} variant="success">
-                Agregar Eje
-              </Button>
-            )}
-          </Accordion.Body>
+          <Accordion.Body> {(user.usRole === "admin") && (              
+              <AddEntityButton item = {item} />             
+            )}</Accordion.Body>
         </Accordion.Item>
       </Accordion>
       {/* <button

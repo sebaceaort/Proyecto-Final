@@ -95,7 +95,7 @@ async function postEntity(datos, tipo, id) {
     redirect: "follow",
   };
 
-  await fetch(`${api}/fiware/entities/add/add`, requestOptions)
+  await fetch(`${api}/fiware/entities/add`, requestOptions)
 
     .then((response) => response.json())
     .then((res) => {
