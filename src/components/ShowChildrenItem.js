@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import { BsFillCaretRightFill, BsFillCaretDownFill } from "react-icons/bs";
 import { ShowChildrens } from "./ShowChildrens";
+import AddEntityButton  from "./agregarEntidades";
+import DeleteEntityButton from "./eliminarEntidades";
 import {
   Accordion,
   Card,
@@ -45,9 +47,10 @@ export const ShowChildrenItem = ({ item }) => {
             </Accordion.Header>
             <Accordion.Body>
               {user.usRole === "admin" && (
-                <Button style={{ marginBottom: "15px" }} variant="success">
-                  Agregar {indicatorType(item)}
-                </Button>
+              <>
+              <AddEntityButton item={item} />
+              <DeleteEntityButton item={item} />
+              </>
               )}
             </Accordion.Body>
           </Accordion.Item>
@@ -68,19 +71,18 @@ export const ShowChildrenItem = ({ item }) => {
         </button> */}
         <Accordion defaultActiveKey="1">
           <Accordion.Item eventKey="0">
+          <DeleteEntityButton item={item} />
             <Accordion.Header onClick={handleClick}>
               <Container>
                 <Row>
                   <Col>
-                    {item.type} - {item.name.value}
+                    {item.type} - {item.name.value} 
                   </Col>
                   <Col lg="2">
                     <Button variant="secondary" className={"btnIndicators"}>
                       Editar
                     </Button>
-                    <Button variant="danger" className={"btnIndicators"}>
-                      Eliminar
-                    </Button>
+                    
                   </Col>
                 </Row>
               </Container>

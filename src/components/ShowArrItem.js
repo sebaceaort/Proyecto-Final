@@ -5,6 +5,7 @@ import { Accordion, Button } from "react-bootstrap";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { UserContext } from "../context/user-context";
 import AddEntityButton  from "./agregarEntidades";
+import DeleteEntityButton from "./eliminarEntidades";
 
 export const ShowArrItem = ({ item }) => {
   const [show, setShow] = useState(false);
@@ -22,7 +23,10 @@ export const ShowArrItem = ({ item }) => {
            
           </Accordion.Header>
           <Accordion.Body> {(user.usRole === "admin") && (              
-              <AddEntityButton item = {item} />             
+              <>
+              <AddEntityButton item={item} />
+              <DeleteEntityButton item={item} />
+              </>             
             )}</Accordion.Body>
         </Accordion.Item>
       </Accordion>
