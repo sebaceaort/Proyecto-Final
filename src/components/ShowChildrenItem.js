@@ -51,8 +51,10 @@ export const ShowChildrenItem = ({ item }) => {
             <Accordion.Body>
               {user.usRole === "admin" && (
               <>
+              <div style={{display: "flex", justifyContent: "flex-start"}}>
               <AddEntityButton item={item} />
               <DeleteEntityButton item={item} />
+              </div>
               </>
               )}
             </Accordion.Body>
