@@ -155,7 +155,7 @@ const AddEntityButton = ({ item = {type : ""} }) => {
     return (
         <>
             <Button variant="success" onClick={handleShow}>
-                + Nuevo Eje
+                Add
             </Button>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton></Modal.Header>

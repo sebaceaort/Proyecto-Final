@@ -68,6 +68,36 @@ async function getDataByQuery(query) {
   return arr;
 }
 
+async function deleteEntity(tipo, id){
+  let resp;
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization", window.localStorage.getItem("token"))
+
+  var myBody = {
+    type : tipo,
+    id : id
+  }
+
+  var requestOptions = {
+    method: "DELETE",
+    headers: myHeaders,
+    body: JSON.stringify(myBody),
+    redirect: "follow",
+  };
+
+  await fetch(`${api}/fiware/entities`, requestOptions)
+
+  .then((response) => response.json())
+  .then((res) => {
+    resp = res;
+  })
+  .catch((err) => console.log(err));
+
+return resp;
+}
+
 async function postEntity(datos, tipo, id) {
 
   let resp;
@@ -106,4 +136,4 @@ async function postEntity(datos, tipo, id) {
   return resp;
 }
 //eslint-disable-next-line
-export default { getEntities, getDataByQuery, getDataByType, postEntity };
+export default { getEntities, getDataByQuery, getDataByType, postEntity, deleteEntity };
