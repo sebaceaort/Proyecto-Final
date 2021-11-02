@@ -20,6 +20,9 @@ export const ShowChildrenItem = ({ item }) => {
   const [show, setShow] = useState(false);
   const [showMeta, setShowMeta] = useState(false);
   const { user } = useContext(UserContext);
+  var today = new Date();   
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
 
   const handleClick = () => {
     setShow(!show);
@@ -48,17 +51,15 @@ export const ShowChildrenItem = ({ item }) => {
             <Accordion.Body>
               {user.usRole === "admin" && (
               <>
+              <div style={{display: "flex", justifyContent: "flex-start"}}>
               <AddEntityButton item={item} />
               <DeleteEntityButton item={item} />
+              </div>
               </>
               )}
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
-
-        {/* <button className="btn btn-primary ms-2" onClick={handleClick}>
-          {show ? <BsFillCaretDownFill /> : <BsFillCaretRightFill />}
-        </button> */}
 
         {show && <ShowChildrens type={item?.type} id={item?.id} />}
       </div>
@@ -66,9 +67,6 @@ export const ShowChildrenItem = ({ item }) => {
   } else {
     return (
       <div>
-        {/* <button className="btn btn-primary ms-2 md-12" onClick={handleClick}>
-          {show ? <BsFillCaretDownFill /> : <BsFillCaretRightFill />}
-        </button> */}
         <Accordion defaultActiveKey="1">
           <Accordion.Item eventKey="0">
           <DeleteEntityButton item={item} />
@@ -108,20 +106,21 @@ export const ShowChildrenItem = ({ item }) => {
                       <div>
                         <div>
                           <div>Hoy</div>
-                          28/10/2021
+                          {date}
                           <ProgressBar
-                            now={5}
-                            label={`${5}%`}
+                            now={10}
+                            label={`${10}%`}
                             variant="danger"
                           />
                         </div>
                         <hr />
                         <div>
                           <div>Meta</div>
-                          27/10/2022
+                          {item.goalDate.value}
+                          {console.log(item.data.value)}
                           <ProgressBar
-                            now={25}
-                            label={`${25}%`}
+                            now={item.goal.value}
+                            label={`${item.goal.value}%`}
                             variant="success"
                           />
                         </div>
