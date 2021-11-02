@@ -154,7 +154,7 @@ const AddEntityButton = ({ item = {type : ""} }) => {
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
+            <Button variant="success" onClick={handleShow}>
                 Add
             </Button>
             <Modal show={show} onHide={handleClose}>
