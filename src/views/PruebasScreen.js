@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { ShowArr } from "../components/ShowArr";
 import fiwareApi from "../services/fiwareApi";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import { UserContext } from "../context/user-context";
 import AddEntityButton from "../components/agregarEntidades";
 

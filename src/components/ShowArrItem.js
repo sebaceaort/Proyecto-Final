@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { ShowChildrens } from "./ShowChildrens";
-import { Accordion, Button } from "react-bootstrap";
+import { Accordion } from "react-bootstrap";
 import { UserContext } from "../context/user-context";
 import AddEntityButton from "./agregarEntidades";
 import DeleteEntityButton from "./eliminarEntidades";

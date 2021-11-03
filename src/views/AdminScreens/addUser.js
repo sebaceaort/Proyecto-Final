@@ -27,13 +27,13 @@ export default function AddUser() {
   }, [])
 
   // console.log(roles[0])
-  roles[0]?.find(r => { r.name === role ? console.log(r._id) : console.log("nada")
+  roles[0]?.find(r =>  r.name === role ? console.log(r._id) : console.log("nada")
     // console.log(r)
     // console.log(role)
     // if(r.name === role){
     //   console.log(r._id)
     // }
-  })
+    )
 
 
   return (

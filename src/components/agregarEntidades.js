@@ -1,6 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState} from "react";
 import { Form, Button, Image, Modal, Spinner, InputGroup } from "react-bootstrap";
-import { MunicipioContext } from "../context/user-context"; //agregar contexto municipio
+//import { MunicipioContext } from "../context/user-context"; //agregar contexto municipio
 import firewareApi from "../services/fiwareApi"
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -84,7 +84,7 @@ const AddEntityButton = ({ item = {type : ""} }) => {
                         />
                     </Form.Group>
 
-                    {element == "Indicator" ?   //SI ES INDICATOR UN COSA
+                    {element === "Indicator" ?   //SI ES INDICATOR UN COSA
                         <>
                             <Form.Label>Tipo de dato:</Form.Label>
                             <InputGroup className="mb-3" controlId="formNombreMun">

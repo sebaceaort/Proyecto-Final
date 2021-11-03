@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 //import { BsFillCaretRightFill, BsFillCaretDownFill } from "react-icons/bs";
 import { ShowChildrens } from "./ShowChildrens";
-import AddEntityButton  from "./agregarEntidades";
+import AddEntityButton from "./agregarEntidades";
 import DeleteEntityButton from "./eliminarEntidades";
 import {
   Accordion,
@@ -16,27 +16,29 @@ import { UserContext } from "../context/user-context";
 
 export const ShowChildrenItem = ({ item }) => {
   const [show, setShow] = useState(false);
- // const [showMeta, setShowMeta] = useState(false);
+  // const [showMeta, setShowMeta] = useState(false);
   const { user } = useContext(UserContext);
-  var today = new Date();   
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-
+  var today = new Date();
+  var date =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 
   const handleClick = () => {
     setShow(!show);
   };
 
-  const indicatorType = (item) => {
-    if (item.type === "Eje") {
-      return "SubEje";
-    } else {
-      return "Indicador";
-    }
-  };
+  // const indicatorType = (item) => {
+  //   if (item.type === "Eje") {
+  //     return "SubEje";
+  //   } else {
+  //     return "Indicador";
+  //   }
+  // };
 
   // const handleShowMeta = () => {
   //   setShowMeta(!showMeta);
   // };
+
+ 
 
   if (item.type !== "Indicator") {
     return (
@@ -48,12 +50,14 @@ export const ShowChildrenItem = ({ item }) => {
             </Accordion.Header>
             <Accordion.Body>
               {user.usRole === "admin" && (
-              <>
-              <div style={{display: "flex", justifyContent: "flex-start"}}>
-              <AddEntityButton item={item} />
-              <DeleteEntityButton item={item} />
-              </div>
-              </>
+                <>
+                  <div
+                    style={{ display: "flex", justifyContent: "flex-start" }}
+                  >
+                    <AddEntityButton item={item} />
+                    <DeleteEntityButton item={item} />
+                  </div>
+                </>
               )}
             </Accordion.Body>
           </Accordion.Item>
@@ -67,18 +71,31 @@ export const ShowChildrenItem = ({ item }) => {
       <div>
         <Accordion defaultActiveKey="1">
           <Accordion.Item eventKey="0">
-          <DeleteEntityButton item={item} />
             <Accordion.Header onClick={handleClick}>
               <Container>
                 <Row>
                   <Col>
-                    {item.type} - {item.name.value} 
+                    {item.type} - {item.name.value}
                   </Col>
                   <Col lg="2">
-                    <Button variant="secondary" className={"btnIndicators"}>
-                      Editar
-                    </Button>
-                    
+                    {user.usRole === "admin" && (
+                      <>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-start",
+                          }}
+                        >
+                          <DeleteEntityButton item={item} />
+                          <Button
+                            variant="secondary"
+                            className={"btnIndicators"}
+                          >
+                            Editar
+                          </Button>
+                        </div>
+                      </>
+                    )}
                   </Col>
                 </Row>
               </Container>

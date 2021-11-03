@@ -1,11 +1,11 @@
 import { Table, Button } from "react-bootstrap";
-import { useState, useEffect } from "react";
-import authApi from "../../services/authApi";
-import Graph from "../../components/graph";
+// import { useState, useEffect } from "react";
+// import authApi from "../../services/authApi";
+// import Graph from "../../components/graph";
 import { useHistory } from "react-router-dom";
 
 export default function Historical() {
-  const [historical, setHistorical] = useState([]);
+ // const [historical, setHistorical] = useState([]);
   const history = useHistory()
 
   //   useEffect(() => {

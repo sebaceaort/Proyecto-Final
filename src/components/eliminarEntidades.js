@@ -1,6 +1,6 @@
-import React, { useState, useContext } from "react";
-import { Form, Button, Image, Modal, Spinner, InputGroup } from "react-bootstrap";
-import { MunicipioContext } from "../context/user-context"; //agregar contexto municipio
+import React, { useState } from "react";
+import { Form, Button, Modal, Spinner } from "react-bootstrap";
+//import { MunicipioContext } from "../context/user-context"; //agregar contexto municipio
 import firewareApi from "../services/fiwareApi"
 
 
