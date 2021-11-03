@@ -1,13 +1,13 @@
 import React, { useState, useContext } from "react";
-import { BsFillCaretRightFill, BsFillCaretDownFill } from "react-icons/bs";
+//import { BsFillCaretRightFill, BsFillCaretDownFill } from "react-icons/bs";
 import { ShowChildrens } from "./ShowChildrens";
 import AddGoalButton from "./nuevaMeta"
+import AddEntityButton from "./agregarEntidades";
+import DeleteEntityButton from "./eliminarEntidades";
 import {
   Accordion,
   Card,
   Button,
-  Form,
-  Badge,
   Container,
   Row,
   Col,
@@ -17,24 +17,29 @@ import { UserContext } from "../context/user-context";
 
 export const ShowChildrenItem = ({ item }) => {
   const [show, setShow] = useState(false);
-  const [showMeta, setShowMeta] = useState(false);
+  // const [showMeta, setShowMeta] = useState(false);
   const { user } = useContext(UserContext);
+  var today = new Date();
+  var date =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 
   const handleClick = () => {
     setShow(!show);
   };
 
-  const indicatorType = (item) => {
-    if (item.type === "Eje") {
-      return "SubEje";
-    } else {
-      return "Indicador";
-    }
-  };
+  // const indicatorType = (item) => {
+  //   if (item.type === "Eje") {
+  //     return "SubEje";
+  //   } else {
+  //     return "Indicador";
+  //   }
+  // };
 
-  const handleShowMeta = () => {
-    setShowMeta(!showMeta);
-  };
+  // const handleShowMeta = () => {
+  //   setShowMeta(!showMeta);
+  // };
+
+ 
 
   if (item.type !== "Indicator") {
     return (
@@ -46,17 +51,18 @@ export const ShowChildrenItem = ({ item }) => {
             </Accordion.Header>
             <Accordion.Body>
               {user.usRole === "admin" && (
-                <Button style={{ marginBottom: "15px" }} variant="success">
-                  Agregar {indicatorType(item)}
-                </Button>
+                <>
+                  <div
+                    style={{ display: "flex", justifyContent: "flex-start" }}
+                  >
+                    <AddEntityButton item={item} />
+                    <DeleteEntityButton item={item} />
+                  </div>
+                </>
               )}
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
-
-        {/* <button className="btn btn-primary ms-2" onClick={handleClick}>
-          {show ? <BsFillCaretDownFill /> : <BsFillCaretRightFill />}
-        </button> */}
 
         {show && <ShowChildrens type={item?.type} id={item?.id} />}
       </div>
@@ -64,9 +70,6 @@ export const ShowChildrenItem = ({ item }) => {
   } else {
     return (
       <div>
-        {/* <button className="btn btn-primary ms-2 md-12" onClick={handleClick}>
-          {show ? <BsFillCaretDownFill /> : <BsFillCaretRightFill />}
-        </button> */}
         <Accordion defaultActiveKey="1">
           <Accordion.Item eventKey="0">
             <Accordion.Header onClick={handleClick}>
@@ -76,12 +79,24 @@ export const ShowChildrenItem = ({ item }) => {
                     {item.type} - {item.name.value}
                   </Col>
                   <Col lg="2">
-                    <Button variant="secondary" className={"btnIndicators"}>
-                      Editar
-                    </Button>
-                    <Button variant="danger" className={"btnIndicators"}>
-                      Eliminar
-                    </Button>
+                    {user.usRole === "admin" && (
+                      <>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-start",
+                          }}
+                        >
+                          <DeleteEntityButton item={item} />
+                          <Button
+                            variant="secondary"
+                            className={"btnIndicators"}
+                          >
+                            Editar
+                          </Button>
+                        </div>
+                      </>
+                    )}
                   </Col>
                 </Row>
               </Container>
@@ -107,20 +122,21 @@ export const ShowChildrenItem = ({ item }) => {
                       <div>
                         <div>
                           <div>Hoy</div>
-                          28/10/2021
+                          {date}
                           <ProgressBar
-                            now={5}
-                            label={`${5}%`}
+                            now={10}
+                            label={`${10}%`}
                             variant="danger"
                           />
                         </div>
                         <hr />
                         <div>
                           <div>Meta</div>
-                          27/10/2022
+                          {item.goalDate.value}
+                          {console.log(item.data.value)}
                           <ProgressBar
-                            now={25}
-                            label={`${25}%`}
+                            now={item.goal.value}
+                            label={`${item.goal.value}%`}
                             variant="success"
                           />
                         </div>

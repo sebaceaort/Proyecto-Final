@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
-import { BsFillCaretRightFill, BsFillCaretDownFill } from "react-icons/bs";
 import { ShowChildrens } from "./ShowChildrens";
-import { Accordion, Button } from "react-bootstrap";
-import { IoAddCircleOutline } from "react-icons/io5";
+import { Accordion } from "react-bootstrap";
 import { UserContext } from "../context/user-context";
+import AddEntityButton from "./agregarEntidades";
+import DeleteEntityButton from "./eliminarEntidades";
 
 export const ShowArrItem = ({ item }) => {
   const [show, setShow] = useState(false);
@@ -20,21 +20,18 @@ export const ShowArrItem = ({ item }) => {
             {type} - <b>{name.value}</b>
           </Accordion.Header>
           <Accordion.Body>
+            {" "}
             {user.usRole === "admin" && (
-              <Button style={{marginBottom: "15px"}} variant="success">
-                Agregar Eje
-              </Button>
+              <>
+                <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                  <AddEntityButton item={item} />
+                  <DeleteEntityButton item={item} />
+                </div>
+              </>
             )}
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
-      {/* <button
-         className="btn btn-primary ms-2" 
-         onClick={handleClick}
-         >
-        {show ? <BsFillCaretDownFill /> : <BsFillCaretRightFill />}
-         </button>
-       */}
       {show && <ShowChildrens type={type} id={id} />}
     </div>
   );

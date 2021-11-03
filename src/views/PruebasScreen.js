@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
 import { ShowArr } from "../components/ShowArr";
 import fiwareApi from "../services/fiwareApi";
-import { Container, Row, Col, Card, Accordion, Button } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import { UserContext } from "../context/user-context";
+import AddEntityButton from "../components/agregarEntidades";
 
 export const PruebasScreen = () => {
   const [data, setData] = useState([]);
@@ -24,9 +25,7 @@ export const PruebasScreen = () => {
               <Card.Header>LISTADO DE MUNICIPIOS INTELIGENTES</Card.Header>
               <Card.Body>
                 {user.usRole === "admin" && (
-                  <Button style={{ marginBottom: "15px" }} variant="success">
-                    Agregar Municipio
-                  </Button>
+                 <AddEntityButton/>
                 )}
                 <ShowArr array={data} />
               </Card.Body>

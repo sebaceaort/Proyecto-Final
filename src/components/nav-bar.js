@@ -41,6 +41,14 @@ const MainNav = (props) => (
         >
           Mostrar Indicadores
         </Nav.Link>
+        <Nav.Link
+          as={RouterNavLink}
+          to="/show-historical"
+          exact
+          activeClassName="router-link-exact-active"
+        >
+          Mostrar Historico
+        </Nav.Link>
         {props.user.usRole === "admin" ? (
           <>
             <Nav.Link
