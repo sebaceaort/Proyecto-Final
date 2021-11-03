@@ -153,7 +153,33 @@ async function postNewGoal(datos, id) {
     redirect: "follow",
   };
 
-  await fetch(`${api}/fiware/entities/add/goal`, requestOptions)
+  await fetch(`${api}/fiware/entities/change/goal`, requestOptions)
+
+    .then((response) => response.json())
+    .then((res) => {
+      resp = res;
+    })
+    .catch((err) => console.log(err));
+  return resp;
+}
+
+async function loadData(datos, id) {
+  let resp;
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization", window.localStorage.getItem("token"))
+  var myBody = {
+    actMonto: datos.actMonto,
+    id: id
+  }
+  var requestOptions = {
+    method: "PUT",
+    headers: myHeaders,
+    body: JSON.stringify(myBody),
+    redirect: "follow",
+  };
+  await fetch(`${api}/fiware/entities/load/dataIndicator`, requestOptions)
 
     .then((response) => response.json())
     .then((res) => {
@@ -190,4 +216,4 @@ async function updateEntity(datos, id) {
 
 
 //eslint-disable-next-line
-export default { getEntities, getDataByQuery, getDataByType, postEntity, deleteEntity, postNewGoal, updateEntity };
+export default { getEntities, getDataByQuery, getDataByType, postEntity, deleteEntity, postNewGoal, updateEntity, loadData};

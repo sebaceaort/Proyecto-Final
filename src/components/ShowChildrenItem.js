@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 //import { BsFillCaretRightFill, BsFillCaretDownFill } from "react-icons/bs";
 import { ShowChildrens } from "./ShowChildrens";
-import AddGoalButton from "./nuevaMeta";
+import AddGoalButton from "./nuevaMeta"
+import IndicatorDataButton from "./nuevoIndicador";
 import AddEntityButton from "./agregarEntidades";
 import DeleteEntityButton from "./eliminarEntidades";
 import UpdateEntityButton from "./updateEntities";
@@ -128,9 +129,7 @@ export const ShowChildrenItem = ({ item }) => {
                   <Container className="p-0">
                     <Row>
                       <Col>
-                        <Button className="btn-load-indicator">
-                          Cargar indicador
-                        </Button>
+                        <IndicatorDataButton item={item} />
                       </Col>
                       <Col>
                         <AddGoalButton item={item} />
