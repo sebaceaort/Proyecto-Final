@@ -4,6 +4,7 @@ import { ShowChildrens } from "./ShowChildrens";
 import AddGoalButton from "./nuevaMeta"
 import AddEntityButton from "./agregarEntidades";
 import DeleteEntityButton from "./eliminarEntidades";
+import UpdateEntityButton from "./updateEntities";
 import {
   Accordion,
   Card,
@@ -56,6 +57,7 @@ export const ShowChildrenItem = ({ item }) => {
                     style={{ display: "flex", justifyContent: "flex-start" }}
                   >
                     <AddEntityButton item={item} />
+                    <UpdateEntityButton item={item}/>
                     <DeleteEntityButton item={item} />
                   </div>
                 </>
@@ -87,6 +89,7 @@ export const ShowChildrenItem = ({ item }) => {
                             justifyContent: "flex-start",
                           }}
                         >
+                          <UpdateEntityButton item={item}/>
                           <DeleteEntityButton item={item} />
                           <Button
                             variant="secondary"

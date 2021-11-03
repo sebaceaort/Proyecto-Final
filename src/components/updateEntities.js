@@ -6,36 +6,26 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 
 //agregar POST
-function AddEntityModal({item, handleClose}) {    
+function UpdateEntityModal({item, handleClose}) { 
+
     const [animate, setAnimate] = useState(false);
-
     const [datos, setDatos] = useState({
-        nombre: '',
-        descripcion: '',
-        tipoDato: 'Número'
+        name: item.name.value,
+        description: item.description?.value,
+        indicatorType: item.indicatorType?.value
     });
-
     const handleChangeDatos = (value, prop) => {
         setDatos({ ...datos, [prop]: value });
-    };
-
-    const element = declararElement(item.type);
-    function declararElement(type) {
-        switch (type) {
-            case 'SubEje': return 'Indicator'
-            case 'Eje': return 'SubEje';
-            case 'Municipio': return 'Eje';
-            default: return 'Municipio';
-        };
-
-    };
+    };   
+    const entityType = item.type;
+    
     
     async function handleSubmit() {
 
-        const data = await firewareApi.postEntity(datos, element,item.id)
+        const data = await firewareApi.updateEntity(datos, item.id)        
 
         if (data) {
-            alert(JSON.stringify(data.name.value) + " fue agregado exitosamente")
+            alert(JSON.stringify(datos.name) + " fue modificado exitosamente")
             handleClose();
         } else {
             setAnimate(false);
@@ -58,18 +48,19 @@ function AddEntityModal({item, handleClose}) {
                 }}
             >
                 <Form.Group className="mb-3" controlId="formNombreMun">
-                    <Form.Label>Nombre del {element}:</Form.Label>
+                    <Form.Label>Nombre del {entityType}:</Form.Label>
                     <Form.Control
                         required
                         type="text"
-                        placeholder="Nombre"                                //ver VALIDATIONS!!!!!!!!!!!!
+                        placeholder="Nombre"  
+                        value = {datos.name}                             //ver VALIDATIONS!!!!!!!!!!!!
                         onChange={(nombre) => {
-                            handleChangeDatos(nombre.target.value, "nombre");
+                            handleChangeDatos(nombre.target.value, "name");
                         }}
                     />
                 </Form.Group>
 
-                {element === "Indicator" ?   //SI ES INDICATOR UN COSA
+                {entityType === "Indicator" ?   //SI ES INDICATOR UN COSA
                     <>
                         <Form.Label>Tipo de dato:</Form.Label>
                         <InputGroup className="mb-3" controlId="formNombreMun">
@@ -77,19 +68,18 @@ function AddEntityModal({item, handleClose}) {
                             <Form.Control
                                 required
                                 type="text"
-                                value={datos.tipoDato}
+                                value={datos.indicatorType}
                                 disabled readonly //ver VALIDATIONS!!!!!!!!!!!!
                             />
 
                             <DropdownButton align="end" id="dropdown-menu" onSelect={(tipoDato) => {
-                                handleChangeDatos(tipoDato, "tipoDato")
+                                handleChangeDatos(tipoDato, "indicatorType")
                             }}>
 
                                 <Dropdown.Item eventKey="Número">Número</Dropdown.Item>
                                 <Dropdown.Item eventKey="Índice">Índice</Dropdown.Item>
                                 <Dropdown.Item eventKey="Porcentaje">Porcentaje</Dropdown.Item>
                             </DropdownButton>
-
 
                         </InputGroup>
 
@@ -98,10 +88,12 @@ function AddEntityModal({item, handleClose}) {
                             <Form.Control
                                 required
                                 type="text"
+                                value = {datos.description}
+                                placeholder = "Descripcion"
                                 
                                 //ver VALIDATIONS!!!!!!!!!!!!
                                 onChange={(descripcion) => {
-                                    handleChangeDatos(descripcion.target.value, "descripcion")
+                                    handleChangeDatos(descripcion.target.value, "description")
                                 }} />
                         </Form.Group></>
 
@@ -129,7 +121,7 @@ function AddEntityModal({item, handleClose}) {
                         ) : (
                             ""
                         )}
-                        {!animate ? "Agregar" : "Loading..."}
+                        {!animate ? "Editar" : "Loading..."}
                     </Button>
                 </Form.Group>
             </Form>
@@ -137,23 +129,23 @@ function AddEntityModal({item, handleClose}) {
     );
 }
 
-const AddEntityButton = ({ item = {type : ""} }) => {
+const UpdateEntityButton = ({ item }) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true); 
 
     return (
         <>
-            <Button variant="success" onClick={handleShow}>
-                Add
+            <Button variant="warning" onClick={handleShow}>
+                Update
             </Button>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
-                    <AddEntityModal item = {item} handleClose = {handleClose}/>
+                    <UpdateEntityModal item = {item} handleClose = {handleClose}/>
                 </Modal.Body>
             </Modal>
         </>
     );
 }
-export default AddEntityButton;
+export default UpdateEntityButton;

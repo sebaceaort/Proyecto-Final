@@ -4,6 +4,7 @@ import { Accordion } from "react-bootstrap";
 import { UserContext } from "../context/user-context";
 import AddEntityButton from "./agregarEntidades";
 import DeleteEntityButton from "./eliminarEntidades";
+import UpdateEntityButton from "./updateEntities";
 
 export const ShowArrItem = ({ item }) => {
   const [show, setShow] = useState(false);
@@ -25,6 +26,7 @@ export const ShowArrItem = ({ item }) => {
               <>
                 <div style={{ display: "flex", justifyContent: "flex-start" }}>
                   <AddEntityButton item={item} />
+                  <UpdateEntityButton item={item}/>
                   <DeleteEntityButton item={item} />
                 </div>
               </>
