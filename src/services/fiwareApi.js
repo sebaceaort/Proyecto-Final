@@ -92,8 +92,7 @@ async function deleteEntity(tipo, id) {
     .then((response) => response.json())
     .then((res) => {
       resp = res;
-    })
-    .catch((err) => console.log(err));
+    })    
 
   return resp;
 }
@@ -130,8 +129,7 @@ async function postEntity(datos, tipo, id) {
     .then((response) => response.json())
     .then((res) => {
       resp = res;
-    })
-    .catch((err) => console.log(err));
+    })   
 
   return resp;
 }
@@ -190,6 +188,32 @@ async function loadData(datos, id) {
     .catch((err) => console.log(err));
   return resp;
 }
+async function updateEntity(datos, id) {
+  let resp;
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization", window.localStorage.getItem("token"))
+
+  const myBody = { id, ...datos }
+
+  var requestOptions = {
+    method: "PUT",
+    headers: myHeaders,
+    body: JSON.stringify(myBody),
+    redirect: "follow",
+  };
+
+  await fetch(`${api}/fiware/entities/update`, requestOptions)
+
+    .then((response) => response.json())
+    .then((res) => {
+      resp = res;
+    })
+   
+  return resp;
+}
+
 
 //eslint-disable-next-line
-export default { getEntities, getDataByQuery, getDataByType, postEntity, deleteEntity, postNewGoal, loadData};
+export default { getEntities, getDataByQuery, getDataByType, postEntity, deleteEntity, postNewGoal, updateEntity, loadData};
