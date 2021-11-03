@@ -4,11 +4,11 @@ import firewareApi from "../services/fiwareApi"
 
 //agregar POST
 
-const AddGoalButton = ({ item }) => {
+const ChangeGoalButton = ({ item }) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    function AddGoalModal() {
+    function ChangeGoalModal() {
         const [animate, setAnimate] = useState(false);
 
         const [datos, setDatos] = useState({
@@ -21,8 +21,8 @@ const AddGoalButton = ({ item }) => {
 
         async function handleSubmit() {
 
-            const data = await createGoal(item.id)
-            async function createGoal(id) {
+            const data = await changeGoal(item.id)
+            async function changeGoal(id) {
                 return await firewareApi.postNewGoal(datos, id)
             }
 
@@ -106,10 +106,10 @@ const AddGoalButton = ({ item }) => {
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
-                    <AddGoalModal />
+                    <ChangeGoalModal />
                 </Modal.Body>
             </Modal>
         </>
     );
 }
-export default AddGoalButton;
+export default ChangeGoalButton;

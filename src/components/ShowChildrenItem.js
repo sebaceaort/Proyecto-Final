@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 //import { BsFillCaretRightFill, BsFillCaretDownFill } from "react-icons/bs";
 import { ShowChildrens } from "./ShowChildrens";
 import AddGoalButton from "./nuevaMeta"
+import IndicatorDataButton from "./nuevoIndicador";
 import AddEntityButton from "./agregarEntidades";
 import DeleteEntityButton from "./eliminarEntidades";
 import {
@@ -39,7 +40,7 @@ export const ShowChildrenItem = ({ item }) => {
   //   setShowMeta(!showMeta);
   // };
 
- 
+
 
   if (item.type !== "Indicator") {
     return (
@@ -165,12 +166,11 @@ export const ShowChildrenItem = ({ item }) => {
                   <Container className="p-0">
                     <Row>
                       <Col>
-                        <Button className="btn-load-indicator">
-                          Cargar indicador
-                        </Button>
+                        <IndicatorDataButton item={item} />
+                        {/* <Button className="btn-load-indicator">Cargar indicador</Button> */}
                       </Col>
                       <Col>
-                        <AddGoalButton item={item}/>
+                        <AddGoalButton item={item} />
                         {/* <Button className="btn-load-goal">Cargar Meta</Button> */}
                       </Col>
                     </Row>
