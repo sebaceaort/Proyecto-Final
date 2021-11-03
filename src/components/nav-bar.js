@@ -53,14 +53,6 @@ const MainNav = (props) => (
           <>
             <Nav.Link
               as={RouterNavLink}
-              to="/load-indicators"
-              exact
-              activeClassName="router-link-exact-active"
-            >
-              Crear Inidicadores
-            </Nav.Link>
-            <Nav.Link
-              as={RouterNavLink}
               to="/AddUser"
               exact
               activeClassName="router-link-exact-active"
@@ -91,8 +83,10 @@ const NavBar = () => {
           {user && (
             <>
               <div>
-               <BsFillPersonFill />
-               <span>{user.usName} {user.usLastName}</span>
+                <BsFillPersonFill />
+                <span>
+                  {user.usName} {user.usLastName}
+                </span>
               </div>
             </>
           )}
