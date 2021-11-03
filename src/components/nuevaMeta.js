@@ -1,131 +1,115 @@
-import React, { useState } from "react";
-import { Formik } from "formik";
+import React, { useState} from "react";
+import { Form, Button, Image, Modal, Spinner } from "react-bootstrap";
+import firewareApi from "../services/fiwareApi"
 
-const FormMeta = () => {
-    const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
+//agregar POST
+
+const AddGoalButton = ({ item }) => {
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    function AddGoalModal() {
+        const [animate, setAnimate] = useState(false);
+
+        const [datos, setDatos] = useState({
+        });
+
+        const handleChangeDatos = (value, prop) => {
+            setDatos({ ...datos, [prop]: value });
+        };
+
+
+        async function handleSubmit() {
+
+            const data = await createGoal(item.id)
+            async function createGoal(id) {
+                return await firewareApi.postNewGoal(datos, id)
+            }
+
+            if (data) {
+                alert("Meta de " + JSON.stringify(item.name) + " fue agregada exitosamente")
+                handleClose();
+            } else {
+                setAnimate(false);
+                alert("Error");
+            }
+        }
+
+        return (
+            <div className="container-login">
+                <Image
+                    src="https://pbs.twimg.com/media/EGnVk29XYAMpxVX.jpg"
+                    fluid
+                    className="centered-image"
+                />
+                <Form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        setAnimate(true);
+                        handleSubmit();
+                    }}
+                >
+                    <Form.Group className="mb-3" controlId="formMetaMonto">
+                        <Form.Label>Monto esperado:</Form.Label>
+                        <Form.Control
+                            required
+                            type="Integer"
+                            placeholder="Monto"                                //ver VALIDATIONS!!!!!!!!!!!!
+                            onChange={(monto) => {
+                                handleChangeDatos(monto.target.value, "monto");
+                            }}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formMetaFecha">
+                        <Form.Label>Fecha limite:</Form.Label>
+                        <Form.Control
+                            required
+                            type="date"
+                            placeholder="Fecha"                                //ver VALIDATIONS!!!!!!!!!!!!
+                            onChange={(goalFecha) => {
+                                handleChangeDatos(goalFecha.target.value, "goalFecha");
+                            }}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                        <Button
+                            variant="primary"
+                            type="submit"
+                            size="lg"
+                            className={"full-width"}
+                        >
+                            {animate ? (
+                                <Spinner
+                                    as="span"
+                                    animation="grow"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                />
+                            ) : (
+                                ""
+                            )}
+                            {!animate ? "Agregar meta" : "Loading..."}
+                        </Button>
+                    </Form.Group>
+                </Form>
+            </div>
+        );
+    }
+
     return (
         <>
-            <Formik
-                initialValues={{
-                    eje: '',
-                    subeje: '',
-                    indicador: '',
-                    monto: '',
-                    fecha: ''
-                }}
-                validate={(valores) => {
-                    let errores = {};
-                    let dias = Math.round((Date.now() - Date.parse(valores.fecha)) / (1000 * 60 * 60 * 24));
-
-                    if (!valores.eje) {
-                        errores.eje = ('Por favor ingrese un eje')
-                    } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.eje)) {
-                        errores.eje = ('El eje solo puede contener letras y espacios')
-                    }
-                    if (!valores.subeje) {
-                        errores.subeje = ('Por favor ingrese un subeje')
-                    } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.subeje)) {
-                        errores.subeje = ('El subeje solo puede contener letras y espacios')
-                    }
-                    if (!valores.indicador) {
-                        errores.indicador = ('Por favor ingrese un indicador')
-                    } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.indicador)) {
-                        errores.indicador = ('El indicador solo puede contener letras y espacios')
-                    }
-                    if (!valores.monto) {
-                        errores.monto = ('Por favor ingrese un monto')
-                    }
-                    if (!valores.fecha) {
-                        errores.fecha = ('Por favor ingrese una fecha')
-                    } else if (dias > 0) {
-                        errores.fecha = ('Por favor ingrese una fecha posterior a la actual')
-                    }
-                    return errores;
-                }}
-                onSubmit={(valores, { resetForm }) => {
-                    resetForm();
-                    console.log("Formulario enviado")
-                    cambiarFormularioEnviado(true)
-                    setTimeout(() => cambiarFormularioEnviado(false), 5000)
-                }}
-            >
-                {({ values, errors, handleSubmit, handleChange, handleBlur, touched }) => (
-                    <form className="row" onSubmit={handleSubmit}>
-                        <div className="row mb-3">
-                            <label htmlFor="eje">Eje</label>
-                            <input
-                                type="text"
-                                id="eje"
-                                name="eje"
-                                placeholder="Ingrese eje"
-                                value={values.eje}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {touched.eje && errors.eje && <div className="error">{errors.eje}</div>}
-                        </div>
-                        <div className="row mb-3">
-                            <label htmlFor="subeje">Subeje</label>
-                            <input
-                                type="text"
-                                id="subeje"
-                                name="subeje"
-                                placeholder="Ingrese subeje"
-                                value={values.subeje}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {touched.subeje && errors.subeje && <div className="error">{errors.subeje}</div>}
-                        </div>
-                        <div className="row mb-3">
-                            <label htmlFor="indicador">Indicador</label>
-                            <input
-                                type="text"
-                                id="indicador"
-                                name="indicador"
-                                placeholder="Ingrese indicador"
-                                value={values.indicador}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {touched.indicador && errors.indicador && <div className="error">{errors.indicador}</div>}
-                        </div>
-                        <div className="row mb-3">
-                            <label htmlFor="monto">Monto esperado</label>
-                            <input
-                                type="number"
-                                id="monto"
-                                name="monto"
-                                placeholder="Ingrese el monto esperado"
-                                value={values.monto}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {touched.monto && errors.monto && <div className="error">{errors.monto}</div>}
-                        </div>
-                        <div className="row mb-3">
-                            <label htmlFor="fecha">Fecha</label>
-                            <input
-                                type="date"
-                                id="fecha"
-                                name="fecha"
-                                placeholder="Ingrese una fecha"
-                                value={values.fecha}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {touched.fecha && errors.fecha && <div className="error">{errors.fecha}</div>}
-                        </div>
-                        <div>
-                            <button className="btn btn-primary" type="submit">Crear meta</button>
-                            {formularioEnviado && <p className="exito">Meta cargada con éxito!</p>}
-                        </div>
-                    </form>
-
-                )}
-            </Formik>
+            <Button className="btn-load-goal" onClick={handleShow}>
+                Cargar Meta
+            </Button>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton></Modal.Header>
+                <Modal.Body>
+                    <AddGoalModal />
+                </Modal.Body>
+            </Modal>
         </>
     );
 }
-
-export default FormMeta;
+export default AddGoalButton;

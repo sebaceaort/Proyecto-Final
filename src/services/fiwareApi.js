@@ -68,7 +68,7 @@ async function getDataByQuery(query) {
   return arr;
 }
 
-async function deleteEntity(tipo, id){
+async function deleteEntity(tipo, id) {
   let resp;
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -76,8 +76,8 @@ async function deleteEntity(tipo, id){
   myHeaders.append("Authorization", window.localStorage.getItem("token"))
 
   var myBody = {
-    type : tipo,
-    id : id
+    type: tipo,
+    id: id
   }
 
   var requestOptions = {
@@ -89,13 +89,13 @@ async function deleteEntity(tipo, id){
 
   await fetch(`${api}/fiware/entities`, requestOptions)
 
-  .then((response) => response.json())
-  .then((res) => {
-    resp = res;
-  })
-  .catch((err) => console.log(err));
+    .then((response) => response.json())
+    .then((res) => {
+      resp = res;
+    })
+    .catch((err) => console.log(err));
 
-return resp;
+  return resp;
 }
 
 async function postEntity(datos, tipo, id) {
@@ -115,7 +115,7 @@ async function postEntity(datos, tipo, id) {
   }
   if (tipo === "Indicator") {
     myBody.descripcion = datos.descripcion;
-    myBody.tipoDato = datos.tipoDato    
+    myBody.tipoDato = datos.tipoDato
   }
 
   var requestOptions = {
@@ -135,5 +135,35 @@ async function postEntity(datos, tipo, id) {
 
   return resp;
 }
+
+async function postNewGoal(datos, id) {
+  let resp;
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization", window.localStorage.getItem("token"))
+
+  var myBody = {
+    monto: datos.monto,
+    fecha: datos.goalFecha,
+    id: id
+  }
+  var requestOptions = {
+    method: "PUT",
+    headers: myHeaders,
+    body: JSON.stringify(myBody),
+    redirect: "follow",
+  };
+
+  await fetch(`${api}/fiware/entities/add/goal`, requestOptions)
+
+    .then((response) => response.json())
+    .then((res) => {
+      resp = res;
+    })
+    .catch((err) => console.log(err));
+  return resp;
+}
+
 //eslint-disable-next-line
-export default { getEntities, getDataByQuery, getDataByType, postEntity, deleteEntity };
+export default { getEntities, getDataByQuery, getDataByType, postEntity, deleteEntity, postNewGoal };

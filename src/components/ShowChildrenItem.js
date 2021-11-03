@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 //import { BsFillCaretRightFill, BsFillCaretDownFill } from "react-icons/bs";
 import { ShowChildrens } from "./ShowChildrens";
+import AddGoalButton from "./nuevaMeta"
 import AddEntityButton from "./agregarEntidades";
 import DeleteEntityButton from "./eliminarEntidades";
 import {
@@ -169,7 +170,8 @@ export const ShowChildrenItem = ({ item }) => {
                         </Button>
                       </Col>
                       <Col>
-                        <Button className="btn-load-goal">Cargar Meta</Button>
+                        <AddGoalButton item={item}/>
+                        {/* <Button className="btn-load-goal">Cargar Meta</Button> */}
                       </Col>
                     </Row>
                   </Container>
