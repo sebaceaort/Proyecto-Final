@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 //import { BsFillCaretRightFill, BsFillCaretDownFill } from "react-icons/bs";
 import { ShowChildrens } from "./ShowChildrens";
-import AddGoalButton from "./nuevaMeta"
+import AddGoalButton from "./nuevaMeta";
 import IndicatorDataButton from "./nuevoIndicador";
 import AddEntityButton from "./agregarEntidades";
 import DeleteEntityButton from "./eliminarEntidades";
@@ -9,7 +9,6 @@ import UpdateEntityButton from "./updateEntities";
 import {
   Accordion,
   Card,
-  Button,
   Container,
   Row,
   Col,
