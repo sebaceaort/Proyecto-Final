@@ -113,7 +113,7 @@ async function postEntity(datos, tipo, id) {
   if (id) {
     myBody.id = id
   }
-  if (tipo == "Indicator") {
+  if (tipo === "Indicator") {
     myBody.descripcion = datos.descripcion;
     myBody.tipoDato = datos.tipoDato    
   }
