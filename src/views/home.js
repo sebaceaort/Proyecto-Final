@@ -24,8 +24,8 @@ export default function Home() {
       <Container>
         <Row>
           <Col className="text-center smartFont">Ciudades Inteligentes</Col>
-          </Row>
-          <Row>
+        </Row>
+        <Row>
           <Col className="text-center">
             <Image
               src="https://www.fiware.com.ar/wp-content/uploads/2019/06/LogoCiudades.png"

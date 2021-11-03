@@ -1,6 +1,6 @@
 import React from "react";
 import FormIndicador from "../../components/nuevoIndicador";
-import FormMeta from "../../components/nuevaMeta";
+import AddGoalButton from "../../components/nuevaMeta";
 
 export default function Indicators() {
   return (
@@ -10,7 +10,7 @@ export default function Indicators() {
             <FormIndicador/>
         </div>
         <div className="container mt-5">
-            <FormMeta/>
+            <AddGoalButton/>
         </div>
     </>
   )
