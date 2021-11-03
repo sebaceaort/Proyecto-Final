@@ -28,7 +28,8 @@ const FormIndicador = () => {
           if (!valores.indicador) {
             errores.indicador = "Por favor ingrese un indicador";
           } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.indicador)) {
-            errores.indicador = "El indicador solo puede contener letras y espacios";
+            errores.indicador =
+              "El indicador solo puede contener letras y espacios";
           }
           if (!valores.monto) {
             errores.monto = "Por favor ingrese un monto";
@@ -92,7 +93,9 @@ const FormIndicador = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {touched.indicador && errors.indicador && <div className="error">{errors.indicador}</div>}
+              {touched.indicador && errors.indicador && (
+                <div className="error">{errors.indicador}</div>
+              )}
             </div>
             <div className="row mb-3">
               <label htmlFor="monto">Monto</label>

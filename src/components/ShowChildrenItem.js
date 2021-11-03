@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 //import { BsFillCaretRightFill, BsFillCaretDownFill } from "react-icons/bs";
 import { ShowChildrens } from "./ShowChildrens";
-import AddGoalButton from "./nuevaMeta"
+import AddGoalButton from "./nuevaMeta";
 import AddEntityButton from "./agregarEntidades";
 import DeleteEntityButton from "./eliminarEntidades";
 import UpdateEntityButton from "./updateEntities";
@@ -18,7 +18,6 @@ import { UserContext } from "../context/user-context";
 
 export const ShowChildrenItem = ({ item }) => {
   const [show, setShow] = useState(false);
-  // const [showMeta, setShowMeta] = useState(false);
   const { user } = useContext(UserContext);
   var today = new Date();
   var date =
@@ -27,20 +26,6 @@ export const ShowChildrenItem = ({ item }) => {
   const handleClick = () => {
     setShow(!show);
   };
-
-  // const indicatorType = (item) => {
-  //   if (item.type === "Eje") {
-  //     return "SubEje";
-  //   } else {
-  //     return "Indicador";
-  //   }
-  // };
-
-  // const handleShowMeta = () => {
-  //   setShowMeta(!showMeta);
-  // };
-
- 
 
   if (item.type !== "Indicator") {
     return (
@@ -57,7 +42,7 @@ export const ShowChildrenItem = ({ item }) => {
                     style={{ display: "flex", justifyContent: "flex-start" }}
                   >
                     <AddEntityButton item={item} />
-                    <UpdateEntityButton item={item}/>
+                    <UpdateEntityButton item={item} />
                     <DeleteEntityButton item={item} />
                   </div>
                 </>
@@ -80,27 +65,7 @@ export const ShowChildrenItem = ({ item }) => {
                   <Col>
                     {item.type} - {item.name.value}
                   </Col>
-                  <Col lg="2">
-                    {user.usRole === "admin" && (
-                      <>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "flex-start",
-                          }}
-                        >
-                          <UpdateEntityButton item={item}/>
-                          <DeleteEntityButton item={item} />
-                          <Button
-                            variant="secondary"
-                            className={"btnIndicators"}
-                          >
-                            Editar
-                          </Button>
-                        </div>
-                      </>
-                    )}
-                  </Col>
+                  <Col lg="2"></Col>
                 </Row>
               </Container>
             </Accordion.Header>
@@ -111,6 +76,19 @@ export const ShowChildrenItem = ({ item }) => {
           <Accordion defaultActiveKey="1">
             <Accordion.Item eventKey="1">
               <Accordion.Body>
+                {user.usRole === "admin" && (
+                  <>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                      }}
+                    >
+                      <UpdateEntityButton item={item} />
+                      <DeleteEntityButton item={item} />
+                    </div>
+                  </>
+                )}
                 <Card className="text-center">
                   <Card.Header className="mb-3">
                     <div>
@@ -146,25 +124,7 @@ export const ShowChildrenItem = ({ item }) => {
                       </div>
                     )}
                   </Card.Header>
-                  {/* {user.usRole !== "admin" && (
-                    <Card.Body>
-                      <Form>
-                        <Form.Group className="mb-3" controlId="formIndicator">
-                          <Form.Control
-                            type="text"
-                            placeholder="Ingrese la cantidad"
-                          />
-                        </Form.Group>
-                        <Button
-                          variant="primary"
-                          type="submit"
-                          className="full-width"
-                        >
-                          Cargar dato
-                        </Button>
-                      </Form>
-                    </Card.Body>
-                  )} */}
+
                   <Container className="p-0">
                     <Row>
                       <Col>
@@ -173,8 +133,7 @@ export const ShowChildrenItem = ({ item }) => {
                         </Button>
                       </Col>
                       <Col>
-                        <AddGoalButton item={item}/>
-                        {/* <Button className="btn-load-goal">Cargar Meta</Button> */}
+                        <AddGoalButton item={item} />
                       </Col>
                     </Row>
                   </Container>

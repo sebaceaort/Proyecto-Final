@@ -3,36 +3,35 @@ import { Form, Button, Spinner } from "react-bootstrap";
 import ocbAuth from "../services/ocbAuth";
 
 export default function NewIndicator() {
-    const [eje, setEje] = useState("");
-    const [subEje, setSubEje] = useState("");
-    const [indicator, setIndicator] = useState("");
-    const [description, setDescription] = useState("");
-    const [indicatorType, setIndicatorType] = useState("");
-    const [animate, setAnimate] = useState(false);
-    
+  const [eje, setEje] = useState("");
+  const [subEje, setSubEje] = useState("");
+  const [indicator, setIndicator] = useState("");
+  const [description, setDescription] = useState("");
+  const [indicatorType, setIndicatorType] = useState("");
+  const [animate, setAnimate] = useState(false);
 
   async function handleSubmit() {
-    ocbAuth.postData(eje,subEje,indicator,description,indicatorType);
-//     connection.v2
-//       .createEntity(
-//         {
-//           id: "SmartBA-Indicator-001",
-//           type: "Indicator",
-//           eje: eje,
-//           subEje: subEje,
-//           indicator: indicator,
-//           description: description,
-//           indicatorType: indicatorType
-//         },
-//         { keyValues: true }
-//       )
-//       .then((res) => {
-//         console.log("res ok", res);
-//       })
-//       .catch((err) => {
-//         console.log("Error", err);
-//         setAnimate(false);
-//       });
+    ocbAuth.postData(eje, subEje, indicator, description, indicatorType);
+    //     connection.v2
+    //       .createEntity(
+    //         {
+    //           id: "SmartBA-Indicator-001",
+    //           type: "Indicator",
+    //           eje: eje,
+    //           subEje: subEje,
+    //           indicator: indicator,
+    //           description: description,
+    //           indicatorType: indicatorType
+    //         },
+    //         { keyValues: true }
+    //       )
+    //       .then((res) => {
+    //         console.log("res ok", res);
+    //       })
+    //       .catch((err) => {
+    //         console.log("Error", err);
+    //         setAnimate(false);
+    //       });
   }
 
   return (

@@ -26,7 +26,7 @@ export const ShowArrItem = ({ item }) => {
               <>
                 <div style={{ display: "flex", justifyContent: "flex-start" }}>
                   <AddEntityButton item={item} />
-                  <UpdateEntityButton item={item}/>
+                  <UpdateEntityButton item={item} />
                   <DeleteEntityButton item={item} />
                 </div>
               </>

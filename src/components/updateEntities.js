@@ -135,7 +135,7 @@ const UpdateEntityButton = ({ item }) => {
 
     return (
         <>
-            <Button variant="warning" onClick={handleShow}>
+            <Button variant="secondary" onClick={handleShow}>
                 Update
             </Button>
             <Modal show={show} onHide={handleClose}>
