@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Form, Button, Modal, Spinner } from "react-bootstrap";
 //import { MunicipioContext } from "../context/user-context"; //agregar contexto municipio
 import firewareApi from "../services/fiwareApi"
+import { useHistory } from "react-router";
 
 
 const DeleteEntityButton = ({item}) => {
+    const history = useHistory()
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -17,6 +19,7 @@ const DeleteEntityButton = ({item}) => {
             if (data) {
                 alert(item.name.value + " eliminado con éxito")
                 handleClose();
+                history.push("/show-data")
             }
             else {
                 setAnimate(false);
