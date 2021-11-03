@@ -92,8 +92,7 @@ async function deleteEntity(tipo, id) {
     .then((response) => response.json())
     .then((res) => {
       resp = res;
-    })
-    .catch((err) => console.log(err));
+    })    
 
   return resp;
 }
@@ -130,8 +129,7 @@ async function postEntity(datos, tipo, id) {
     .then((response) => response.json())
     .then((res) => {
       resp = res;
-    })
-    .catch((err) => console.log(err));
+    })   
 
   return resp;
 }
@@ -186,7 +184,7 @@ async function updateEntity(datos, id) {
     .then((res) => {
       resp = res;
     })
-    .catch((err) => console.log(err));
+   
   return resp;
 }
 

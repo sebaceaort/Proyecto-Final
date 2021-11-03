@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { Form, Button, Image, Modal, Spinner, InputGroup } from "react-bootstrap";
 //import { MunicipioContext } from "../context/user-context"; //agregar contexto municipio
 import firewareApi from "../services/fiwareApi"
@@ -6,7 +6,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 
 //agregar POST
-function AddEntityModal({item, handleClose}) {    
+function AddEntityModal({ item, handleClose }) {
     const [animate, setAnimate] = useState(false);
 
     const [datos, setDatos] = useState({
@@ -29,17 +29,16 @@ function AddEntityModal({item, handleClose}) {
         };
 
     };
-    
+
     async function handleSubmit() {
-
-        const data = await firewareApi.postEntity(datos, element,item.id)
-
-        if (data) {
+        try {
+            const data = await firewareApi.postEntity(datos, element, item.id)
             alert(JSON.stringify(data.name.value) + " fue agregado exitosamente")
             handleClose();
-        } else {
+        }
+        catch (error) {
             setAnimate(false);
-            alert("Error");
+            alert("Ups! Algo salió mal!");
         }
     }
 
@@ -98,7 +97,7 @@ function AddEntityModal({item, handleClose}) {
                             <Form.Control
                                 required
                                 type="text"
-                                
+
                                 //ver VALIDATIONS!!!!!!!!!!!!
                                 onChange={(descripcion) => {
                                     handleChangeDatos(descripcion.target.value, "descripcion")
@@ -137,10 +136,10 @@ function AddEntityModal({item, handleClose}) {
     );
 }
 
-const AddEntityButton = ({ item = {type : ""} }) => {
+const AddEntityButton = ({ item = { type: "" } }) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true); 
+    const handleShow = () => setShow(true);
 
     return (
         <>
@@ -150,7 +149,7 @@ const AddEntityButton = ({ item = {type : ""} }) => {
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
-                    <AddEntityModal item = {item} handleClose = {handleClose}/>
+                    <AddEntityModal item={item} handleClose={handleClose} />
                 </Modal.Body>
             </Modal>
         </>

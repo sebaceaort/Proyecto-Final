@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { Form, Button, Image, Modal, Spinner, InputGroup } from "react-bootstrap";
 //import { MunicipioContext } from "../context/user-context"; //agregar contexto municipio
 import firewareApi from "../services/fiwareApi"
@@ -6,7 +6,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 
 //agregar POST
-function UpdateEntityModal({item, handleClose}) { 
+function UpdateEntityModal({ item, handleClose }) {
 
     const [animate, setAnimate] = useState(false);
     const [datos, setDatos] = useState({
@@ -16,20 +16,19 @@ function UpdateEntityModal({item, handleClose}) {
     });
     const handleChangeDatos = (value, prop) => {
         setDatos({ ...datos, [prop]: value });
-    };   
+    };
     const entityType = item.type;
-    
-    
+
+
     async function handleSubmit() {
-
-        const data = await firewareApi.updateEntity(datos, item.id)        
-
-        if (data) {
+        try {
+            const data = await firewareApi.updateEntity(datos, item.id)
             alert(JSON.stringify(datos.name) + " fue modificado exitosamente")
             handleClose();
-        } else {
+        }
+        catch (error) {
             setAnimate(false);
-            alert("Error");
+            alert("Ups! Algo salió mal!");
         }
     }
 
@@ -52,8 +51,8 @@ function UpdateEntityModal({item, handleClose}) {
                     <Form.Control
                         required
                         type="text"
-                        placeholder="Nombre"  
-                        value = {datos.name}                             //ver VALIDATIONS!!!!!!!!!!!!
+                        placeholder="Nombre"
+                        value={datos.name}                             //ver VALIDATIONS!!!!!!!!!!!!
                         onChange={(nombre) => {
                             handleChangeDatos(nombre.target.value, "name");
                         }}
@@ -88,9 +87,9 @@ function UpdateEntityModal({item, handleClose}) {
                             <Form.Control
                                 required
                                 type="text"
-                                value = {datos.description}
-                                placeholder = "Descripcion"
-                                
+                                value={datos.description}
+                                placeholder="Descripcion"
+
                                 //ver VALIDATIONS!!!!!!!!!!!!
                                 onChange={(descripcion) => {
                                     handleChangeDatos(descripcion.target.value, "description")
@@ -132,7 +131,7 @@ function UpdateEntityModal({item, handleClose}) {
 const UpdateEntityButton = ({ item }) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true); 
+    const handleShow = () => setShow(true);
 
     return (
         <>
@@ -142,7 +141,7 @@ const UpdateEntityButton = ({ item }) => {
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
-                    <UpdateEntityModal item = {item} handleClose = {handleClose}/>
+                    <UpdateEntityModal item={item} handleClose={handleClose} />
                 </Modal.Body>
             </Modal>
         </>
