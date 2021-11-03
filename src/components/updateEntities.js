@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Form, Button, Image, Modal, Spinner, InputGroup } from "react-bootstrap";
-//import { MunicipioContext } from "../context/user-context"; //agregar contexto municipio
-import firewareApi from "../services/fiwareApi"
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 
@@ -22,7 +20,6 @@ function UpdateEntityModal({ item, handleClose }) {
 
     async function handleSubmit() {
         try {
-            const data = await firewareApi.updateEntity(datos, item.id)
             alert(JSON.stringify(datos.name) + " fue modificado exitosamente")
             handleClose();
         }

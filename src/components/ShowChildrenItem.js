@@ -113,11 +113,11 @@ export const ShowChildrenItem = ({ item }) => {
                         <hr />
                         <div>
                           <div>Meta</div>
-                          {item.goalDate.value}
-                          {console.log(item.data.value)}
+                          {item.goalDate?.value}
+                          {console.log(item)}
                           <ProgressBar
-                            now={item.goal.value}
-                            label={`${item.goal.value}%`}
+                            now={item.goal?.value}
+                            label={`${item.goal?.value}%`}
                             variant="success"
                           />
                         </div>

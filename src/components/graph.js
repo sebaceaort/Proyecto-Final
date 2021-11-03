@@ -1,5 +1,5 @@
 import React from "react";
-import { Radar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 
 const data = {
   labels: ["Accesibilidad","Seguridad", "Gobernanza", "Innovacion", "Movilidad", "Promocion", "Marketing", "Sustentabilidad", "Tecnologia", "Creatividad"],
@@ -42,8 +42,8 @@ const DoughnutChart = () => (
           </a>
         </div>
       </div>
-      <div style={{ height: "50%", width: "50%" }}>
-        <Radar data={data} />
+      <div style={{ height: "100%", width: "100%" }}>
+        <Line data={data} />
       </div>
     </div>
   </>
