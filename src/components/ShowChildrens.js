@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { UpdateContext } from "../context/update-context";
 import fiwareApi from "../services/fiwareApi";
 import { ShowChildrenItem } from "./ShowChildrenItem";
 
 export const ShowChildrens = ({ type, id }) => {
   const [data, setData] = useState([]);
+  const { update } = useContext(UpdateContext)
   useEffect(() => {
     async function getEntities() {
       const entities = await fiwareApi.getDataByQuery("ref" + type + "==" + id);
       setData(entities);
+      console.log("actualizo")
+      return () => {};
     }
     getEntities();
-  }, [type, id]);
+  }, [type, id, update]);
 
-  return data.map((item) => <ShowChildrenItem key={item.id} item={item} />);
+  return data.map((item) => <ShowChildrenItem key={item.id} item={item}/>);
 };

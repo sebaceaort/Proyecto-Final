@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Form, Button, Modal, Spinner } from "react-bootstrap";
-import firewareApi from "../services/fiwareApi";
-import { useHistory } from "react-router";
+import firewareApi from "../../services/fiwareApi";
+import { UpdateContext } from "../../context/update-context";
 
 function DeleteEntityModal({ item, handleClose }) {
-  const history = useHistory();
+  const { setUpdate } = useContext(UpdateContext);
   const [animate, setAnimate] = useState(false);
   async function handleSubmit() {
     try {
@@ -12,7 +12,7 @@ function DeleteEntityModal({ item, handleClose }) {
 
       alert(item.name.value + " eliminado con éxito");
       handleClose();
-      history.push("/show-data");
+      setUpdate((state) => !state);
     } catch (error) {
       setAnimate(false);
       alert("Ups! Algo salió mal!");
@@ -63,7 +63,7 @@ const DeleteEntityButton = ({ item }) => {
   return (
     <>
       <Button variant="danger" onClick={handleShow}>
-        Delete
+        Eliminar
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton></Modal.Header>

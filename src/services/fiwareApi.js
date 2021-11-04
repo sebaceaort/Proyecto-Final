@@ -1,11 +1,11 @@
-const api = process.env.REACT_APP_MONGO_URL_DEV
+const api = process.env.REACT_APP_MONGO_URL_DEV;
 
 async function getEntities() {
   let arr = [];
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
-  myHeaders.append("Authorization", window.localStorage.getItem("token"))
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
 
   var requestOptions = {
     method: "GET",
@@ -28,7 +28,7 @@ async function getDataByType(type) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
-  myHeaders.append("Authorization", window.localStorage.getItem("token"))
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
 
   var requestOptions = {
     method: "GET",
@@ -50,7 +50,7 @@ async function getDataByQuery(query) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
-  myHeaders.append("Authorization", window.localStorage.getItem("token"))
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
 
   var requestOptions = {
     method: "GET",
@@ -73,12 +73,12 @@ async function deleteEntity(tipo, id) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
-  myHeaders.append("Authorization", window.localStorage.getItem("token"))
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
 
   var myBody = {
     type: tipo,
-    id: id
-  }
+    id: id,
+  };
 
   var requestOptions = {
     method: "DELETE",
@@ -88,33 +88,31 @@ async function deleteEntity(tipo, id) {
   };
 
   await fetch(`${api}/fiware/entities`, requestOptions)
-
     .then((response) => response.json())
     .then((res) => {
       resp = res;
-    })    
+    });
 
   return resp;
 }
 
 async function postEntity(datos, tipo, id) {
-
   let resp;
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
-  myHeaders.append("Authorization", window.localStorage.getItem("token"))
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
 
   var myBody = {
     name: datos.nombre,
     type: tipo,
-  }
+  };
   if (id) {
-    myBody.id = id
+    myBody.id = id;
   }
   if (tipo === "Indicator") {
     myBody.descripcion = datos.descripcion;
-    myBody.tipoDato = datos.tipoDato
+    myBody.tipoDato = datos.tipoDato;
   }
 
   var requestOptions = {
@@ -125,11 +123,10 @@ async function postEntity(datos, tipo, id) {
   };
 
   await fetch(`${api}/fiware/entities/add`, requestOptions)
-
     .then((response) => response.json())
     .then((res) => {
       resp = res;
-    })   
+    });
 
   return resp;
 }
@@ -139,13 +136,13 @@ async function postNewGoal(datos, id) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
-  myHeaders.append("Authorization", window.localStorage.getItem("token"))
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
 
   var myBody = {
     monto: datos.monto,
     fecha: datos.goalFecha,
-    id: id
-  }
+    id: id,
+  };
   var requestOptions = {
     method: "PUT",
     headers: myHeaders,
@@ -154,7 +151,6 @@ async function postNewGoal(datos, id) {
   };
 
   await fetch(`${api}/fiware/entities/change/goal`, requestOptions)
-
     .then((response) => response.json())
     .then((res) => {
       resp = res;
@@ -168,11 +164,11 @@ async function loadData(datos, id) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
-  myHeaders.append("Authorization", window.localStorage.getItem("token"))
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
   var myBody = {
     actMonto: datos.actMonto,
-    id: id
-  }
+    id: id,
+  };
   var requestOptions = {
     method: "PUT",
     headers: myHeaders,
@@ -180,7 +176,6 @@ async function loadData(datos, id) {
     redirect: "follow",
   };
   await fetch(`${api}/fiware/entities/load/dataIndicator`, requestOptions)
-
     .then((response) => response.json())
     .then((res) => {
       resp = res;
@@ -193,9 +188,9 @@ async function updateEntity(datos, id) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
-  myHeaders.append("Authorization", window.localStorage.getItem("token"))
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
 
-  const myBody = { id, ...datos }
+  const myBody = { id, ...datos };
 
   var requestOptions = {
     method: "PUT",
@@ -205,15 +200,22 @@ async function updateEntity(datos, id) {
   };
 
   await fetch(`${api}/fiware/entities/update`, requestOptions)
-
     .then((response) => response.json())
     .then((res) => {
       resp = res;
-    })
-   
+    });
+
   return resp;
 }
 
-
 //eslint-disable-next-line
-export default { getEntities, getDataByQuery, getDataByType, postEntity, deleteEntity, postNewGoal, updateEntity, loadData};
+export default {
+  getEntities,
+  getDataByQuery,
+  getDataByType,
+  postEntity,
+  deleteEntity,
+  postNewGoal,
+  loadData,
+  updateEntity,
+};
