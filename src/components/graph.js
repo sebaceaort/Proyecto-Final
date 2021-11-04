@@ -1,5 +1,5 @@
 import React from "react";
-import { Line } from "react-chartjs-2";
+import { Radar } from "react-chartjs-2";
 
 const data = {
   labels: ["Accesibilidad","Seguridad", "Gobernanza", "Innovacion", "Movilidad", "Promocion", "Marketing", "Sustentabilidad", "Tecnologia", "Creatividad"],
@@ -36,14 +36,14 @@ const DoughnutChart = () => (
         <div className="links text-center">
           <a
             className="btn btn-gh"
-            href="https://github.com/reactchartjs/react-chartjs-2/blob/master/example/src/charts/Doughnut.js"
+            href="https://github.com/reactchartjs/react-chartjs-2/blob/master/example/src/charts/Radar.js"
           >
             Ciudades del futuro
           </a>
         </div>
       </div>
       <div style={{ height: "100%", width: "100%" }}>
-        <Line data={data} />
+        <Radar data={data} />
       </div>
     </div>
   </>

@@ -2,7 +2,9 @@ import { Table, Button } from "react-bootstrap";
 // import { useState, useEffect } from "react";
 // import authApi from "../../services/authApi";
 // import Graph from "../../components/graph";
+import {GoGraph} from "react-icons/go";
 import { useHistory } from "react-router-dom";
+
 
 export default function Historical() {
  // const [historical, setHistorical] = useState([]);
@@ -15,10 +17,10 @@ export default function Historical() {
   //     }
   //     getUsers();
   //   }, []);
-
+console.log("historico")
   return (
     <>
-      <Button onClick={() => {history.push("/show-graph")}}>Ver grafico</Button>
+      <Button onClick={() => {history.push("/show-graph")}}><GoGraph/>  Ver grafico</Button>
       <Table striped bordered hover responsive>
         <thead>
           <tr>

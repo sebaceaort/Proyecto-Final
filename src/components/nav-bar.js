@@ -27,14 +27,6 @@ const MainNav = (props) => (
         </Nav.Link>
         <Nav.Link
           as={RouterNavLink}
-          to="/load-data"
-          exact
-          activeClassName="router-link-exact-active"
-        >
-          Cargar Indicadores
-        </Nav.Link>
-        <Nav.Link
-          as={RouterNavLink}
           to="/show-data"
           exact
           activeClassName="router-link-exact-active"

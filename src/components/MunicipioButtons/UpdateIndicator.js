@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Form, Button, Image, Modal, Spinner } from "react-bootstrap";
-import firewareApi from "../services/fiwareApi";
+import { UpdateContext } from "../../context/update-context";
+import firewareApi from "../../services/fiwareApi";
 
 //agregar POST
 
@@ -19,6 +20,7 @@ const IndicatorDataButton = ({ item }) => {
       setDatos({ ...datos, [prop]: value });
     };
 
+    const { setUpdate } = useContext(UpdateContext);
     async function handleSubmit() {
       const data = await loadDataIndicator(item.id);
       async function loadDataIndicator(id) {
@@ -34,6 +36,7 @@ const IndicatorDataButton = ({ item }) => {
         setAnimate(false);
         alert("Error");
       }
+      setUpdate((state) => !state);
     }
 
     return (

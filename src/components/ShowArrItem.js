@@ -2,9 +2,9 @@ import React, { useState, useContext } from "react";
 import { ShowChildrens } from "./ShowChildrens";
 import { Accordion } from "react-bootstrap";
 import { UserContext } from "../context/user-context";
-import AddEntityButton from "./agregarEntidades";
-import DeleteEntityButton from "./eliminarEntidades";
-import UpdateEntityButton from "./updateEntities";
+import AddEntityButton from "./AdminButtons/AddEntityButton";
+import DeleteEntityButton from "./AdminButtons/DeleteEntityButton";
+import EditEntityButton from "./AdminButtons/EditEntityButton";
 
 export const ShowArrItem = ({ item }) => {
   const [show, setShow] = useState(false);
@@ -21,12 +21,11 @@ export const ShowArrItem = ({ item }) => {
             {type} - <b>{name.value}</b>
           </Accordion.Header>
           <Accordion.Body>
-            {" "}
             {user.usRole === "admin" && (
               <>
                 <div style={{ display: "flex", justifyContent: "flex-start" }}>
                   <AddEntityButton item={item} />
-                  <UpdateEntityButton item={item} />
+                  <EditEntityButton item={item} />
                   <DeleteEntityButton item={item} />
                 </div>
               </>

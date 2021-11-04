@@ -1,11 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 //import { BsFillCaretRightFill, BsFillCaretDownFill } from "react-icons/bs";
 import { ShowChildrens } from "./ShowChildrens";
-import AddGoalButton from "./nuevaMeta";
-import IndicatorDataButton from "./nuevoIndicador";
-import AddEntityButton from "./agregarEntidades";
-import DeleteEntityButton from "./eliminarEntidades";
-import UpdateEntityButton from "./updateEntities";
+import AddGoalButton from "./MunicipioButtons/UpdateGoal";
+import IndicatorDataButton from "./MunicipioButtons/UpdateIndicator";
+import AddEntityButton from "./AdminButtons/AddEntityButton";
+import DeleteEntityButton from "./AdminButtons/DeleteEntityButton";
+import UpdateEntityButton from "./AdminButtons/EditEntityButton";
 import {
   Accordion,
   Card,
@@ -16,12 +16,13 @@ import {
 } from "react-bootstrap";
 import { UserContext } from "../context/user-context";
 
-export const ShowChildrenItem = ({ item }) => {
+export const ShowChildrenItem = ({ item, setUpdate }) => {
+  const [actualPercentage, setactualPercentage] = useState(0);
+  useEffect(() => {
+    setactualPercentage((item.data?.value * 100) / item.goal?.value);
+  }, [item]);
   const [show, setShow] = useState(false);
   const { user } = useContext(UserContext);
-  var today = new Date();
-  var date =
-    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 
   const handleClick = () => {
     setShow(!show);
@@ -89,7 +90,7 @@ export const ShowChildrenItem = ({ item }) => {
                     </div>
                   </>
                 )}
-                <Card className="text-center">
+                <Card className="text-center mt-2">
                   <Card.Header className="mb-3">
                     <div>
                       Tipo: <b>{item.indicatorType.value}</b>
@@ -102,11 +103,11 @@ export const ShowChildrenItem = ({ item }) => {
                     {user.usRole !== "admin" && (
                       <div>
                         <div>
-                          <div>Hoy</div>
-                          {date}
+                          <div>Indicador Actual</div>
+                          {item.indicatorDate?.value}
                           <ProgressBar
-                            now={10}
-                            label={`${10}%`}
+                            now={actualPercentage}
+                            label={`${item.data?.value}`}
                             variant="danger"
                           />
                         </div>
@@ -114,27 +115,31 @@ export const ShowChildrenItem = ({ item }) => {
                         <div>
                           <div>Meta</div>
                           {item.goalDate?.value}
-                          {console.log(item)}
+                          .3
                           <ProgressBar
-                            now={item.goal?.value}
-                            label={`${item.goal?.value}%`}
+                            now={100}
+                            label={`${item.goal?.value}`}
                             variant="success"
                           />
                         </div>
                       </div>
                     )}
                   </Card.Header>
-
-                  <Container className="p-0">
-                    <Row>
-                      <Col>
-                        <IndicatorDataButton item={item} />
-                      </Col>
-                      <Col>
-                        <AddGoalButton item={item} />
-                      </Col>
-                    </Row>
-                  </Container>
+                  {user.usRole !== "admin" && (
+                    <Container className="p-0">
+                      <Row>
+                        <Col>
+                          <IndicatorDataButton
+                            item={item}
+                            setUpdate={setUpdate}
+                          />
+                        </Col>
+                        <Col>
+                          <AddGoalButton item={item} setUpdate={setUpdate} />
+                        </Col>
+                      </Row>
+                    </Container>
+                  )}
                 </Card>
               </Accordion.Body>
             </Accordion.Item>
