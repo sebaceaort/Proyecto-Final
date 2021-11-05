@@ -2,11 +2,22 @@ import React from "react";
 import { Radar } from "react-chartjs-2";
 
 const data = {
-  labels: ["Accesibilidad","Seguridad", "Gobernanza", "Innovacion", "Movilidad", "Promocion", "Marketing", "Sustentabilidad", "Tecnologia", "Creatividad"],
+  labels: [
+    "Accesibilidad",
+    "Seguridad",
+    "Gobernanza",
+    "Innovacion",
+    "Movilidad",
+    "Promocion",
+    "Marketing",
+    "Sustentabilidad",
+    "Tecnologia",
+    "Creatividad",
+  ],
   datasets: [
     {
       label: "# Cumplimiento de metas por eje ",
-      data: [12, 19, 3, 5, 2, 3,7,8,4,100],
+      data: [12, 19, 3, 5, 2, 3, 7, 8, 4, 100],
       backgroundColor: [
         "rgba(255, 99, 132, 0.2)",
         "rgba(54, 162, 235, 0.2)",
