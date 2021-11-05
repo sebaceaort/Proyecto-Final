@@ -24,6 +24,23 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
   const [show, setShow] = useState(false);
   const { user } = useContext(UserContext);
 
+  const formatDate = (date) => {
+    let dia = date.slice(8, 10);
+    let mes = date.slice(5, 7);
+    let anio = date.slice(0, 4);
+
+    return dia + "-" + mes + "-" + anio;
+  };
+
+  const variantSelector = (percentage) => {
+    if (percentage < 35) {
+      return "danger";
+    } else if (percentage < 75) {
+      return "warning";
+    } else if (percentage < 99.9) {
+      return "success";
+    } else return "info";
+  };
   const handleClick = () => {
     setShow(!show);
   };
@@ -104,21 +121,28 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
                       <div>
                         <div>
                           <div>Indicador Actual</div>
-                          {item.indicatorDate?.value}
+
+                          {formatDate(item.indicatorDate?.value)}
+                          <hr />
                           <ProgressBar
+                            animated
                             now={actualPercentage}
                             label={`${item.data?.value}`}
-                            variant="danger"
+                            striped
+                            variant={variantSelector(actualPercentage)}
                           />
                         </div>
                         <hr />
                         <div>
                           <div>Meta</div>
-                          {item.goalDate?.value}
-                          .3
+
+                          {formatDate(item.goalDate?.value)}
+                          <hr />
                           <ProgressBar
+                            animated
                             now={100}
                             label={`${item.goal?.value}`}
+                            striped
                             variant="success"
                           />
                         </div>
