@@ -1,20 +1,10 @@
 import { Table, Button } from "react-bootstrap";
-<<<<<<< HEAD
-
-// import authApi from "../../services/authApi";
-=======
 import { useState, useEffect } from "react";
 import fiwareApi from "../../services/fiwareApi";
->>>>>>> b0b5b1491ebea3bcba64ae167f23634fb9f6cabb
-// import Graph from "../../components/graph";
 import { GoGraph } from "react-icons/go";
 import { useHistory } from "react-router-dom";
 
 export default function Historical() {
-<<<<<<< HEAD
-  
-  const history = useHistory();
-=======
   const [historical, setHistorical] = useState([]);
   const history = useHistory();
 
@@ -25,7 +15,6 @@ export default function Historical() {
     }
     getHistorical();
   }, []);
->>>>>>> b0b5b1491ebea3bcba64ae167f23634fb9f6cabb
 
   return (
     <>

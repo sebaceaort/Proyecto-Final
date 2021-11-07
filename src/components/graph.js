@@ -29,7 +29,6 @@ const DoughnutChart = () => {
   useEffect(() => {
     async function getKpi() {
       subEjes.forEach(async (subEje) => {
-        console.log("for");
         await fiwareApi
           .getGraphData(subEje.id, subEje.refEje)
           .then((res) => setKpi((state) => [...state, res]));
@@ -48,17 +47,12 @@ const DoughnutChart = () => {
         const kpiFinal = total / arrAux.length;
         return { label: eje.label, kpi: kpiFinal };
       });
-      console.log(labelandkpi);
       return labelandkpi;
     }
     const dataFin = dataFinal(ejes, kpi);
     setLabels(dataFin.map((e) => e.label));
     setDatos(dataFin.map((e) => e.kpi));
   }, [ejes, kpi]);
-
-  console.log(ejes);
-  console.log(subEjes);
-  console.log(kpi);
 
   const data = {
     labels: labels,
