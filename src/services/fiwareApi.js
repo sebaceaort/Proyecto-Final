@@ -165,7 +165,7 @@ async function loadData(datos, id) {
   myHeaders.append("Accept", "application/json");
   myHeaders.append("Authorization", window.localStorage.getItem("token"));
   var myBody = {
-    actMonto: datos.actMonto,
+    actMonto: datos.monto,
     id: id,
   };
   var requestOptions = {
