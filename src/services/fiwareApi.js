@@ -208,11 +208,36 @@ async function updateEntity(datos, id) {
   return resp;
 }
 
+async function getHistoricalData() {
+  let arr = [];
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
+
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  await fetch(`${api}/fiware/historical`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      console.log(res)
+      arr = res;
+    })
+    .catch((err) => console.log(err));
+
+  return arr;
+}
+
 //eslint-disable-next-line
 export default {
   getEntities,
   getDataByQuery,
   getDataByType,
+  getHistoricalData,
   postEntity,
   deleteEntity,
   postNewGoal,
