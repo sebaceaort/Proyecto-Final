@@ -17,6 +17,7 @@ const AddGoalButton = ({ item }) => {
         const { setUpdate } = useContext(UpdateContext);
 
         async function handleSubmit(valores) {
+            console.log("Fecha: " + valores.fecha)
             const data = await createGoal(item.id)
             async function createGoal(id) {
                 return await firewareApi.postNewGoal(valores, id)
