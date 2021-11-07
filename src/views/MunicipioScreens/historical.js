@@ -1,26 +1,31 @@
 import { Table, Button } from "react-bootstrap";
-// import { useState, useEffect } from "react";
-// import authApi from "../../services/authApi";
+import { useState, useEffect } from "react";
+import fiwareApi from "../../services/fiwareApi";
 // import Graph from "../../components/graph";
-import {GoGraph} from "react-icons/go";
+import { GoGraph } from "react-icons/go";
 import { useHistory } from "react-router-dom";
 
-
 export default function Historical() {
- // const [historical, setHistorical] = useState([]);
-  const history = useHistory()
+  const [historical, setHistorical] = useState([]);
+  const history = useHistory();
 
-  //   useEffect(() => {
-  //     async function getUsers() {
-  //       const disabledUsers = await authApi.getDisabledUsers();
-  //       setUsers((oldUsers) => [...oldUsers, disabledUsers]);
-  //     }
-  //     getUsers();
-  //   }, []);
-console.log("historico")
+  useEffect(() => {
+    async function getHistorical() {
+      const historicalData = await fiwareApi.getHistoricalData();
+      setHistorical((oldHistorical) => [...oldHistorical, historicalData]);
+    }
+    getHistorical();
+  }, []);
+
   return (
     <>
-      <Button onClick={() => {history.push("/show-graph")}}><GoGraph/>  Ver grafico</Button>
+      <Button
+        onClick={() => {
+          history.push("/show-graph");
+        }}
+      >
+        <GoGraph /> Ver grafico
+      </Button>
       <Table striped bordered hover responsive>
         <thead>
           <tr>
@@ -35,40 +40,20 @@ console.log("historico")
           </tr>
         </thead>
         <tbody>
-          {/* {users[0]?.map((user, i) => { */}
-          {/* return ( */}
-          <tr>
-            <td>1</td>
-            <td>Accesibilidad</td>
-            <td>Accesibilidad</td>
-            <td>Transporte público accesible</td>
-            <td>5%</td>
-            <td>2021-10-15</td>
-            <td>25%</td>
-            <td>2022-02-20</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Accesibilidad</td>
-            <td>Accesibilidad</td>
-            <td>Transporte público accesible</td>
-            <td>8%</td>
-            <td>2021-10-22</td>
-            <td>25%</td>
-            <td>2022-02-20</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Seguridad</td>
-            <td>Seguridad Ciudadana</td>
-            <td>Delitos contra la persona</td>
-            <td>23%</td>
-            <td>2021-10-25</td>
-            <td>35%</td>
-            <td>2022-02-20</td>
-          </tr>
-          {/* ); */}
-          {/* })} */}
+          {historical[0]?.map((data, i) => {
+            return (
+              <tr>
+                <td>{i + 1}</td>
+                <td>{data.refEje}</td>
+                <td>{data.refSubEje}</td>
+                <td>{data.indicatorName}</td>
+                <td>{data.data}%</td>
+                <td>{data.indicatorDate}</td>
+                <td>{data.goal}%</td>
+                <td>{data.goalDate}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
     </>
