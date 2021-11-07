@@ -24,6 +24,7 @@ export default function AddUser() {
       setRoles((oldRoles) => [...oldRoles, roles])
     }
     getRoles()
+    
   }, [])
 
   // console.log(roles[0])
@@ -104,8 +105,8 @@ export default function AddUser() {
                 roles?.map((role,i) => {
                   return (
                     <>
-                      <option key={role[i]._id} value={role[i].name}>Administrador</option>
-                      <option key={role[i+1]._id} value={role[i+1].name}>Municipio</option>
+                      <option key={role[i]?._id} value={role[i]?.name}>Administrador</option>
+                      <option key={role[i+1]?._id} value={role[i+1]?.name}>Municipio</option>
                     </>
                   );
                 })
