@@ -231,7 +231,7 @@ async function getGraphLabels(munId) {
   return arr;
 }
 
-async function   getGraphSubEjes(ejeId) {
+async function getGraphSubEjes(ejeId) {
   let arr = [];
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -254,7 +254,7 @@ async function   getGraphSubEjes(ejeId) {
   return arr;
 }
 
-async function   getGraphData(subEjeId, refEje) {
+async function getGraphData(subEjeId, refEje) {
   let arr = [];
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -277,11 +277,36 @@ async function   getGraphData(subEjeId, refEje) {
   return arr;
 }
 
+async function getHistoricalData() {
+  let arr = [];
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
+
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  await fetch(`${api}/fiware/historical`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      console.log(res);
+      arr = res;
+    })
+    .catch((err) => console.log(err));
+
+  return arr;
+}
+
 //eslint-disable-next-line
 export default {
   getEntities,
   getDataByQuery,
   getDataByType,
+  getHistoricalData,
   postEntity,
   deleteEntity,
   postNewGoal,

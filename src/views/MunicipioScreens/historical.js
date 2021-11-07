@@ -1,14 +1,31 @@
 import { Table, Button } from "react-bootstrap";
+<<<<<<< HEAD
 
 // import authApi from "../../services/authApi";
+=======
+import { useState, useEffect } from "react";
+import fiwareApi from "../../services/fiwareApi";
+>>>>>>> b0b5b1491ebea3bcba64ae167f23634fb9f6cabb
 // import Graph from "../../components/graph";
 import { GoGraph } from "react-icons/go";
 import { useHistory } from "react-router-dom";
 
-
 export default function Historical() {
+<<<<<<< HEAD
   
   const history = useHistory();
+=======
+  const [historical, setHistorical] = useState([]);
+  const history = useHistory();
+
+  useEffect(() => {
+    async function getHistorical() {
+      const historicalData = await fiwareApi.getHistoricalData();
+      setHistorical((oldHistorical) => [...oldHistorical, historicalData]);
+    }
+    getHistorical();
+  }, []);
+>>>>>>> b0b5b1491ebea3bcba64ae167f23634fb9f6cabb
 
   return (
     <>
@@ -33,40 +50,20 @@ export default function Historical() {
           </tr>
         </thead>
         <tbody>
-          {/* {users[0]?.map((user, i) => { */}
-          {/* return ( */}
-          <tr>
-            <td>1</td>
-            <td>Accesibilidad</td>
-            <td>Accesibilidad</td>
-            <td>Transporte público accesible</td>
-            <td>5%</td>
-            <td>2021-10-15</td>
-            <td>25%</td>
-            <td>2022-02-20</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Accesibilidad</td>
-            <td>Accesibilidad</td>
-            <td>Transporte público accesible</td>
-            <td>8%</td>
-            <td>2021-10-22</td>
-            <td>25%</td>
-            <td>2022-02-20</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Seguridad</td>
-            <td>Seguridad Ciudadana</td>
-            <td>Delitos contra la persona</td>
-            <td>23%</td>
-            <td>2021-10-25</td>
-            <td>35%</td>
-            <td>2022-02-20</td>
-          </tr>
-          {/* ); */}
-          {/* })} */}
+          {historical[0]?.map((data, i) => {
+            return (
+              <tr>
+                <td>{i + 1}</td>
+                <td>{data.refEje}</td>
+                <td>{data.refSubEje}</td>
+                <td>{data.indicatorName}</td>
+                <td>{data.data}%</td>
+                <td>{data.indicatorDate}</td>
+                <td>{data.goal}%</td>
+                <td>{data.goalDate}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
     </>

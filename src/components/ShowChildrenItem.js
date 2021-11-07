@@ -127,7 +127,7 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
                           <ProgressBar
                             animated
                             now={actualPercentage}
-                            label={`${item.data?.value}`}
+                            label={`${item.data?.value}%`}
                             striped
                             variant={variantSelector(actualPercentage)}
                           />
@@ -141,7 +141,7 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
                           <ProgressBar
                             animated
                             now={100}
-                            label={`${item.goal?.value}`}
+                            label={`${item.goal?.value}%`}
                             striped
                             variant="success"
                           />
