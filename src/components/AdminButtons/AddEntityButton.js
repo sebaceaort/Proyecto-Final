@@ -13,7 +13,6 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import { UpdateContext } from "../../context/update-context";
 
-
 //agregar POST
 function AddEntityModal({ item, handleClose }) {
   const [animate, setAnimate] = useState(false);
@@ -32,16 +31,16 @@ function AddEntityModal({ item, handleClose }) {
     switch (type) {
       case "SubEje":
         return "Indicator";
-        case "Eje":
-          return "SubEje";
-          case "Municipio":
-            return "Eje";
-            default:
-              return "Municipio";
-            }
-          }
-          
-          const {setUpdate} = useContext(UpdateContext)
+      case "Eje":
+        return "SubEje";
+      case "Municipio":
+        return "Eje";
+      default:
+        return "Municipio";
+    }
+  }
+
+  const { setUpdate } = useContext(UpdateContext);
   async function handleSubmit() {
     try {
       const data = await firewareApi.postEntity(datos, element, item.id);
@@ -51,11 +50,10 @@ function AddEntityModal({ item, handleClose }) {
       setAnimate(false);
       alert("Ups! Algo salió mal!");
     }
-    setUpdate(state=>!state)
+    setUpdate((state) => !state);
   }
 
   return (
-    
     <div className="container-login">
       <Image
         src="https://pbs.twimg.com/media/EGnVk29XYAMpxVX.jpg"
@@ -69,7 +67,7 @@ function AddEntityModal({ item, handleClose }) {
           handleSubmit();
         }}
       >
-        <Form.Group className="mb-3" controlId="formNombreMun">
+        <Form.Group className="mb-3">
           <Form.Label>Nombre del {element}:</Form.Label>
           <Form.Control
             required
@@ -84,33 +82,36 @@ function AddEntityModal({ item, handleClose }) {
         {element === "Indicator" ? ( //SI ES INDICATOR UN COSA
           <>
             <Form.Label>Tipo de dato:</Form.Label>
-            <InputGroup className="mb-3" controlId="formNombreMun">
+            <InputGroup className="mb-3">
               <Form.Control
                 required
                 type="text"
                 value={datos.tipoDato}
                 disabled
-                readonly //ver VALIDATIONS!!!!!!!!!!!!
+                readOnly //ver VALIDATIONS!!!!!!!!!!!!
               />
 
               <DropdownButton
+                title=""
                 align="end"
                 id="dropdown-menu"
                 onSelect={(tipoDato) => {
                   handleChangeDatos(tipoDato, "tipoDato");
                 }}
               >
-                <Dropdown.Item eventKey="Número">Número</Dropdown.Item>
-                <Dropdown.Item eventKey="Índice">Índice</Dropdown.Item>
+                <Dropdown.Item eventKey="Numero">Número</Dropdown.Item>
+                <Dropdown.Item eventKey="Indice">Índice</Dropdown.Item>
                 <Dropdown.Item eventKey="Porcentaje">Porcentaje</Dropdown.Item>
+                <Dropdown.Item eventKey="Monto">Monto</Dropdown.Item>
               </DropdownButton>
             </InputGroup>
 
-            <Form.Group className="mb-3" controlId="formDescripcion">
+            <Form.Group className="mb-3">
               <Form.Label>Descripcion:</Form.Label>
               <Form.Control
                 required
-                type="text"
+                as="textarea"
+                row={3}
                 //ver VALIDATIONS!!!!!!!!!!!!
                 onChange={(descripcion) => {
                   handleChangeDatos(descripcion.target.value, "descripcion");
@@ -153,7 +154,7 @@ const AddEntityButton = ({ item = { type: "" } }) => {
 
   return (
     <>
-      <Button  variant="success" onClick={handleShow}>
+      <Button variant="success" onClick={handleShow}>
         Agregar
       </Button>
       <Modal show={show} onHide={handleClose}>

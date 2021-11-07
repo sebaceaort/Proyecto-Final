@@ -53,7 +53,7 @@ function UpdateEntityModal({ item, handleClose }) {
           handleSubmit();
         }}
       >
-        <Form.Group className="mb-3" controlId="formNombreMun">
+        <Form.Group className="mb-3">
           <Form.Label>Nombre del {entityType}:</Form.Label>
           <Form.Control
             required
@@ -69,16 +69,17 @@ function UpdateEntityModal({ item, handleClose }) {
         {entityType === "Indicator" ? ( //SI ES INDICATOR UN COSA
           <>
             <Form.Label>Tipo de dato:</Form.Label>
-            <InputGroup className="mb-3" controlId="formNombreMun">
+            <InputGroup className="mb-3">
               <Form.Control
                 required
                 type="text"
                 value={datos.indicatorType}
                 disabled
-                readonly //ver VALIDATIONS!!!!!!!!!!!!
+                readOnly //ver VALIDATIONS!!!!!!!!!!!!
               />
 
               <DropdownButton
+                title=""
                 align="end"
                 id="dropdown-menu"
                 onSelect={(tipoDato) => {
@@ -88,14 +89,16 @@ function UpdateEntityModal({ item, handleClose }) {
                 <Dropdown.Item eventKey="Número">Número</Dropdown.Item>
                 <Dropdown.Item eventKey="Índice">Índice</Dropdown.Item>
                 <Dropdown.Item eventKey="Porcentaje">Porcentaje</Dropdown.Item>
+                <Dropdown.Item eventKey="Monto">Monto</Dropdown.Item>
               </DropdownButton>
             </InputGroup>
 
-            <Form.Group className="mb-3" controlId="formDescripcion">
+            <Form.Group className="mb-3">
               <Form.Label>Descripcion:</Form.Label>
               <Form.Control
                 required
-                type="text"
+                as="textarea"
+                row={3}
                 value={datos.description}
                 placeholder="Descripcion"
                 //ver VALIDATIONS!!!!!!!!!!!!

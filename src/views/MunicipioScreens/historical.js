@@ -1,7 +1,6 @@
 import { Table, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import fiwareApi from "../../services/fiwareApi";
-// import Graph from "../../components/graph";
 import { GoGraph } from "react-icons/go";
 import { useHistory } from "react-router-dom";
 

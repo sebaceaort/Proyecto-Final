@@ -207,6 +207,75 @@ async function updateEntity(datos, id) {
   return resp;
 }
 
+async function getGraphLabels(munId) {
+  let arr = [];
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
+
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  await fetch(`${api}/fiware/graph/labels/${munId}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      arr = res;
+    })
+    .catch((err) => console.log(err));
+
+  return arr;
+}
+
+async function getGraphSubEjes(ejeId) {
+  let arr = [];
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
+
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  await fetch(`${api}/fiware/graph/subEjes/${ejeId}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      arr = res;
+    })
+    .catch((err) => console.log(err));
+
+  return arr;
+}
+
+async function getGraphData(subEjeId, refEje) {
+  let arr = [];
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
+
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  await fetch(`${api}/fiware/graph/data/${subEjeId}/${refEje}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      arr = res;
+    })
+    .catch((err) => console.log(err));
+
+  return arr;
+}
+
 async function getHistoricalData() {
   let arr = [];
   var myHeaders = new Headers();
@@ -223,7 +292,7 @@ async function getHistoricalData() {
   await fetch(`${api}/fiware/historical`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      console.log(res)
+      console.log(res);
       arr = res;
     })
     .catch((err) => console.log(err));
@@ -242,4 +311,7 @@ export default {
   postNewGoal,
   loadData,
   updateEntity,
+  getGraphLabels,
+  getGraphSubEjes,
+  getGraphData,
 };
