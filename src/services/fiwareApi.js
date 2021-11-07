@@ -137,10 +137,9 @@ async function postNewGoal(datos, id) {
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
   myHeaders.append("Authorization", window.localStorage.getItem("token"));
-
   var myBody = {
     monto: datos.monto,
-    fecha: datos.goalFecha,
+    fecha: datos.fecha,
     id: id,
   };
   var requestOptions = {
