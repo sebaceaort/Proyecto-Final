@@ -1,5 +1,5 @@
-import Home from "./home";
-import Profile from "./profile";
+import Home from "./CommonsScreens/home";
+import Profile from "./CommonsScreens/profile";
 import AddUser from "./AdminScreens/addUser";
 import UsersDisabled from "./AdminScreens/usersDisabled";
 

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { UserContext } from "../context/user-context";
+import { UserContext } from "../../context/user-context";
 import { Container, Row, Col } from "react-bootstrap";
 
 export const Profile = () => {

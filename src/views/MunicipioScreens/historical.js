@@ -16,9 +16,18 @@ export default function Historical() {
     getHistorical();
   }, []);
 
+  const formatDate = (date) => {
+    let dia = date.slice(8, 10);
+    let mes = date.slice(5, 7);
+    let anio = date.slice(0, 4);
+
+    return dia + "-" + mes + "-" + anio;
+  };
+
   return (
     <>
       <Button
+        variant="warning"
         onClick={() => {
           history.push("/show-graph");
         }}
@@ -45,11 +54,11 @@ export default function Historical() {
                 <td>{i + 1}</td>
                 <td>{data.refEje}</td>
                 <td>{data.refSubEje}</td>
-                <td>{data.indicatorName}</td>
-                <td>{data.data}%</td>
-                <td>{data.indicatorDate}</td>
-                <td>{data.goal}%</td>
-                <td>{data.goalDate}</td>
+                <td >{data.indicatorName}</td>
+                <td className="text-center">{data.data}%</td>
+                <td className="text-center">{formatDate(data.indicatorDate)}</td>
+                <td className="text-center">{data.goal}%</td>
+                <td className="text-center">{formatDate(data.goalDate)}</td>
               </tr>
             );
           })}

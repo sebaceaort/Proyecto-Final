@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Radar } from "react-chartjs-2";
+import { Bar, Line, PolarArea, Radar } from "react-chartjs-2";
 import fiwareApi from "../services/fiwareApi";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -11,6 +11,7 @@ const DoughnutChart = () => {
   const [kpi, setKpi] = useState([]);
   const [labels, setLabels] = useState([]);
   const [datos, setDatos] = useState([]);
+  const [type, setType] = useState("");
 
   useEffect(() => {
     async function getData() {
@@ -60,7 +61,7 @@ const DoughnutChart = () => {
     datasets: [
       {
         label: "# Cumplimiento de metas por eje ",
-        data: datos,
+        data: [...datos],
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
           "rgba(54, 162, 235, 0.2)",
@@ -81,34 +82,55 @@ const DoughnutChart = () => {
       },
     ],
   };
-
+  const graphType = (type) => {
+    switch (type) {
+      case "Radar":
+        return <Radar data={data} />;
+      case "Bar":
+        return <Bar data={data} />;
+      case "Linea":
+        return <Line data={data} />;
+      default:
+        return <PolarArea data={data} />;
+    }
+  };
   return (
     <>
-     <DropdownButton
-                title="Tipo de Grafico"
-                align="end"
-                id="dropdown-menu"
-              
-              >
-                <Dropdown.Item eventKey="Radar">Radar</Dropdown.Item>
-                <Dropdown.Item eventKey="Bar">Barras</Dropdown.Item>
-                <Dropdown.Item eventKey="Linea">Linea</Dropdown.Item>
-                <Dropdown.Item eventKey="Monto">Monto</Dropdown.Item>
-      </DropdownButton>
-      <div>
-        <div className="header">
+      <div className="text-center">
+        <DropdownButton
+          variant="warning"
+          title="Tipo de Grafico"
+          align="end"
+          id="dropdown-menu"
+          onSelect={(tipoDato) => {setType(tipoDato)}}
+        >
+          <Dropdown.Item eventKey="Radar">Radar</Dropdown.Item>
+          <Dropdown.Item eventKey="Bar">Barras</Dropdown.Item>
+          <Dropdown.Item eventKey="Linea">Linea</Dropdown.Item>
+          <Dropdown.Item eventKey="Polar">Polar</Dropdown.Item>
+        </DropdownButton>
+        <div className="header mt-3">
           <h1 className="title text-center">Indicadores</h1>
           <div className="links text-center">
-            <a
-              className="btn btn-gh"
-              href="https://github.com/reactchartjs/react-chartjs-2/blob/master/example/src/charts/Radar.js"
-            >
-              Ciudades del futuro
-            </a>
+            <h2>Ciudades del futuro</h2>
           </div>
         </div>
-        <div style={{ height: "75%", width: "75%" }}>
-          <Radar data={data} />
+        <div className="w-100 d-flex justify-content-center alinght-items-center">
+          {type==="radar"?
+         ( <div
+            className="justify-content-center alinght-items-center"
+            style={{ height: "75%", width: "75%" }}
+          >
+            {graphType(type)}
+          </div>)
+          :
+          (<div
+            className="justify-content-center alinght-items-center"
+            style={{ height: "100%", width: "100%" }}
+          >
+            {graphType(type)}
+          </div>)
+          }
         </div>
       </div>
     </>
