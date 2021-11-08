@@ -5,8 +5,10 @@ import {
   Image,
   Modal,
   Spinner,
-  InputGroup,
+  InputGroup
 } from "react-bootstrap";
+
+import { Formik, Field } from "formik";
 
 import firewareApi from "../../services/fiwareApi";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -16,16 +18,8 @@ import { UpdateContext } from "../../context/update-context";
 //agregar POST
 function AddEntityModal({ item, handleClose }) {
   const [animate, setAnimate] = useState(false);
+  const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
 
-  const [datos, setDatos] = useState({
-    nombre: "",
-    descripcion: "",
-    tipoDato: "Número",
-  });
-
-  const handleChangeDatos = (value, prop) => {
-    setDatos({ ...datos, [prop]: value });
-  };
   const element = declararElement(item.type);
   function declararElement(type) {
     switch (type) {
@@ -41,11 +35,11 @@ function AddEntityModal({ item, handleClose }) {
   }
 
   const { setUpdate } = useContext(UpdateContext);
-  async function handleSubmit() {
+
+  async function handleSubmit(valores) {
     try {
-      const data = await firewareApi.postEntity(datos, element, item.id);
-      alert(JSON.stringify(data.name.value) + " fue agregado exitosamente");
-      handleClose();
+      const data = await firewareApi.postEntity(valores, element, item.id);
+      setTimeout(() => handleClose(), 1000)
     } catch (error) {
       setAnimate(false);
       alert("Ups! Algo salió mal!");
@@ -60,89 +54,94 @@ function AddEntityModal({ item, handleClose }) {
         fluid
         className="centered-image"
       />
-      <Form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setAnimate(true);
-          handleSubmit();
+
+      <Formik
+        initialValues={{
+          nombre: "",
+          descripcion: "",
+          tipoDato: "Número"
+        }}
+        validate={(valores) => {
+          let errores = {};
+          let dias = Math.round((Date.now() - Date.parse(valores.fecha)) / (1000 * 60 * 60 * 24));
+
+          if (!valores.nombre) {
+            errores.nombre = ('Por favor ingrese un ' + element)
+          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.nombre)) {
+            errores.nombre = ('El ' + element + ' solo puede contener letras y espacios')
+          }
+          if (!valores.descripcion) {
+            errores.descripcion = ('Por favor ingrese una descripción')
+          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,150}$/.test(valores.descripcion)) {
+            errores.descripcion = ('La descripción solo puede contener letras y espacios')
+          }
+          return errores;
+        }}
+        onSubmit={(valores, { resetForm }) => {
+          resetForm();
+          console.log("Formulario enviado")
+          cambiarFormularioEnviado(true)
+          setTimeout(() => cambiarFormularioEnviado(false), 1000)
+          handleSubmit(valores)
         }}
       >
-        <Form.Group className="mb-3">
-          <Form.Label>Nombre del {element}:</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Nombre" //ver VALIDATIONS!!!!!!!!!!!!
-            onChange={(nombre) => {
-              handleChangeDatos(nombre.target.value, "nombre");
-            }}
-          />
-        </Form.Group>
-
-        {element === "Indicator" ? ( //SI ES INDICATOR UN COSA
-          <>
-            <Form.Label>Tipo de dato:</Form.Label>
-            <InputGroup className="mb-3">
-              <Form.Control
-                required
-                type="text"
-                value={datos.tipoDato}
-                disabled
-                readOnly //ver VALIDATIONS!!!!!!!!!!!!
+        {({ values, errors, handleSubmit, handleChange, handleBlur, touched }) => (
+          <form className="row" onSubmit={handleSubmit}>
+            <div className="row mb-3">
+              <label htmlFor="nombre">Nombre del {element}:</label>
+              <input className="mb-3" controlId="formNombre"
+                type="Text"
+                id="nombre"
+                name="nombre"
+                placeholder="Ingrese el nombre esperado"
+                value={values.nombre}
+                onChange={handleChange}
+                onBlur={handleBlur}
               />
+              {touched.nombre && errors.nombre && <div style={{ color: 'red' }}>{errors.nombre}</div>}
+            </div>
+            {element === "Indicator" ? (
+              <>
+                <label htmlFor="nombre">Tipo de dato</label>
+                <InputGroup className="mb-3">
+                  <Field 
+                    name="tipoDato"
+                    as="select"
+                    value={values.tipoDato}
+                    onChange={handleChange}
+                    onBlur={handleBlur}>
 
-              <DropdownButton
-                title=""
-                align="end"
-                id="dropdown-menu"
-                onSelect={(tipoDato) => {
-                  handleChangeDatos(tipoDato, "tipoDato");
-                }}
-              >
-                <Dropdown.Item eventKey="Numero">Número</Dropdown.Item>
-                <Dropdown.Item eventKey="Indice">Índice</Dropdown.Item>
-                <Dropdown.Item eventKey="Porcentaje">Porcentaje</Dropdown.Item>
-                <Dropdown.Item eventKey="Monto">Monto</Dropdown.Item>
-              </DropdownButton>
-            </InputGroup>
+                    <option value="Numero">Número</option>
+                    <option value="Indice">Indice</option>
+                    <option value="Porcentaje">Porcentaje</option>
+                    <option value="Monto">Monto</option>
+                  </Field>
+                </InputGroup>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Descripcion:</Form.Label>
-              <Form.Control
-                required
-                as="textarea"
-                row={3}
-                //ver VALIDATIONS!!!!!!!!!!!!
-                onChange={(descripcion) => {
-                  handleChangeDatos(descripcion.target.value, "descripcion");
-                }}
-              />
-            </Form.Group>
-          </>
-        ) : null}
-
-        <Form.Group className="mb-3">
-          <Button
-            variant="primary"
-            type="submit"
-            size="lg"
-            className={"full-width"}
-          >
-            {animate ? (
-              <Spinner
-                as="span"
-                animation="grow"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
-            ) : (
-              ""
-            )}
-            {!animate ? "Agregar" : "Loading..."}
-          </Button>
-        </Form.Group>
-      </Form>
+                <div className="row mb-3">
+                  <label htmlFor="nombre">Descipción</label>
+                  <Form.Control
+                    required
+                    as="textarea"
+                    row={3}
+                    id="descripcion"
+                    name="descripcion"
+                    placeholder="Ingrese una descripción"
+                    value={values.descripcion}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {touched.descripcion && errors.descripcion && <div style={{ color: 'red' }}>{errors.descripcion}</div>}
+                </div>
+              </>
+            ) : null}
+            <div>
+              <button className="btn btn-primary" type="submit">Crear {element}</button>
+              {formularioEnviado && <p style={{ color: 'green' }}>{element} cargado con éxito!</p>}
+            </div>
+          </form>
+        )}
+      </Formik>
     </div>
   );
 }
