@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
-import { ShowArr } from "../components/ShowArr";
-import fiwareApi from "../services/fiwareApi";
+import { ShowArr } from "../../components/ShowArr";
+import fiwareApi from "../../services/fiwareApi";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { UserContext } from "../context/user-context";
-import AddEntityButton from "../components/AdminButtons/AddEntityButton";
-import { UpdateContext } from "../context/update-context";
+import { UserContext } from "../../context/user-context";
+import AddEntityButton from "../../components/AdminButtons/AddEntityButton";
+import { UpdateContext } from "../../context/update-context";
 
 export const AdminEntitiesScreen = () => {
   const [data, setData] = useState([]);

@@ -25,24 +25,37 @@ const MainNav = (props) => (
         >
           Perfil
         </Nav.Link>
-        <Nav.Link
-          as={RouterNavLink}
-          to="/show-data"
-          exact
-          activeClassName="router-link-exact-active"
-        >
-          Mostrar Indicadores
-        </Nav.Link>
-        <Nav.Link
-          as={RouterNavLink}
-          to="/show-historical"
-          exact
-          activeClassName="router-link-exact-active"
-        >
-          Mostrar Historico
-        </Nav.Link>
+
+        {props.user.usRole !== "admin" && (
+          <>
+            <Nav.Link
+              as={RouterNavLink}
+              to="/muni-data"
+              exact
+              activeClassName="router-link-exact-active"
+            >
+              Mostrar Indicadores
+            </Nav.Link>
+            <Nav.Link
+              as={RouterNavLink}
+              to="/show-historical"
+              exact
+              activeClassName="router-link-exact-active"
+            >
+              Mostrar Historico
+            </Nav.Link>
+          </>
+        )}
         {props.user.usRole === "admin" ? (
           <>
+            <Nav.Link
+              as={RouterNavLink}
+              to="/show-data"
+              exact
+              activeClassName="router-link-exact-active"
+            >
+              Mostrar Indicadores
+            </Nav.Link>
             <Nav.Link
               as={RouterNavLink}
               to="/AddUser"
