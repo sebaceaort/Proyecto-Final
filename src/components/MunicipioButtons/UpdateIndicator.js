@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Form, Button, Image, Modal, Spinner } from "react-bootstrap";
 import { UpdateContext } from "../../context/update-context";
 import firewareApi from "../../services/fiwareApi";
+import { Formik } from "formik";
 
 //agregar POST
 
@@ -9,29 +10,21 @@ const IndicatorDataButton = ({ item }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
+
   function IndicatorDataModal() {
     const [animate, setAnimate] = useState(false);
 
-    const [datos, setDatos] = useState({
-      actMonto: 0,
-    });
-
-    const handleChangeDatos = (value, prop) => {
-      setDatos({ ...datos, [prop]: value });
-    };
-
     const { setUpdate } = useContext(UpdateContext);
-    async function handleSubmit() {
+
+    async function handleSubmit(valores) {
       const data = await loadDataIndicator(item.id);
       async function loadDataIndicator(id) {
-        return await firewareApi.loadData(datos, id);
+        return await firewareApi.loadData(valores, id);
       }
 
       if (data) {
-        alert(
-          "Datos de " + JSON.stringify(item.name) + " fue agregada exitosamente"
-        );
-        handleClose();
+        setTimeout(() => handleClose(), 1000)
       } else {
         setAnimate(false);
         alert("Error");
@@ -46,46 +39,53 @@ const IndicatorDataButton = ({ item }) => {
           fluid
           className="centered-image"
         />
-        <Form
-          onSubmit={(e) => {
-            e.preventDefault();
-            setAnimate(true);
-            handleSubmit();
+
+        <Formik
+          initialValues={{
+            monto: ''
+          }}
+          validate={(valores) => {
+            let errores = {};
+            let dias = Math.round((Date.now() - Date.parse(valores.fecha)) / (1000 * 60 * 60 * 24));
+
+            if (!valores.monto) {
+              errores.monto = ('Por favor ingrese un monto')
+            } else if (isNaN(valores.monto)) {
+              errores.monto = ('Por favor, ingrese un monto numérico')
+            }
+            return errores;
+          }}
+          onSubmit={(valores, { resetForm }) => {
+            resetForm();
+            console.log("Formulario enviado")
+            cambiarFormularioEnviado(true)
+            setTimeout(() => cambiarFormularioEnviado(false), 1000)
+            handleSubmit(valores)
           }}
         >
-          <Form.Group className="mb-3" controlId="formIndicadorMonto">
-            <Form.Label>Monto actual:</Form.Label>
-            <Form.Control
-              required
-              type="Integer"
-              placeholder="Ingrese el monto actual" //ver VALIDATIONS!!!!!!!!!!!!
-              onChange={(monto) => {
-                handleChangeDatos(monto.target.value, "actMonto");
-              }}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Button
-              variant="primary"
-              type="submit"
-              size="lg"
-              className={"full-width"}
-            >
-              {animate ? (
-                <Spinner
-                  as="span"
-                  animation="grow"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
+          {({ values, errors, handleSubmit, handleChange, handleBlur, touched }) => (
+            <form className="row" onSubmit={handleSubmit}>
+              <div className="row mb-3">
+                <label htmlFor="monto">Monto esperado</label>
+                <input className="mb-3" controlId="formMetaFecha"
+                  type="Integer"
+                  id="monto"
+                  name="monto"
+                  placeholder="Ingrese el monto esperado"
+                  value={values.monto}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 />
-              ) : (
-                ""
-              )}
-              {!animate ? "Agregar data indicador" : "Loading..."}
-            </Button>
-          </Form.Group>
-        </Form>
+                {touched.monto && errors.monto && <div style={{ color: 'red' }}>{errors.monto}</div>}
+              </div>
+              <div>
+                <button className="btn btn-primary" type="submit">Cargar data indicador</button>
+                {formularioEnviado && <p style={{ color: 'green' }}>Data cargada con éxito!</p>}
+              </div>
+            </form>
+
+          )}
+        </Formik>
       </div>
     );
   }

@@ -17,18 +17,12 @@ const AddGoalButton = ({ item }) => {
         const { setUpdate } = useContext(UpdateContext);
 
         async function handleSubmit(valores) {
-            console.log("Fecha: " + valores.fecha)
             const data = await createGoal(item.id)
             async function createGoal(id) {
                 return await firewareApi.postNewGoal(valores, id)
             }
 
-            if (data) {
-                // cambiarExito(true)
-                // if(cambiarExito){
-                //         <Alert>Meta actualizada con éxito!</Alert>
-                // }
-                // setTimeout(() => cambiarExito(false), 5000)            
+            if (data) {          
                 setTimeout(() => handleClose(), 1000)
                 setUpdate(state => !state)
             } else {
