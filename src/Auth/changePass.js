@@ -3,7 +3,7 @@ import { Button, Image, Modal } from "react-bootstrap";
 
 import { Formik } from "formik";
 import authApi from "../services/authApi";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { UserContext } from "../context/user-context";
 
 function ChangePassModal({ handleClose }) {
