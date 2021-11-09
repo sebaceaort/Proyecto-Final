@@ -6,18 +6,29 @@ import authApi from "../services/authApi";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../context/user-context";
 
-function ChangePassModal({ handleClose }) {
-  const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
-  const [animate, setAnimate] = useState(false);
+function ChangePassModal({handleClose}) {
+  const [formularioEnviado, cambiarFormularioEnviado] = useState(false);  
   const { user } = useContext(UserContext);
+  const history = useHistory();
+  const { setUser } = useContext(UserContext);
+  const logout = () => {
+    setUser(null);
+    window.localStorage.clear("user");
+    history.push("/");
+  };
+
 
   async function handleSubmit(valores) {
     await authApi
       .changePassword(user.usEmail, valores)
-      .then(() => setTimeout(() => handleClose(), 1000))
-      .catch((error) => {
-        setAnimate(false);
-        alert("Ups! Algo salió mal!");
+      .then(() => {
+          handleClose()
+          alert("Su contraseña fue cambiada exitosamente")
+          logout()
+        })
+      .catch((error) => {        
+        alert(error);
+        handleClose()
       });
   }
 
@@ -41,23 +52,26 @@ function ChangePassModal({ handleClose }) {
           if (!valores.password) {
             errores.password = "Por favor ingrese su contraseña actual ";
           }
+          if (valores.password === valores.newPassword){
+            errores.newPassword = "La contraseña nueva debe ser distinta a la actual";
+          }
           if (!valores.newPassword) {
             errores.newPassword = "Por favor ingrese su nueva contraseña";
           }
           if (!valores.newPasswordConf) {
-            errores.newPassword =
+            errores.newPasswordConf =
               "Por favor ingrese otra vez la nueva contraseña";
           }
           if (valores.newPassword != valores.newPasswordConf) {
-            errores.newPassword = "Las nuevas contraseñas no coinciden";
+            errores.newPasswordConf = "Las nuevas contraseñas no coinciden";
           }
           return errores;
         }}
-        onSubmit={(valores, { resetForm }) => {
+        onSubmit={async (valores, { resetForm }) => {
           resetForm();
           cambiarFormularioEnviado(true);
           setTimeout(() => cambiarFormularioEnviado(false), 1000);
-          handleSubmit(valores);
+          await handleSubmit(valores);
         }}
       >
         {({
@@ -126,10 +140,8 @@ function ChangePassModal({ handleClose }) {
             <div>
               <button className="btn btn-primary" type="submit">
                 Cambiar
-              </button>
-              {formularioEnviado && (
-                <p style={{ color: "green" }}>Contraseña cambiada con éxito!</p>
-              )}
+              </button>  
+              {formularioEnviado}            
             </div>
           </form>
         )}
@@ -138,21 +150,10 @@ function ChangePassModal({ handleClose }) {
   );
 }
 
-const ChangePassButton = ({ item }) => {
+const ChangePassButton = () => {
   const [show, setShow] = useState(false);
-  const history = useHistory();
-  const { setUser } = useContext(UserContext);
-  const logout = () => {
-    setUser(null);
-    window.localStorage.clear("user");
-    history.push("/");
-  };
-  const handleClose = () => {
-    setShow(false);
-    alert("Su contraseña ha sido cambiada exitosamente");
-    logout();
-  };
   const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false); 
 
   return (
     <>
@@ -162,7 +163,7 @@ const ChangePassButton = ({ item }) => {
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
-          <ChangePassModal handleClose={handleClose} />
+          <ChangePassModal handleClose = {handleClose}/>
         </Modal.Body>
       </Modal>
     </>

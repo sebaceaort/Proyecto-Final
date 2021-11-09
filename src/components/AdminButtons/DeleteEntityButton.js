@@ -12,7 +12,7 @@ function DeleteEntityModal({ item, handleClose }) {
     try {
       await firewareApi.deleteEntity(item.type, item.id);
       
-      setTimeout(() => handleClose(), 2000)
+      setTimeout(() => handleClose(), 3000)
       setUpdate((state) => !state);
     } catch (error) {
       setAnimate(false);

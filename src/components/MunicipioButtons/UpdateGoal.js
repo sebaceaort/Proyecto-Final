@@ -52,7 +52,10 @@ const AddGoalButton = ({ item }) => {
                             errores.monto = ('Por favor ingrese un monto')
                         } else if (isNaN(valores.monto)) {
                             errores.monto = ('Por favor, ingrese un monto numérico')
+                        } else if((valores.monto).trim()==0){
+                            errores.monto = ('Por favor ingrese un monto')
                         }
+
                         if (!valores.fecha) {
                             errores.fecha = ('Por favor ingrese una fecha')
                         } else if (dias > 0) {
