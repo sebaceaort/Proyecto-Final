@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useContext } from "react";
 import { ShowArr } from "../../components/ShowArr";
 import fiwareApi from "../../services/fiwareApi";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { UserContext } from "../../context/user-context";
-//import AddEntityButton from "../components/AdminButtons/AddEntityButton";
 import { UpdateContext } from "../../context/update-context";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
+import { GoGraph } from "react-icons/go";
 
 export const MunicipioEntitiesScreen = () => {
   const [data, setData] = useState([]);
   const { user } = useContext(UserContext);
   const { setUpdate } = useContext(UpdateContext);
+  const history = useHistory();
 
   useEffect(() => {
     const municipio = user.usMunicipio;
@@ -35,6 +36,14 @@ export const MunicipioEntitiesScreen = () => {
           <Col>
             <Card className="text-center">
               <Card.Header>LISTADO DE MUNICIPIOS INTELIGENTES</Card.Header>
+              <Button
+                variant="warning"
+                onClick={() => {
+                  history.push("/show-graph");
+                }}
+              >
+                <GoGraph /> Ver grafico
+              </Button>
               <Card.Body>
                 <ShowArr array={data} />
               </Card.Body>
