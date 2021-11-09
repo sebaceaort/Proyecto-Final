@@ -69,11 +69,15 @@ function AddEntityModal({ item, handleClose }) {
             errores.nombre = ('Por favor ingrese un ' + element)
           } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.nombre)) {
             errores.nombre = ('El ' + element + ' solo puede contener letras y espacios')
+          } else if ((valores.nombre).trim() == 0) {
+            errores.nombre = ('Por favor ingrese un ' + element + ' no vacío')
           }
           if (!valores.descripcion) {
             errores.descripcion = ('Por favor ingrese una descripción')
           } else if (!/^[a-zA-ZÀ-ÿ\s]{1,150}$/.test(valores.descripcion)) {
             errores.descripcion = ('La descripción solo puede contener letras y espacios')
+          } else if ((valores.descripcion).trim() == 0) {
+            errores.descripcion = ('Por favor ingrese una descripcion no vacía')
           }
           return errores;
         }}
@@ -104,7 +108,7 @@ function AddEntityModal({ item, handleClose }) {
               <>
                 <label htmlFor="nombre">Tipo de dato</label>
                 <InputGroup className="mb-3">
-                  <Field 
+                  <Field
                     name="tipoDato"
                     as="select"
                     value={values.tipoDato}
