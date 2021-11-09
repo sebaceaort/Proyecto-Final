@@ -1,14 +1,17 @@
 import { Table, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import authApi from "../../services/authApi";
 
+
 export default function UsersDisabled() {
+  const history = useHistory();
   const [users, setUsers] = useState([]);
-  
+
   useEffect(() => {
     async function getUsers() {
-      const disabledUsers = await authApi.getDisabledUsers();
-      setUsers((oldUsers) => [...oldUsers, disabledUsers]);
+      const allUsers = await authApi.getAllUsers();
+      setUsers((oldUsers) => [...oldUsers, allUsers]);
     }
     getUsers();
   }, []);
@@ -21,7 +24,7 @@ export default function UsersDisabled() {
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Email</th>
-          <th>Habilitar Usuario</th>
+          <th>Gestionar usuarios</th>
         </tr>
       </thead>
       <tbody>
@@ -32,20 +35,37 @@ export default function UsersDisabled() {
               <td>{user.usName}</td>
               <td>{user.usLastName}</td>
               <td>{user.usEmail}</td>
-              <td>
-                <Button
-                  variant="primary"
-                  size="lg"
-                  className={"full-width"}
-                  onClick={() => {
-                    authApi.updateUsers(user._id);
-                    alert("Usuario Habilitado!");
-                    window.location.reload();
-                  } }
-                >
-                  Habilitar
-                </Button>
-              </td>
+              <>
+                <td>
+                  {(!user.usActive && (
+                    <Button
+                      variant="primary"
+                      size="lg"
+                      className={"full-width btnEnable"}
+                      onClick={() => {
+                        authApi.updateUsers(user._id);
+                        alert("Usuario Habilitado!");
+                        history.push("/UsersDisabled")
+                      }}
+                    >
+                      Habilitar
+                    </Button>
+                  )) || (
+                    <Button
+                      variant="danger"
+                      size="lg"
+                      className={"full-width"}
+                      onClick={() => {
+                        authApi.updateUsers(user._id);
+                        alert("Usuario Deshabilitado!");
+                        window.location.reload();
+                      }}
+                    >
+                      Deshabilitar
+                    </Button>
+                  )}
+                </td>
+              </>
             </tr>
           );
         })}

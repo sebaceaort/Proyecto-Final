@@ -98,7 +98,7 @@ export default function AddUser() {
             }}
           >
             <option>Selecciona un Rol</option>
-            {roles[0]?.map((rol,i) => {
+            {roles[0]?.map((rol, i) => {
               return (
                 <>
                   <option key={i} value={role.name}>
@@ -109,28 +109,30 @@ export default function AddUser() {
             })}
           </Form.Control>
         </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Ingrese el municipio correspondiente</Form.Label>
-          <Form.Select
-            required
-            value={selectedMunicipio}
-            onChange={(e) => {
-              // e.preventDefault()
-              // console.log(e)
-              setMunicipio(e.target.value);
-              setSelectedMunicipio(e.innerText)
-            }}
-          >
-            <option>Municipios...</option>
-            {municipios[0]?.map((muni) => {
-              return (
-                <option key={muni.id} value={muni.id}>
-                  {muni.name.value}
-                </option>
-              );
-            })}
-          </Form.Select>
-        </Form.Group>
+        {role !== "admin" && (
+          <Form.Group className="mb-3">
+            <Form.Label>Ingrese el municipio correspondiente</Form.Label>
+            <Form.Select
+              required
+              value={selectedMunicipio}
+              onChange={(e) => {
+                // e.preventDefault()
+                // console.log(e)
+                setMunicipio(e.target.value);
+                setSelectedMunicipio(e.innerText);
+              }}
+            >
+              <option>Municipios...</option>
+              {municipios[0]?.map((muni) => {
+                return (
+                  <option key={muni.id} value={muni.id}>
+                    {muni.name.value}
+                  </option>
+                );
+              })}
+            </Form.Select>
+          </Form.Group>
+        )}
         <Form.Group className="mb-3">
           <Button
             variant="primary"
@@ -151,7 +153,7 @@ export default function AddUser() {
             history.push("/UsersDisabled");
           }}
         >
-          Habilitar usuarios
+          Gestionar usuarios
         </Button>
       </div>
     </>
