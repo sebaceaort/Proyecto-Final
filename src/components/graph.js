@@ -6,12 +6,14 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 
 const DoughnutChart = () => {
+ 
   const [ejes, setEjes] = useState([]);
   const [subEjes, setSubEjes] = useState([]);
   const [kpi, setKpi] = useState([]);
   const [labels, setLabels] = useState([]);
   const [datos, setDatos] = useState([]);
   const [type, setType] = useState("");
+  const [ancho, setAncho] = useState(0)
 
   useEffect(() => {
     async function getData() {
@@ -28,6 +30,7 @@ const DoughnutChart = () => {
   }, [ejes]);
 
   useEffect(() => {
+    setAncho(window.innerWidth);
     async function getKpi() {
       subEjes.forEach(async (subEje) => {
         await fiwareApi
@@ -90,8 +93,11 @@ const DoughnutChart = () => {
         return <Bar data={data} />;
       case "Linea":
         return <Line data={data} />;
-      default:
-        return <PolarArea data={data} />;
+      case "Polar":
+          return <PolarArea data={data} />;
+
+      default: return <Bar data={data} />
+       
     }
   };
   return (
@@ -118,11 +124,10 @@ const DoughnutChart = () => {
           </div>
         </div>
         <div className="w-100 d-flex justify-content-center alinght-items-center">
-          {type === "radar" ? (
+          {(type === "Radar" || type === "Polar" )&& ancho>=1024? (
             <div
               className="justify-content-center alinght-items-center"
-              style={{ height: "75%", width: "75%" }}
-            >
+              style={{  width: "50%" }}            >
               {graphType(type)}
             </div>
           ) : (

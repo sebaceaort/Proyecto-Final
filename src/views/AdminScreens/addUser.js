@@ -101,7 +101,7 @@ export default function AddUser() {
             {roles[0]?.map((rol, i) => {
               return (
                 <>
-                  <option key={i} value={role.name}>
+                  <option key={role.id} value={role.name}>
                     {rol.name}
                   </option>
                 </>

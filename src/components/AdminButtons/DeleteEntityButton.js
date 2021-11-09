@@ -27,7 +27,7 @@ function DeleteEntityModal({ item, handleClose }) {
         e.preventDefault();
         setAnimate(true);
         cambiarFormularioEnviado(true)
-        setTimeout(() => cambiarFormularioEnviado(false), 1500)
+        setTimeout(() => cambiarFormularioEnviado(!formularioRechazado), 1500)
         handleSubmit();
       }}
     >

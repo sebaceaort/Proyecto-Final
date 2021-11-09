@@ -62,7 +62,7 @@ function ChangePassModal({handleClose}) {
             errores.newPasswordConf =
               "Por favor ingrese otra vez la nueva contraseña";
           }
-          if (valores.newPassword != valores.newPasswordConf) {
+          if (valores.newPassword !== valores.newPasswordConf) {
             errores.newPasswordConf = "Las nuevas contraseñas no coinciden";
           }
           return errores;
@@ -82,11 +82,12 @@ function ChangePassModal({handleClose}) {
           handleBlur,
           touched,
         }) => (
-          <form className="row" onSubmit={handleSubmit}>
+          <form className="row p-3" onSubmit={handleSubmit}>
             <div className="row mb-3">
-              <label htmlFor="nombre">Contraseña actual:</label>
+              <label htmlFor="nombre"><b>Contraseña actual:</b></label>
+              <div className="w-100">
               <input
-                className="mb-3"
+                 className="mt-2 mb-3 w-100"
                 controlId="formPassword"
                 type="password"
                 id="password"
@@ -99,12 +100,14 @@ function ChangePassModal({handleClose}) {
               {touched.password && errors.password && (
                 <div style={{ color: "red" }}>{errors.password}</div>
               )}
+              </div>
             </div>
 
             <div className="row mb-3">
-              <label htmlFor="nombre">Nueva contraseña:</label>
+              <label htmlFor="nombre"><b>Nueva contraseña:</b></label>
+              <div className="w-100">
               <input
-                className="mb-3"
+                className="mt-2 mb-3 w-100"
                 controlId="formNewPassword"
                 type="password"
                 id="newPassword"
@@ -117,13 +120,14 @@ function ChangePassModal({handleClose}) {
               {touched.newPassword && errors.newPassword && (
                 <div style={{ color: "red" }}>{errors.newPassword}</div>
               )}
+              </div>
             </div>
 
             <div className="row mb-3">
-              <label htmlFor="nombre">Confirmar nueva contraseña:</label>
+              <label htmlFor="nombre"><b>Confirmar nueva contraseña:</b></label>
+              <div className="w-100">
               <input
-                className="mb-3"
-                controlId="formNewPasswordConf"
+                 className="mt-2 mb-3 w-100"
                 type="password"
                 id="newPasswordConf"
                 name="newPasswordConf"
@@ -135,13 +139,16 @@ function ChangePassModal({handleClose}) {
               {touched.newPasswordConf && errors.newPasswordConf && (
                 <div style={{ color: "red" }}>{errors.newPasswordConf}</div>
               )}
+              </div>
             </div>
 
-            <div>
-              <button className="btn btn-primary" type="submit">
+            <div className="row">
+            <div className="w-100 text-center">
+              <button className="btn btn-primary w-100" type="submit">
                 Cambiar
               </button>  
-              {formularioEnviado}            
+              {formularioEnviado} 
+            </div>           
             </div>
           </form>
         )}
