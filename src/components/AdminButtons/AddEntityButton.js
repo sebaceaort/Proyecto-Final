@@ -34,7 +34,12 @@ function AddEntityModal({ item, handleClose }) {
 
   async function handleSubmit(valores) {
     try {
+<<<<<<< HEAD
       await firewareApi.postEntity(valores, element, item.id);
+=======
+      console.log(valores)
+      const data = await firewareApi.postEntity(valores, element, item.id);
+>>>>>>> 6d53726ffeecfe85854ab42cbd92ef3acfaf7d03
       setTimeout(() => handleClose(), 1000)
     } catch (error) {
       alert("Ups! Algo salió mal!");
@@ -57,7 +62,9 @@ function AddEntityModal({ item, handleClose }) {
           tipoDato: "Número"
         }}
         validate={(valores) => {
+          console.log(valores.nombre)
           let errores = {};
+<<<<<<< HEAD
 
           if (!valores.nombre) {
             errores.nombre = ('Por favor ingrese un ' + element)
@@ -68,7 +75,33 @@ function AddEntityModal({ item, handleClose }) {
             errores.descripcion = ('Por favor ingrese una descripción')
           } else if (!/^[a-zA-ZÀ-ÿ\s]{1,150}$/.test(valores.descripcion)) {
             errores.descripcion = ('La descripción solo puede contener letras y espacios')
+=======
+          if(element!=="Indicador"){
+            if (!valores.nombre) {
+              errores.nombre = ('Por favor ingrese un ' + element)
+            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.nombre)) {
+              errores.nombre = ('El ' + element + ' solo puede contener letras y espacios')
+            } else if ((valores.nombre).trim() == 0) {
+              errores.nombre = ('Por favor ingrese un ' + element + ' no vacío')
+            }
+          } else{
+            if (!valores.nombre) {
+              errores.nombre = ('Por favor ingrese un ' + element)
+            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.nombre)) {
+              errores.nombre = ('El ' + element + ' solo puede contener letras y espacios')
+            } else if ((valores.nombre).trim() == 0) {
+              errores.nombre = ('Por favor ingrese un ' + element + ' no vacío')
+            }
+            if (!valores.descripcion) {
+              errores.descripcion = ('Por favor ingrese una descripción')
+            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,150}$/.test(valores.descripcion)) {
+              errores.descripcion = ('La descripción solo puede contener letras y espacios')
+            } else if ((valores.descripcion).trim() == 0) {
+              errores.descripcion = ('Por favor ingrese una descripcion no vacía')
+            }
+>>>>>>> 6d53726ffeecfe85854ab42cbd92ef3acfaf7d03
           }
+          console.log(errores)
           return errores;
         }}
         onSubmit={(valores, { resetForm }) => {
@@ -98,7 +131,7 @@ function AddEntityModal({ item, handleClose }) {
               <>
                 <label htmlFor="nombre">Tipo de dato</label>
                 <InputGroup className="mb-3">
-                  <Field 
+                  <Field
                     name="tipoDato"
                     as="select"
                     value={values.tipoDato}
@@ -160,3 +193,4 @@ const AddEntityButton = ({ item = { type: "" } }) => {
   );
 };
 export default AddEntityButton;
+

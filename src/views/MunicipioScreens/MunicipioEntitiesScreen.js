@@ -26,7 +26,7 @@ export const MunicipioEntitiesScreen = () => {
       <Redirect to="" />;
     }
     setUpdate();
-  }, [setUpdate, user.usRole]);
+  }, [setUpdate, user.usRole, user.usMunicipio]);
 
   return (
     <>

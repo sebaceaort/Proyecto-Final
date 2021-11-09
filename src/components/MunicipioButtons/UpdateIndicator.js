@@ -45,10 +45,17 @@ const IndicatorDataButton = ({ item }) => {
             if (!valores.monto) {
               errores.monto = "Por favor ingrese un monto";
             } else if (isNaN(valores.monto)) {
+<<<<<<< HEAD
               errores.monto = "Por favor, ingrese un monto numérico";
+=======
+              errores.monto = ('Por favor, ingrese un monto numérico')
+            } else if ((valores.monto).trim() == 0) {
+              errores.monto = ('Por favor ingrese un monto')
+>>>>>>> 6d53726ffeecfe85854ab42cbd92ef3acfaf7d03
             }
-            return errores;
-          }}
+              return errores;
+            }
+          }
           onSubmit={(valores, { resetForm }) => {
             resetForm();
             console.log("Formulario enviado");
