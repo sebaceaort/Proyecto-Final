@@ -88,6 +88,28 @@ async function getDisabledUsers() {
   return dUsers;
 }
 
+async function getAllUsers() {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
+  let dUsers = [];
+  var requestOptions = {
+    method: "GET",
+    redirect: "follow",
+    headers: myHeaders,
+  };
+
+  await fetch(`${api}/users/`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      dUsers = result;
+    })
+    .catch((error) => console.log("error", error));
+
+  return dUsers;
+}
+
 async function updateUsers(userId) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -167,4 +189,5 @@ export default {
   updateUsers,
   getRoles,
   changePassword,
+  getAllUsers
 };
