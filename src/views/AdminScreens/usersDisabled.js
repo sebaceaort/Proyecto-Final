@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import authApi from "../../services/authApi";
 
-
 export default function UsersDisabled() {
   const history = useHistory();
   const [users, setUsers] = useState([]);
@@ -45,7 +44,7 @@ export default function UsersDisabled() {
                       onClick={() => {
                         authApi.updateUsers(user._id);
                         alert("Usuario Habilitado!");
-                        history.push("/UsersDisabled")
+                        history.push("/UsersDisabled");
                       }}
                     >
                       Habilitar
@@ -58,7 +57,7 @@ export default function UsersDisabled() {
                       onClick={() => {
                         authApi.updateUsers(user._id);
                         alert("Usuario Deshabilitado!");
-                        history.push("/UsersDisabled")
+                        history.push("/UsersDisabled");
                       }}
                     >
                       Deshabilitar
