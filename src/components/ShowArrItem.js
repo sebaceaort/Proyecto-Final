@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { ShowChildrens } from "./ShowChildrens";
-import { Accordion } from "react-bootstrap";
+import { Accordion, Card } from "react-bootstrap";
 import { UserContext } from "../context/user-context";
 import AddEntityButton from "./AdminButtons/AddEntityButton";
 import DeleteEntityButton from "./AdminButtons/DeleteEntityButton";
@@ -17,9 +17,11 @@ export const ShowArrItem = ({ item }) => {
     <div>
       <Accordion defaultActiveKey="1">
         <Accordion.Item eventKey="0">
+          <Card>
           <Accordion.Header onClick={handleClick}>
             {type} - <b>{name.value}</b>
           </Accordion.Header>
+          </Card>
           <Accordion.Body>
             {user.usRole === "admin" && (
               <>

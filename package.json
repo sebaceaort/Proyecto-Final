@@ -29,6 +29,7 @@
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-json-pretty": "^2.2.0",
+    "react-router": "^6.0.1",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
     "request": "^2.88.2",
@@ -69,5 +70,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-dom": "^17.0.11",
+    "@types/react-router-dom": "^5.3.2"
   }
 }
