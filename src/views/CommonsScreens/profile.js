@@ -1,19 +1,25 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../context/user-context";
 import { Container, Row, Col } from "react-bootstrap";
-
+import ChangePassButton from "../../Auth/changePass";
 export const Profile = () => {
   const { user } = useContext(UserContext);
 
   return user ? (
     <Container className="mb-5">
       <Row className="align-items-center profile-header mb-5 text-center text-md-left">
+     
+          
+          
         <Col md={2}>
+        
           <img
             src="https://pickaface.net/gallery/avatar/unr_standard_180203_0234_y7cln.png"
             alt={user.usName}
-            className="rounded-circle img-fluid profile-picture mb-3 mb-md-0"
+            className="rounded-circle img-fluid profile-picture mb-4  md-0"
           />
+          
+          <ChangePassButton />
         </Col>
         <Col md>
           <pre>
@@ -34,7 +40,10 @@ export const Profile = () => {
             className="rounded-circle img-fluid profile-picture mb-3 mb-md-0"
           />
         </Col>
+        
+
       </Row>
+      
     </Container>
   ) : (
     ""

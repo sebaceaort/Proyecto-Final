@@ -87,11 +87,9 @@ const NavBar = () => {
           <AuthNav />
           {user && (
             <>
-              <div>
+              <div style={{ marginLeft: "5px" }}>
                 <BsFillPersonFill />
-                <span>
-                  {user.usName} {user.usLastName}
-                </span>
+                {user.usName} {user.usLastName}
               </div>
             </>
           )}

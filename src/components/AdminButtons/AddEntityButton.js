@@ -8,11 +8,10 @@ import {
 } from "react-bootstrap";
 
 import { Formik, Field } from "formik";
-
 import firewareApi from "../../services/fiwareApi";
 import { UpdateContext } from "../../context/update-context";
 
-//agregar POST
+
 function AddEntityModal({ item, handleClose }) {
 
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
@@ -114,7 +113,7 @@ function AddEntityModal({ item, handleClose }) {
                 </InputGroup>
 
                 <div className="row mb-3">
-                  <label htmlFor="nombre">Descipción</label>
+                  <label htmlFor="nombre">Descripción</label>
                   <Form.Control
                     required
                     as="textarea"

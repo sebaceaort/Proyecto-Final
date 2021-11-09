@@ -1,4 +1,4 @@
-const api = process.env.REACT_APP_MONGO_URL_DEV
+const api = process.env.REACT_APP_MONGO_URL_DEV;
 
 async function login(usr, pass) {
   let user = "";
@@ -33,11 +33,12 @@ async function login(usr, pass) {
   return user;
 }
 
-async function addUser(usr, name, lastname, pass, role) {
+async function addUser(usr, name, lastname, pass, role, muni) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
-  myHeaders.append("Authorization",window.localStorage.getItem("token"))
+
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
 
   var raw = JSON.stringify({
     usEmail: usr,
@@ -46,6 +47,7 @@ async function addUser(usr, name, lastname, pass, role) {
     usPasswordHash: pass,
     usActive: false,
     usRole: role,
+    usMunicipio: muni
   });
 
   var requestOptions = {
@@ -68,12 +70,12 @@ async function getDisabledUsers() {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
-  myHeaders.append("Authorization",window.localStorage.getItem("token"))
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
   let dUsers = [];
   var requestOptions = {
     method: "GET",
     redirect: "follow",
-    headers: myHeaders
+    headers: myHeaders,
   };
 
   await fetch(`${api}/users/disabled`, requestOptions)
@@ -90,7 +92,7 @@ async function updateUsers(userId) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
-  myHeaders.append("Authorization",window.localStorage.getItem("token"))
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
 
   var requestOptions = {
     method: "PUT",
@@ -108,12 +110,12 @@ async function getRoles() {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
-  myHeaders.append("Authorization",window.localStorage.getItem("token"))
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
   let roles = [];
   var requestOptions = {
     method: "GET",
     redirect: "follow",
-    headers: myHeaders
+    headers: myHeaders,
   };
 
   await fetch(`${api}/roles`, requestOptions)
@@ -126,5 +128,43 @@ async function getRoles() {
   return roles;
 }
 
+async function changePassword(userEmail, valores) {
+  let resp;
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
+
+  var myBody = {
+    email: userEmail,
+    password: valores.password,
+    newPassword: valores.newPassword,
+  };
+
+  var requestOptions = {
+    method: "PUT",
+    headers: myHeaders,
+    body: JSON.stringify(myBody),
+    redirect: "follow",
+  };
+
+  await fetch(`${api}/users/change/password/`, requestOptions)
+    .then((response) => {
+      console.log(response)
+      resp = response})
+    .catch((error) => {
+      console.log("entró al catch")
+      throw new Error(error.message)});
+
+  return resp;
+}
+
 //eslint-disable-next-line
-export default { login, addUser, getDisabledUsers, updateUsers, getRoles };
+export default {
+  login,
+  addUser,
+  getDisabledUsers,
+  updateUsers,
+  getRoles,
+  changePassword,
+};

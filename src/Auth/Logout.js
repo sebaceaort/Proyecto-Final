@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/user-context";
 import { Button, Spinner } from "react-bootstrap";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 const LogoutButton = () => {
   const { setUser } = useContext(UserContext);

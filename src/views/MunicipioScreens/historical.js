@@ -1,4 +1,4 @@
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Pagination } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import fiwareApi from "../../services/fiwareApi";
 import { GoGraph } from "react-icons/go";
@@ -54,9 +54,11 @@ export default function Historical() {
                 <td>{i + 1}</td>
                 <td>{data.refEje}</td>
                 <td>{data.refSubEje}</td>
-                <td >{data.indicatorName}</td>
+                <td>{data.indicatorName}</td>
                 <td className="text-center">{data.data}%</td>
-                <td className="text-center">{formatDate(data.indicatorDate)}</td>
+                <td className="text-center">
+                  {formatDate(data.indicatorDate)}
+                </td>
                 <td className="text-center">{data.goal}%</td>
                 <td className="text-center">{formatDate(data.goalDate)}</td>
               </tr>
@@ -64,6 +66,24 @@ export default function Historical() {
           })}
         </tbody>
       </Table>
+
+      <Pagination>
+        <Pagination.First />
+        <Pagination.Prev />
+        <Pagination.Item>{1}</Pagination.Item>
+        <Pagination.Ellipsis />
+
+        <Pagination.Item>{10}</Pagination.Item>
+        <Pagination.Item>{11}</Pagination.Item>
+        <Pagination.Item active>{12}</Pagination.Item>
+        <Pagination.Item>{13}</Pagination.Item>
+        <Pagination.Item disabled>{14}</Pagination.Item>
+
+        <Pagination.Ellipsis />
+        <Pagination.Item>{20}</Pagination.Item>
+        <Pagination.Next />
+        <Pagination.Last />
+      </Pagination>
     </>
   );
 }
