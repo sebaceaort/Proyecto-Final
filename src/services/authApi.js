@@ -172,11 +172,15 @@ async function changePassword(userEmail, valores) {
 
   await fetch(`${api}/users/change/password/`, requestOptions)
     .then((response) => {
-      console.log(response)
-      resp = response})
+     if (response.status != 200) {
+       throw new Error ("Ups! Algo a salido mal, intentelo de nuevo")
+     } else{
+      resp = response
+     }
+      })
     .catch((error) => {
-      console.log("entró al catch")
-      throw new Error(error.message)});
+      console.log(error)
+      throw error});
 
   return resp;
 }
