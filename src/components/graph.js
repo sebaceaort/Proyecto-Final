@@ -51,7 +51,7 @@ const DoughnutChart = () => {
       return labelandkpi;
     }
     const dataFin = dataFinal(ejes, kpi);
-    setLabels(dataFin.map((e) => e.label));
+    setLabels(dataFin.map((e) => {return e.label.length > 13 ? e.label.substring(0,10) :  e.label}));
     setDatos(dataFin.map((e) => e.kpi));
   }, [ejes, kpi]);
 
@@ -102,7 +102,9 @@ const DoughnutChart = () => {
           title="Tipo de Grafico"
           align="end"
           id="dropdown-menu"
-          onSelect={(tipoDato) => {setType(tipoDato)}}
+          onSelect={(tipoDato) => {
+            setType(tipoDato);
+          }}
         >
           <Dropdown.Item eventKey="Radar">Radar</Dropdown.Item>
           <Dropdown.Item eventKey="Bar">Barras</Dropdown.Item>
@@ -116,21 +118,21 @@ const DoughnutChart = () => {
           </div>
         </div>
         <div className="w-100 d-flex justify-content-center alinght-items-center">
-          {type==="radar"?
-         ( <div
-            className="justify-content-center alinght-items-center"
-            style={{ height: "75%", width: "75%" }}
-          >
-            {graphType(type)}
-          </div>)
-          :
-          (<div
-            className="justify-content-center alinght-items-center"
-            style={{ height: "100%", width: "100%" }}
-          >
-            {graphType(type)}
-          </div>)
-          }
+          {type === "radar" ? (
+            <div
+              className="justify-content-center alinght-items-center"
+              style={{ height: "75%", width: "75%" }}
+            >
+              {graphType(type)}
+            </div>
+          ) : (
+            <div
+              className="justify-content-center alinght-items-center"
+              style={{ height: "100%", width: "100%" }}
+            >
+              {graphType(type)}
+            </div>
+          )}
         </div>
       </div>
     </>

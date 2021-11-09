@@ -33,12 +33,11 @@ async function login(usr, pass) {
   return user;
 }
 
-async function addUser(usr, name, lastname, pass, role) {
+async function addUser(usr, name, lastname, pass, role, muni) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
   myHeaders.append("Authorization",window.localStorage.getItem("token"))
-
   var raw = JSON.stringify({
     usEmail: usr,
     usName: name,
@@ -46,6 +45,7 @@ async function addUser(usr, name, lastname, pass, role) {
     usPasswordHash: pass,
     usActive: false,
     usRole: role,
+    usMunicipio: muni
   });
 
   var requestOptions = {
