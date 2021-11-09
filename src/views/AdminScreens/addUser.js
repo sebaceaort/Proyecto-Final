@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import authApi from "../../services/authApi";
+import fiwareApi from "../../services/fiwareApi";
 
 export default function AddUser() {
   const [username, setUsername] = useState("");
@@ -9,33 +10,29 @@ export default function AddUser() {
   const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState({});
-  const [roles, setRoles] = useState([])
+  const [roles, setRoles] = useState([]);
+  const [municipio, setMunicipio] = useState({});
+  const [selectedMunicipio, setSelectedMunicipio] = useState({});
+  const [municipios, setMunicipios] = useState([]);
   const history = useHistory();
 
-  //const tempRole = {}
-
   async function handleSubmit() {
-    await authApi.addUser(username, name, lastname, password, role);
+    await authApi.addUser(username, name, lastname, password, role, municipio);
   }
 
   useEffect(() => {
     async function getRoles() {
       const roles = await authApi.getRoles();
-      setRoles((oldRoles) => [...oldRoles, roles])
+      setRoles((oldRoles) => [...oldRoles, roles]);
     }
-    getRoles()
-    
-  }, [])
+    async function getMunicipios() {
+      const allMunicipios = await fiwareApi.getDataByType("Municipio");
 
-  // console.log(roles[0])
-  roles[0]?.find(r =>  r.name === role ? console.log(r._id) : console.log("nada")
-    // console.log(r)
-    // console.log(role)
-    // if(r.name === role){
-    //   console.log(r._id)
-    // }
-    )
-
+      setMunicipios((oldMunicipios) => [...oldMunicipios, allMunicipios]);
+    }
+    getRoles();
+    getMunicipios();
+  }, []);
 
   return (
     <>
@@ -95,25 +92,44 @@ export default function AddUser() {
           <Form.Control
             required
             as="select"
-            value={roles}
+            value={role}
             onChange={(e) => {
               setRole(e.target.value);
             }}
           >
             <option>Selecciona un Rol</option>
-            {
-                roles?.map((role,i) => {
-                  return (
-                    <>
-                      <option key={role[i]?._id} value={role[i]?.name}>Administrador</option>
-                      <option key={role[i+1]?._id} value={role[i+1]?.name}>Municipio</option>
-                    </>
-                  );
-                })
-              // <option value="admin">Administrador</option>
-              // <option value="municipio">Municipio</option>
-            }
+            {roles[0]?.map((rol,i) => {
+              return (
+                <>
+                  <option key={i} value={role.name}>
+                    {rol.name}
+                  </option>
+                </>
+              );
+            })}
           </Form.Control>
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Ingrese el municipio correspondiente</Form.Label>
+          <Form.Select
+            required
+            value={selectedMunicipio}
+            onChange={(e) => {
+              // e.preventDefault()
+              // console.log(e)
+              setMunicipio(e.target.value);
+              setSelectedMunicipio(e.innerText)
+            }}
+          >
+            <option>Municipios...</option>
+            {municipios[0]?.map((muni) => {
+              return (
+                <option key={muni.id} value={muni.id}>
+                  {muni.name.value}
+                </option>
+              );
+            })}
+          </Form.Select>
         </Form.Group>
         <Form.Group className="mb-3">
           <Button

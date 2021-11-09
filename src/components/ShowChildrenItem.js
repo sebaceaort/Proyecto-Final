@@ -44,15 +44,17 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
   const handleClick = () => {
     setShow(!show);
   };
-
+  //style={{ border: "2px solid", borderRadius: "1%", borderColor: "#0C63E4" }} -> Line 53
   if (item.type !== "Indicator") {
     return (
       <div>
         <Accordion defaultActiveKey="1">
           <Accordion.Item eventKey="0">
-            <Accordion.Header onClick={handleClick}>
-              {item.type} - <b>{item.name?.value}</b>
-            </Accordion.Header>
+            <Card>
+              <Accordion.Header style={{ border: "3px solid #E7F1FF", borderRadius: "1%", borderColor: "#E7F1FF" }} onClick={handleClick}>
+                {item.type} - <b>{item.name?.value}</b>
+              </Accordion.Header>
+            </Card>
             <Accordion.Body>
               {user.usRole === "admin" && (
                 <>
@@ -77,7 +79,7 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
       <div>
         <Accordion defaultActiveKey="1">
           <Accordion.Item eventKey="0">
-            <Accordion.Header onClick={handleClick}>
+            <Accordion.Header style={{ border: "3px solid #E7F1FF", borderRadius: "1%", borderColor: "#E7F1FF" }} onClick={handleClick}>
               <Container>
                 <Row>
                   <Col>
