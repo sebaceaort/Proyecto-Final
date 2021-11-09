@@ -6,16 +6,18 @@ import { UpdateContext } from "../../context/update-context";
 function DeleteEntityModal({ item, handleClose }) {
   const { setUpdate } = useContext(UpdateContext);
   const [animate, setAnimate] = useState(false);
+  const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
+  const [formularioRechazado, cambiarFormularioRechazado] = useState(false);
   async function handleSubmit() {
     try {
       await firewareApi.deleteEntity(item.type, item.id);
-
-      alert(item.name.value + " eliminado con éxito");
-      handleClose();
+      
+      setTimeout(() => handleClose(), 2000)
       setUpdate((state) => !state);
     } catch (error) {
       setAnimate(false);
-      alert("Ups! Algo salió mal!");
+      cambiarFormularioRechazado(true)
+      setTimeout(() => cambiarFormularioRechazado(false), 1500)
     }
   }
 
@@ -24,6 +26,8 @@ function DeleteEntityModal({ item, handleClose }) {
       onSubmit={(e) => {
         e.preventDefault();
         setAnimate(true);
+        cambiarFormularioEnviado(true)
+        setTimeout(() => cambiarFormularioEnviado(false), 1500)
         handleSubmit();
       }}
     >
@@ -50,6 +54,7 @@ function DeleteEntityModal({ item, handleClose }) {
           )}
           {!animate ? "Confirmar" : "Eliminando..."}
         </Button>
+        {formularioEnviado && <p style={{ color: 'green' }}>{item.type} {item.name.value} eliminado con éxito!</p>}
       </Form.Group>
     </Form>
   );
