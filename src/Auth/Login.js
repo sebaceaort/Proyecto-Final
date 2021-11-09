@@ -5,6 +5,7 @@ import login from "../services/authApi";
 
 const LoginButton = () => {
   const [show, setShow] = useState(false);
+  const [validation, setValidation] = useState(0)
   const { setUser } = useContext(UserContext);
 
   const handleClose = () => setShow(false);
@@ -31,12 +32,16 @@ const LoginButton = () => {
           window.localStorage.setItem("user", JSON.stringify(data));
           handleClose();
         } else {
+          setValidation(1)
+          setTimeout(() => setValidation(0), 2000)
           setAnimate(false);
-          alert("Usuario Inhabilitado, contactese con un administrador");
+          // alert("Usuario Inhabilitado, contactese con un administrador");
         }
       } else {
+        setValidation(2)
+        setTimeout(() => setValidation(0), 2000)
         setAnimate(false);
-        alert("Usuario o contraseña incorrectos");
+        // alert("Usuario o contraseña incorrectos");
       }
     }
 
@@ -99,6 +104,8 @@ const LoginButton = () => {
               {!animate ? "Iniciar Sesion" : "Loading..."}
             </Button>
           </Form.Group>
+          {validation===2 ? <p style={{ color: 'red' }}>Usuario o contraseña incorrectos</p> : validation===1 ? <p style={{ color: 'red' }}>Usuario Inhabilitado, contactese con un administrador</p> : null}
+
         </Form>
       </div>
     );

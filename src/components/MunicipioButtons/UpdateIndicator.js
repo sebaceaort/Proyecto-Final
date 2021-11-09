@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Form, Button, Image, Modal, Spinner } from "react-bootstrap";
+import { Button, Image, Modal } from "react-bootstrap";
 import { UpdateContext } from "../../context/update-context";
 import firewareApi from "../../services/fiwareApi";
 import { Formik } from "formik";
@@ -46,7 +46,6 @@ const IndicatorDataButton = ({ item }) => {
           }}
           validate={(valores) => {
             let errores = {};
-            let dias = Math.round((Date.now() - Date.parse(valores.fecha)) / (1000 * 60 * 60 * 24));
 
             if (!valores.monto) {
               errores.monto = ('Por favor ingrese un monto')
