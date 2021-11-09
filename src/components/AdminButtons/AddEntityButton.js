@@ -4,20 +4,17 @@ import {
   Button,
   Image,
   Modal,
-  Spinner,
   InputGroup
 } from "react-bootstrap";
 
 import { Formik, Field } from "formik";
 
 import firewareApi from "../../services/fiwareApi";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import Dropdown from "react-bootstrap/Dropdown";
 import { UpdateContext } from "../../context/update-context";
 
 //agregar POST
 function AddEntityModal({ item, handleClose }) {
-  const [animate, setAnimate] = useState(false);
+
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
 
   const element = declararElement(item.type);
@@ -38,10 +35,9 @@ function AddEntityModal({ item, handleClose }) {
 
   async function handleSubmit(valores) {
     try {
-      const data = await firewareApi.postEntity(valores, element, item.id);
+      await firewareApi.postEntity(valores, element, item.id);
       setTimeout(() => handleClose(), 1000)
     } catch (error) {
-      setAnimate(false);
       alert("Ups! Algo salió mal!");
     }
     setUpdate((state) => !state);
@@ -63,7 +59,6 @@ function AddEntityModal({ item, handleClose }) {
         }}
         validate={(valores) => {
           let errores = {};
-          let dias = Math.round((Date.now() - Date.parse(valores.fecha)) / (1000 * 60 * 60 * 24));
 
           if (!valores.nombre) {
             errores.nombre = ('Por favor ingrese un ' + element)
