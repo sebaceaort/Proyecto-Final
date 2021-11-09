@@ -58,7 +58,7 @@ export default function UsersDisabled() {
                       onClick={() => {
                         authApi.updateUsers(user._id);
                         alert("Usuario Deshabilitado!");
-                        window.location.reload();
+                        history.push("/UsersDisabled")
                       }}
                     >
                       Deshabilitar
