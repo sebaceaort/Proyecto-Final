@@ -39,7 +39,7 @@ export default function Historical() {
         <tbody>
           {historical[0]?.map((data, i) => {
             return (
-              <tr>
+              <tr key={i}>
                 <td>{i + 1}</td>
                 <td>{data.refEje}</td>
                 <td>{data.refSubEje}</td>

@@ -3,6 +3,7 @@ import { Button, Image, Modal } from "react-bootstrap";
 import { UpdateContext } from "../../context/update-context";
 import firewareApi from "../../services/fiwareApi";
 import { Formik } from "formik";
+import {GiStairsGoal} from "react-icons/gi"
 
 const AddGoalButton = ({ item }) => {
   const [show, setShow] = useState(false);
@@ -77,46 +78,52 @@ const AddGoalButton = ({ item }) => {
             handleBlur,
             touched,
           }) => (
-            <form className="row" onSubmit={handleSubmit}>
+            <form className="row smartFontModal p-3" onSubmit={handleSubmit}>
               <div className="row mb-3">
                 <label htmlFor="monto">Monto esperado</label>
-                <input
-                  className="mb-3"
-                  controlId="formMetaFecha"
-                  type="Integer"
-                  id="monto"
-                  name="monto"
-                  placeholder="Ingrese el monto esperado"
-                  value={values.monto}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                {touched.monto && errors.monto && (
-                  <div style={{ color: "red" }}>{errors.monto}</div>
-                )}
+                <div className=" w-100">
+                  <input
+                    className="mb-1 w-100"
+                    type="Integer"
+                    id="monto"
+                    name="monto"
+                    placeholder="Ingrese el monto esperado"
+                    value={values.monto}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {touched.monto && errors.monto && (
+                    <div style={{ color: "red" }}>{errors.monto}</div>
+                  )}
+                </div>
               </div>
               <div className="row mb-3">
                 <label htmlFor="fecha">Fecha</label>
-                <input
-                  type="date"
-                  id="fecha"
-                  name="fecha"
-                  placeholder="Ingrese una fecha"
-                  value={values.fecha}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                {touched.fecha && errors.fecha && (
-                  <div style={{ color: "red" }}>{errors.fecha}</div>
-                )}
+                <div className=" w-100">
+                  <input
+                    className="mb-1 w-100"
+                    type="date"
+                    id="fecha"
+                    name="fecha"
+                    placeholder="Ingrese una fecha"
+                    value={values.fecha}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {touched.fecha && errors.fecha && (
+                    <div style={{ color: "red" }}>{errors.fecha}</div>
+                  )}
+                </div>
               </div>
-              <div>
-                <button className="btn btn-primary" type="submit">
-                  Crear meta
-                </button>
-                {formularioEnviado && (
-                  <p style={{ color: "green" }}>Meta cargada con éxito!</p>
-                )}
+              <div className="row">
+                <div className="mt-3 w-100 text-center">
+                  <button className="btn btn-primary w-100" type="submit">
+                    Crear meta
+                  </button>
+                  {formularioEnviado && (
+                    <p style={{ color: "green" }}>Meta cargada con éxito!</p>
+                  )}
+                </div>
               </div>
             </form>
           )}
@@ -127,8 +134,11 @@ const AddGoalButton = ({ item }) => {
 
   return (
     <>
-      <Button className="btn-load-goal h-100" onClick={handleShow}>
-        Cargar Meta
+      <Button className="btn-load-goal h-100 p-1" onClick={handleShow}>
+        <div>
+        <GiStairsGoal className="fs-4"/>
+        <div className="ms-2">Cargar Meta</div>
+        </div>
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton></Modal.Header>

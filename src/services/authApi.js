@@ -33,7 +33,7 @@ async function login(usr, pass) {
   return user;
 }
 
-async function addUser(usr, name, lastname, pass, role, muni) {
+async function addUser(usr, name, lastname, pass, role, muni, history) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
@@ -61,7 +61,7 @@ async function addUser(usr, name, lastname, pass, role, muni) {
     .then((result) => {
       console.log(result);
       alert("Usuario Creado con exito!");
-      window.location.reload();
+     history.push("/UsersDisabled")
     })
     .catch((error) => console.log("error", error));
 }

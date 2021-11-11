@@ -3,6 +3,7 @@ import { Form, Button, Image, Modal, InputGroup } from "react-bootstrap";
 import { UpdateContext } from "../../context/update-context";
 import fiwareApi from "../../services/fiwareApi";
 import { Formik, Field } from "formik";
+import { FaPencilAlt } from "react-icons/fa";
 
 //agregar POST
 function UpdateEntityModal({ item, handleClose }) {
@@ -86,7 +87,7 @@ function UpdateEntityModal({ item, handleClose }) {
           handleBlur,
           touched,
         }) => (
-          <form className="row p-3" onSubmit={handleSubmit}>
+          <form className="row p-3 smartFontModal" onSubmit={handleSubmit}>
             <div className="row mb-3">
               <label htmlFor="name">
                 <b>Nombre del {entityType}:</b>
@@ -178,8 +179,15 @@ const UpdateEntityButton = ({ item }) => {
 
   return (
     <>
-      <Button variant="secondary" onClick={handleShow}>
-        Editar
+      <Button
+        className="smartFontModal"
+        variant="secondary"
+        onClick={handleShow}
+      >
+        <div>
+          <FaPencilAlt className="mb-1" />
+          <span className="p-1">Editar</span>
+        </div>
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton></Modal.Header>
