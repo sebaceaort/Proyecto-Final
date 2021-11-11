@@ -60,7 +60,6 @@ async function addUser(usr, name, lastname, pass, role, muni) {
   fetch(`${api}/users`, requestOptions)
     .then((result) => {
       console.log(result);
-      alert("Usuario Creado con exito!");
       window.location.reload();
     })
     .catch((error) => console.log("error", error));
