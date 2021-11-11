@@ -15,7 +15,10 @@ export default function AddUser() {
 
   async function handleSubmit(valores) {
     console.log("Usename " + valores.username + " nombre " + valores.name + " apellido " + valores.lastname + " contraseña " + valores.password + " role " + valores.role + " municipio " + valores.municipio)
-    await authApi.addUser(valores.username, valores.name, valores.lastname, valores.password, valores.role, valores.municipio);
+    await authApi.addUser(valores.username, valores.name, valores.lastname, valores.password, valores.role, valores.selectedMunicipio, history);
+ 
+    // async function handleSubmit() {
+  //   await authApi.addUser(username, name, lastname, password, role, municipio, history);
   }
 
   useEffect(() => {
@@ -329,7 +332,7 @@ export default function AddUser() {
             variant="primary"
             type="submit"
             size="lg"
-            className={"full-width"}
+            className={"full-width smartFontModal"}
           >
             Registrar nuevo usuario
           </Button>
@@ -339,7 +342,7 @@ export default function AddUser() {
         <Button
           variant="warning"
           size="lg"
-          className={"full-width"}
+          className={"full-width smartFontModal"}
           onClick={() => {
             history.push("/UsersDisabled");
           }}

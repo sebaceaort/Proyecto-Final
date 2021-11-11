@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Form, Button, Modal, Spinner } from "react-bootstrap";
 import firewareApi from "../../services/fiwareApi";
 import { UpdateContext } from "../../context/update-context";
-
+import { BsFillTrashFill } from "react-icons/bs";
 function DeleteEntityModal({ item, handleClose }) {
   const { setUpdate } = useContext(UpdateContext);
   const [animate, setAnimate] = useState(false);
@@ -11,13 +11,13 @@ function DeleteEntityModal({ item, handleClose }) {
   async function handleSubmit() {
     try {
       await firewareApi.deleteEntity(item.type, item.id);
-      
-      setTimeout(() => handleClose(), 3000)
+
+      setTimeout(() => handleClose(), 3000);
       setUpdate((state) => !state);
     } catch (error) {
       setAnimate(false);
-      cambiarFormularioRechazado(true)
-      setTimeout(() => cambiarFormularioRechazado(false), 1500)
+      cambiarFormularioRechazado(true);
+      setTimeout(() => cambiarFormularioRechazado(false), 1500);
     }
   }
 
@@ -26,14 +26,17 @@ function DeleteEntityModal({ item, handleClose }) {
       onSubmit={(e) => {
         e.preventDefault();
         setAnimate(true);
-        cambiarFormularioEnviado(true)
-        setTimeout(() => cambiarFormularioEnviado(!formularioRechazado), 1500)
+        cambiarFormularioEnviado(true);
+        setTimeout(() => cambiarFormularioEnviado(!formularioRechazado), 1500);
         handleSubmit();
       }}
     >
-      <Form.Group className="mb-3">
-        <Form.Label>
-          ¿Está seguro que desea elimniar el {item.type} {item.name.value} ?
+      <Form.Group className="mb-3 text-center smartFontModal">
+        <Form.Label className="mb-3">
+          <b>
+            {" "}
+            ¿Está seguro que desea elimniar el {item.type} {item.name.value} ?
+          </b>
         </Form.Label>
         <Button
           variant="primary"
@@ -54,7 +57,11 @@ function DeleteEntityModal({ item, handleClose }) {
           )}
           {!animate ? "Confirmar" : "Eliminando..."}
         </Button>
-        {formularioEnviado && <p style={{ color: 'green' }}>{item.type} {item.name.value} eliminado con éxito!</p>}
+        {formularioEnviado && (
+          <p style={{ color: "green" }}>
+            {item.type} {item.name.value} eliminado con éxito!
+          </p>
+        )}
       </Form.Group>
     </Form>
   );
@@ -67,8 +74,11 @@ const DeleteEntityButton = ({ item }) => {
 
   return (
     <>
-      <Button variant="danger" onClick={handleShow}>
-        Eliminar
+      <Button className="smartFontModal" variant="danger" onClick={handleShow}>
+        <div className="">
+          <BsFillTrashFill className="m-1" />
+          <span className="p-1">Eliminar</span>
+        </div>
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton></Modal.Header>

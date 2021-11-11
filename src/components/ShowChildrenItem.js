@@ -109,7 +109,7 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
                     </div>
                   </>
                 )}
-                <Card className="text-center mt-2">
+                <Card className="text-center mt-2 ">
                   <Card.Header className="mb-3">
                     <div>
                       Tipo: <b>{item.indicatorType.value}</b>

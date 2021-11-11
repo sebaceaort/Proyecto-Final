@@ -6,7 +6,7 @@ import AuthNav from "../Auth/AuthNav";
 import { BsFillPersonFill } from "react-icons/bs";
 
 const MainNav = (props) => (
-  <Nav className="mr-auto">
+  <Nav className="mr-auto smartFontModal">
     <Nav.Link
       as={RouterNavLink}
       to="/"
@@ -87,9 +87,9 @@ const NavBar = () => {
           <AuthNav />
           {user && (
             <>
-              <div style={{ marginLeft: "5px" }}>
-                <BsFillPersonFill />
-                {user.usName} {user.usLastName}
+              <div className="smartFontModal" style={{ marginLeft: "5px" }}>
+                <BsFillPersonFill className="mb-1"/>
+                <span> {user.usName} {user.usLastName}</span>
               </div>
             </>
           )}

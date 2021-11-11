@@ -34,8 +34,8 @@ export const MunicipioEntitiesScreen = () => {
       <Container>
         <Row>
           <Col>
-            <Card className="text-center">
-              <Card.Header>LISTADO DE MUNICIPIOS INTELIGENTES</Card.Header>
+            <Card className="text-center smartFontModal">
+              <Card.Header>LISTADO DE EJES</Card.Header>
               <Button
                 variant="warning"
                 onClick={() => {
