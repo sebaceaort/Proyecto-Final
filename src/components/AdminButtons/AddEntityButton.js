@@ -47,31 +47,22 @@ function AddEntityModal({ item, handleClose }) {
         initialValues={{
           nombre: "",
           descripcion: "",
-          tipoDato: "Número",
+          tipoDato: "",
         }}
         validate={(valores) => {
           let errores = {};
-          if (element !== "Indicador") {
-            if (!valores.nombre) {
-              errores.nombre = "Por favor ingrese un " + element;
-            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.nombre)) {
-              errores.nombre =
-                "El " + element + " solo puede contener letras y espacios";
-            } else if (valores.nombre.trim() === 0) {
-              errores.nombre = "Por favor ingrese un " + element + " no vacío";
-            }
-          } else {
-            if (!valores.nombre) {
-              errores.nombre = "Por favor ingrese un " + element;
-            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.nombre)) {
-              errores.nombre =
-                "El " + element + " solo puede contener letras y espacios";
-            } else if (valores.nombre.trim() === 0) {
-              errores.nombre = "Por favor ingrese un " + element + " no vacío";
-            }
+          if (!valores.nombre) {
+            errores.nombre = "Por favor ingrese un " + element;
+          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,50}$/.test(valores.nombre)) {
+            errores.nombre =
+              "El " + element + " solo puede contener letras y espacios";
+          } else if (valores.nombre.trim() === 0) {
+            errores.nombre = "Por favor ingrese un " + element + " no vacío";
+          }
+          if (element === "Indicator") {
             if (!valores.descripcion) {
               errores.descripcion = "Por favor ingrese una descripción";
-            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,150}$/.test(valores.descripcion)) {
+            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,600}$/.test(valores.descripcion)) {
               errores.descripcion =
                 "La descripción solo puede contener letras y espacios";
             } else if (valores.descripcion.trim() === 0) {
@@ -129,12 +120,16 @@ function AddEntityModal({ item, handleClose }) {
                       onChange={handleChange}
                       onBlur={handleBlur}
                     >
+                      <option>Seleccione el tipo de dato...</option>
                       <option value="Numero">Número</option>
                       <option value="Indice">Indice</option>
                       <option value="Porcentaje">Porcentaje</option>
                       <option value="Monto">Monto</option>
                     </Field>
                   </InputGroup>
+                  {values.tipoDato=== "Seleccione el tipo de dato..."&&(
+                    <div style={{ color: "red" }}>Por favor selecciona un tipo de dato</div>
+                  )}
 
                   <div className="mb-3 w-100">
                     <label htmlFor="nombre">

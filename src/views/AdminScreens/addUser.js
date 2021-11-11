@@ -1,23 +1,24 @@
 import { useState, useEffect } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, InputGroup } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import authApi from "../../services/authApi";
 import fiwareApi from "../../services/fiwareApi";
+import { Formik, Field } from "formik";
+
 
 export default function AddUser() {
-  const [username, setUsername] = useState("");
-  const [name, setName] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [password, setPassword] = useState("");
+  const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
   const [role, setRole] = useState({});
   const [roles, setRoles] = useState([]);
-  const [municipio, setMunicipio] = useState({});
-  const [selectedMunicipio, setSelectedMunicipio] = useState({});
   const [municipios, setMunicipios] = useState([]);
   const history = useHistory();
 
-  async function handleSubmit() {
-    await authApi.addUser(username, name, lastname, password, role, municipio, history);
+  async function handleSubmit(valores) {
+    console.log("Usename " + valores.username + " nombre " + valores.name + " apellido " + valores.lastname + " contraseña " + valores.password + " role " + valores.role + " municipio " + valores.municipio)
+    await authApi.addUser(valores.username, valores.name, valores.lastname, valores.password, valores.role, valores.selectedMunicipio, history);
+ 
+    // async function handleSubmit() {
+  //   await authApi.addUser(username, name, lastname, password, role, municipio, history);
   }
 
   useEffect(() => {
@@ -36,14 +37,206 @@ export default function AddUser() {
 
   return (
     <>
-      <Form
-      className="smartFontModal"
+
+      <Formik
+        initialValues={{
+          name: "",
+          lastname: "",
+          username: "",
+          password: "",
+          role: "",
+          selectedMunicipio: ""
+        }}
+        validate={(valores) => {
+          let errores = {};
+          if (!valores.name) {
+            errores.name = "Por favor ingrese un nombre"
+          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.name)) {
+            errores.name = "El nombre solo puede contener letras y espacios";
+          } else if (valores.name.trim() === "") {
+            errores.name = "Por favor ingrese un nombre que no este vacío";
+          }
+          if (!valores.lastname) {
+            errores.lastname = "Por favor ingrese un apellido"
+          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.lastname)) {
+            errores.lastname = "El apellido solo puede contener letras y espacios";
+          } else if (valores.lastname.trim() === "") {
+            errores.lastname = "Por favor ingrese un apellido que no este vacío";
+          }
+          if (!valores.username) {
+            errores.username = "Por favor ingrese un email"
+          } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(valores.username)) {
+            errores.username = "El formato de email no es correcto";
+          } else if (valores.username.trim() === "") {
+            errores.username = "Por favor ingrese un email que no este vacío";
+          }
+          if (!valores.password) {
+            errores.password = "Por favor ingrese una contraseña"
+          } else if (valores.password.replace(" ", "") !== valores.password) {
+            errores.password = "Por favor ingrese una contraseña sin espacios";
+          }
+          if (valores.role === "Selecciona un Rol") {
+            errores.role = "Por favor selecciona un rol"
+          }
+          return errores;
+        }}
+        onSubmit={(valores, { resetForm }) => {
+          resetForm();
+          console.log("Formulario enviado");
+          cambiarFormularioEnviado(true);
+          setTimeout(() => cambiarFormularioEnviado(false), 1000);
+          handleSubmit(valores);
+        }}
+      >
+        {({
+          values,
+          errors,
+          handleSubmit,
+          handleChange,
+          handleBlur,
+          touched,
+        }) => (
+          <form className="row" onSubmit={handleSubmit}>
+            <div className="row mb-3">
+              <label htmlFor="name">Ingrese su nombre: </label>
+              <input
+                className="mb-3"
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Ingrese el nombre"
+                value={values.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {touched.name && errors.name && (
+                <div style={{ color: "red" }}>{errors.name}</div>
+              )}
+            </div>
+            <div className="row mb-3">
+              <label htmlFor="lastname">Ingrese su apellido: </label>
+              <input
+                className="mb-3"
+                type="text"
+                id="lastname"
+                name="lastname"
+                placeholder="Ingrese el apellido"
+                value={values.lastname}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {touched.lastname && errors.lastname && (
+                <div style={{ color: "red" }}>{errors.lastname}</div>
+              )}
+            </div>
+            <div className="row mb-3">
+              <label htmlFor="username">Ingrese su Email: </label>
+              <input
+                className="mb-3"
+                type="email"
+                id="username"
+                name="username"
+                placeholder="Ingrese el email"
+                value={values.username}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {touched.username && errors.username && (
+                <div style={{ color: "red" }}>{errors.username}</div>
+              )}
+            </div>
+            <div className="row mb-3">
+              <label htmlFor="password">Ingrese una contraseña: </label>
+              <input
+                className="mb-3"
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Ingrese una contraseña"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {touched.password && errors.password && (
+                <div style={{ color: "red" }}>{errors.password}</div>
+              )}
+            </div>
+            <div>
+              <label htmlFor="role">Tipo de dato:</label>
+              <InputGroup className="mt-2 mb-3">
+                <Field
+                  name="role"
+                  as="select"
+                  value={values.role}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                >
+                  <option>Selecciona un Rol</option>
+                  {roles[0]?.map((rol, i) => {
+                    return (
+                      <>
+                        <option key={role.id} value={role.name}>
+                          {rol.name}
+                        </option>
+                      </>
+                    );
+                  })}
+                </Field>
+              </InputGroup>
+              {touched.role && errors.role && (
+                <div style={{ color: "red" }}>{errors.role}</div>
+              )}
+            </div>
+            {values.role !== "admin" && (
+              <div>
+                <label htmlFor="selectedMunicipio">Ingrese el municipio correspondiente: </label>
+                <InputGroup className="mt-2 mb-3">
+                  <Field
+                    name="selectedMunicipio"
+                    as="select"
+                    value={values.selectedMunicipio}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  >
+                    <option>Municipios...</option>
+                    {municipios[0]?.map((muni) => {
+                      return (
+                        <option key={muni.id} value={muni.id}>
+                          {muni.name.value}
+                        </option>
+                      );
+                    })}
+                  </Field>
+                </InputGroup>
+                {touched.selectedMunicipio && errors.selectedMunicipio && (
+                  <div style={{ color: "red" }}>{errors.selectedMunicipio}</div>
+                )}
+              </div>
+            )}
+            <div>
+              <Button
+                variant="primary"
+                type="submit"
+                size="lg"
+                className={"full-width"}
+              >
+                Registrar nuevo usuario
+              </Button>
+              {formularioEnviado && (
+                <p style={{ color: "green" }}>Usuario creado con éxito!</p>
+              )}
+            </div>
+          </form>
+        )}
+      </Formik>
+
+      {/* <Form
         onSubmit={(e) => {
           e.preventDefault();
           handleSubmit();
         }}
-      >
-        <Form.Group className="mb-3">
+      > */}
+      {/* <Form.Group className="mb-3">
           <Form.Label>Ingrese su nombre:</Form.Label>
           <Form.Control
             required
@@ -75,8 +268,8 @@ export default function AddUser() {
               setUsername(e.target.value);
             }}
           />
-        </Form.Group>
-        <Form.Group className="mb-3">
+        </Form.Group> */}
+      {/* <Form.Group className="mb-3">
           <Form.Label>Ingrese una contraseña:</Form.Label>
           <Form.Control
             required
@@ -87,8 +280,8 @@ export default function AddUser() {
               setPassword(e.target.value);
             }}
           />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicSelect">
+        </Form.Group> */}
+      {/* <Form.Group className="mb-3" controlId="formBasicSelect">
           <Form.Label>Ingrese un rol</Form.Label>
           <Form.Control
             required
@@ -109,8 +302,8 @@ export default function AddUser() {
               );
             })}
           </Form.Control>
-        </Form.Group>
-        {role !== "admin" && (
+        </Form.Group> */}
+      {/* {role !== "admin" && (
           <Form.Group className="mb-3">
             <Form.Label>Ingrese el municipio correspondiente</Form.Label>
             <Form.Select
@@ -133,8 +326,8 @@ export default function AddUser() {
               })}
             </Form.Select>
           </Form.Group>
-        )}
-        <Form.Group className="mb-3">
+        )} */}
+      {/* <Form.Group className="mb-3">
           <Button
             variant="primary"
             type="submit"
@@ -143,8 +336,8 @@ export default function AddUser() {
           >
             Registrar nuevo usuario
           </Button>
-        </Form.Group>
-      </Form>
+        </Form.Group> */}
+      {/* </Form> */}
       <div>
         <Button
           variant="warning"
