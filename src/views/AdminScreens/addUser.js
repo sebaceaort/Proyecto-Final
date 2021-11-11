@@ -17,7 +17,7 @@ export default function AddUser() {
   const history = useHistory();
 
   async function handleSubmit() {
-    await authApi.addUser(username, name, lastname, password, role, municipio);
+    await authApi.addUser(username, name, lastname, password, role, municipio, history);
   }
 
   useEffect(() => {
@@ -37,6 +37,7 @@ export default function AddUser() {
   return (
     <>
       <Form
+      className="smartFontModal"
         onSubmit={(e) => {
           e.preventDefault();
           handleSubmit();
@@ -138,7 +139,7 @@ export default function AddUser() {
             variant="primary"
             type="submit"
             size="lg"
-            className={"full-width"}
+            className={"full-width smartFontModal"}
           >
             Registrar nuevo usuario
           </Button>
@@ -148,7 +149,7 @@ export default function AddUser() {
         <Button
           variant="warning"
           size="lg"
-          className={"full-width"}
+          className={"full-width smartFontModal"}
           onClick={() => {
             history.push("/UsersDisabled");
           }}

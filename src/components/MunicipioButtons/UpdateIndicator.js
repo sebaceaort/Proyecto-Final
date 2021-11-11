@@ -3,6 +3,7 @@ import { Button, Image, Modal } from "react-bootstrap";
 import { UpdateContext } from "../../context/update-context";
 import firewareApi from "../../services/fiwareApi";
 import { Formik } from "formik";
+import{GrIndicator} from"react-icons/gr"
 
 const IndicatorDataButton = ({ item }) => {
   const [show, setShow] = useState(false);
@@ -67,7 +68,7 @@ const IndicatorDataButton = ({ item }) => {
             handleBlur,
             touched,
           }) => (
-            <form className="row" onSubmit={handleSubmit}>
+            <form className="row smartFontModal " onSubmit={handleSubmit}>
               <div className="row mb-3 ">
                 <label className="mb-2" htmlFor="monto">
                   <b>Monto esperado</b>
@@ -107,7 +108,8 @@ const IndicatorDataButton = ({ item }) => {
   return (
     <>
       <Button className="btn-load-indicator" onClick={handleShow}>
-        Cargar data indicador
+        <GrIndicator className="fs-4"/>
+        <div className="ms-2">  Cargar data indicador</div>      
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton></Modal.Header>

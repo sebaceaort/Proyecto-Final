@@ -33,7 +33,7 @@ export const AdminEntitiesScreen = () => {
       <Container>
         <Row>
           <Col>
-            <Card className="text-center">
+            <Card className="text-center smartFontModal">
               <Card.Header>LISTADO DE MUNICIPIOS INTELIGENTES</Card.Header>
               <Card.Body>
                 <div className="mb-2">

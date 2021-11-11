@@ -4,6 +4,7 @@ import { Form, Button, Image, Modal, InputGroup } from "react-bootstrap";
 import { Formik, Field } from "formik";
 import firewareApi from "../../services/fiwareApi";
 import { UpdateContext } from "../../context/update-context";
+import { MdLibraryAdd } from "react-icons/md";
 
 function AddEntityModal({ item, handleClose }) {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
@@ -95,7 +96,7 @@ function AddEntityModal({ item, handleClose }) {
           handleBlur,
           touched,
         }) => (
-          <form className="row p-3" onSubmit={handleSubmit}>
+          <form className="row p-3 smartFontModal" onSubmit={handleSubmit}>
             <div className="row mb-3">
               <label htmlFor="nombre">
                 <b>Nombre del {element}:</b>
@@ -184,8 +185,11 @@ const AddEntityButton = ({ item = { type: "" } }) => {
 
   return (
     <>
-      <Button variant="success" onClick={handleShow}>
-        Agregar
+      <Button className="smartFontModal" variant="success" onClick={handleShow}>
+        <div>
+          <MdLibraryAdd className="m-1" />
+          <span className="p-1">Agregar</span>
+        </div>
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton></Modal.Header>
