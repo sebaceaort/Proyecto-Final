@@ -48,10 +48,10 @@ function AddEntityModal({ item, handleClose }) {
       case "Municipio":
         return (
           <Image
-            src={imgEje}
-            
-            className="rounded mx-auto img-fluid mb-2 mt-2"
-          />
+          src={imgEje}
+          fluid
+          className="rounded img-fluid mb-2 mt-2"
+        />
         );
       default:
         return (
