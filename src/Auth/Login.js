@@ -113,7 +113,7 @@ const LoginButton = () => {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button className="smartFontModal" variant="primary" onClick={handleShow}>
         Log in
       </Button>
       <Modal show={show} onHide={handleClose}>

@@ -33,7 +33,7 @@ async function login(usr, pass) {
   return user;
 }
 
-async function addUser(usr, name, lastname, pass, role, muni) {
+async function addUser(usr, name, lastname, pass, role, muni, history) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
@@ -47,7 +47,7 @@ async function addUser(usr, name, lastname, pass, role, muni) {
     usPasswordHash: pass,
     usActive: false,
     usRole: role,
-    usMunicipio: muni
+    usMunicipio: muni,
   });
 
   var requestOptions = {
@@ -61,7 +61,7 @@ async function addUser(usr, name, lastname, pass, role, muni) {
     .then((result) => {
       console.log(result);
       alert("Usuario Creado con exito!");
-      window.location.reload();
+     history.push("/UsersDisabled")
     })
     .catch((error) => console.log("error", error));
 }
@@ -172,15 +172,16 @@ async function changePassword(userEmail, valores) {
 
   await fetch(`${api}/users/change/password/`, requestOptions)
     .then((response) => {
-     if (response.status != 200) {
-       throw new Error ("Ups! Algo a salido mal, intentelo de nuevo")
-     } else{
-      resp = response
-     }
-      })
+      if (response.status !== 200) {
+        throw new Error("Ups! Algo a salido mal, intentelo de nuevo");
+      } else {
+        resp = response;
+      }
+    })
     .catch((error) => {
-      console.log(error)
-      throw error});
+      console.log(error);
+      throw error;
+    });
 
   return resp;
 }
@@ -193,5 +194,5 @@ export default {
   updateUsers,
   getRoles,
   changePassword,
-  getAllUsers
+  getAllUsers,
 };

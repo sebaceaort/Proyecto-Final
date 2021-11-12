@@ -1,12 +1,9 @@
-import { Table, Button, Pagination } from "react-bootstrap";
+import { Table, Pagination } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import fiwareApi from "../../services/fiwareApi";
-import { GoGraph } from "react-icons/go";
-import { useHistory } from "react-router-dom";
 
 export default function Historical() {
   const [historical, setHistorical] = useState([]);
-  const history = useHistory();
 
   useEffect(() => {
     async function getHistorical() {
@@ -26,14 +23,6 @@ export default function Historical() {
 
   return (
     <>
-      <Button
-        variant="warning"
-        onClick={() => {
-          history.push("/show-graph");
-        }}
-      >
-        <GoGraph /> Ver grafico
-      </Button>
       <Table striped bordered hover responsive>
         <thead>
           <tr>
@@ -50,7 +39,7 @@ export default function Historical() {
         <tbody>
           {historical[0]?.map((data, i) => {
             return (
-              <tr>
+              <tr key={i}>
                 <td>{i + 1}</td>
                 <td>{data.refEje}</td>
                 <td>{data.refSubEje}</td>

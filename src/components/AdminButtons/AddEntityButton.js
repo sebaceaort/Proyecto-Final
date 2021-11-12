@@ -1,20 +1,12 @@
 import React, { useContext, useState } from "react";
-import {
-  Form,
-  Button,
-  Image,
-  Modal,
-  Spinner,
-  InputGroup
-} from "react-bootstrap";
+import { Form, Button, Image, Modal, InputGroup } from "react-bootstrap";
 
 import { Formik, Field } from "formik";
 import firewareApi from "../../services/fiwareApi";
 import { UpdateContext } from "../../context/update-context";
-
+import { MdLibraryAdd } from "react-icons/md";
 
 function AddEntityModal({ item, handleClose }) {
-  const [animate, setAnimate] = useState(false);
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
 
   const element = declararElement(item.type);
@@ -35,11 +27,9 @@ function AddEntityModal({ item, handleClose }) {
 
   async function handleSubmit(valores) {
     try {
-      console.log(valores)
-      const data = await firewareApi.postEntity(valores, element, item.id);
-      setTimeout(() => handleClose(), 1000)
+      await firewareApi.postEntity(valores, element, item.id);
+      setTimeout(() => handleClose(), 1000);
     } catch (error) {
-      setAnimate(false);
       alert("Ups! Algo salió mal!");
     }
     setUpdate((state) => !state);
@@ -57,99 +47,124 @@ function AddEntityModal({ item, handleClose }) {
         initialValues={{
           nombre: "",
           descripcion: "",
-          tipoDato: "Número"
+          tipoDato: "",
         }}
         validate={(valores) => {
-          console.log(valores.nombre)
           let errores = {};
-          if(element!=="Indicador"){
-            if (!valores.nombre) {
-              errores.nombre = ('Por favor ingrese un ' + element)
-            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.nombre)) {
-              errores.nombre = ('El ' + element + ' solo puede contener letras y espacios')
-            } else if ((valores.nombre).trim() == 0) {
-              errores.nombre = ('Por favor ingrese un ' + element + ' no vacío')
-            }
-          } else{
-            if (!valores.nombre) {
-              errores.nombre = ('Por favor ingrese un ' + element)
-            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.nombre)) {
-              errores.nombre = ('El ' + element + ' solo puede contener letras y espacios')
-            } else if ((valores.nombre).trim() == 0) {
-              errores.nombre = ('Por favor ingrese un ' + element + ' no vacío')
-            }
+          if (!valores.nombre) {
+            errores.nombre = "Por favor ingrese un " + element;
+          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,50}$/.test(valores.nombre)) {
+            errores.nombre =
+              "El " + element + " solo puede contener letras y espacios";
+          } else if (valores.nombre.trim() === 0) {
+            errores.nombre = "Por favor ingrese un " + element + " no vacío";
+          }
+          if (element === "Indicator") {
             if (!valores.descripcion) {
-              errores.descripcion = ('Por favor ingrese una descripción')
-            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,150}$/.test(valores.descripcion)) {
-              errores.descripcion = ('La descripción solo puede contener letras y espacios')
-            } else if ((valores.descripcion).trim() == 0) {
-              errores.descripcion = ('Por favor ingrese una descripcion no vacía')
+              errores.descripcion = "Por favor ingrese una descripción";
+            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,600}$/.test(valores.descripcion)) {
+              errores.descripcion =
+                "La descripción solo puede contener letras y espacios";
+            } else if (valores.descripcion.trim() === 0) {
+              errores.descripcion =
+                "Por favor ingrese una descripcion no vacía";
             }
           }
-          console.log(errores)
           return errores;
         }}
         onSubmit={(valores, { resetForm }) => {
           resetForm();
-          console.log("Formulario enviado")
-          cambiarFormularioEnviado(true)
-          setTimeout(() => cambiarFormularioEnviado(false), 1000)
-          handleSubmit(valores)
+          cambiarFormularioEnviado(true);
+          setTimeout(() => cambiarFormularioEnviado(false), 1000);
+          handleSubmit(valores);
         }}
       >
-        {({ values, errors, handleSubmit, handleChange, handleBlur, touched }) => (
-          <form className="row" onSubmit={handleSubmit}>
+        {({
+          values,
+          errors,
+          handleSubmit,
+          handleChange,
+          handleBlur,
+          touched,
+        }) => (
+          <form className="row p-3 smartFontModal" onSubmit={handleSubmit}>
             <div className="row mb-3">
-              <label htmlFor="nombre">Nombre del {element}:</label>
-              <input className="mb-3" controlId="formNombre"
-                type="Text"
-                id="nombre"
-                name="nombre"
-                placeholder="Ingrese el nombre esperado"
-                value={values.nombre}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {touched.nombre && errors.nombre && <div style={{ color: 'red' }}>{errors.nombre}</div>}
+              <label htmlFor="nombre">
+                <b>Nombre del {element}:</b>
+              </label>
+              <div className="w-100">
+                <input
+                  className="mt-2 mb-3 w-100"
+                  type="Text"
+                  id="nombre"
+                  name="nombre"
+                  placeholder="Ingrese el nombre esperado"
+                  value={values.nombre}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {touched.nombre && errors.nombre && (
+                  <div style={{ color: "red" }}>{errors.nombre}</div>
+                )}
+              </div>
+              {element === "Indicator" && (
+                <>
+                  <label htmlFor="nombre">
+                    <b>Tipo de dato</b>
+                  </label>
+                  <InputGroup className="mt-2 mb-3">
+                    <Field
+                      name="tipoDato"
+                      as="select"
+                      value={values.tipoDato}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    >
+                      <option>Seleccione el tipo de dato...</option>
+                      <option value="Numero">Número</option>
+                      <option value="Indice">Indice</option>
+                      <option value="Porcentaje">Porcentaje</option>
+                      <option value="Monto">Monto</option>
+                    </Field>
+                  </InputGroup>
+                  {values.tipoDato=== "Seleccione el tipo de dato..."&&(
+                    <div style={{ color: "red" }}>Por favor selecciona un tipo de dato</div>
+                  )}
+
+                  <div className="mb-3 w-100">
+                    <label htmlFor="nombre">
+                      <b>Descripción</b>
+                    </label>
+                    <div className="mt-2 w-100">
+                      <Form.Control
+                        className="w-100"
+                        required
+                        as="textarea"
+                        row={3}
+                        id="descripcion"
+                        name="descripcion"
+                        placeholder="Ingrese una descripción"
+                        value={values.descripcion}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      />
+                      {touched.descripcion && errors.descripcion && (
+                        <div style={{ color: "red" }}>{errors.descripcion}</div>
+                      )}
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
-            {element === "Indicator" ? (
-              <>
-                <label htmlFor="nombre">Tipo de dato</label>
-                <InputGroup className="mb-3">
-                  <Field
-                    name="tipoDato"
-                    as="select"
-                    value={values.tipoDato}
-                    onChange={handleChange}
-                    onBlur={handleBlur}>
-
-                    <option value="Numero">Número</option>
-                    <option value="Indice">Indice</option>
-                    <option value="Porcentaje">Porcentaje</option>
-                    <option value="Monto">Monto</option>
-                  </Field>
-                </InputGroup>
-
-                <div className="row mb-3">
-                  <label htmlFor="nombre">Descripción</label>
-                  <Form.Control
-                    required
-                    as="textarea"
-                    row={3}
-                    id="descripcion"
-                    name="descripcion"
-                    placeholder="Ingrese una descripción"
-                    value={values.descripcion}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                  {touched.descripcion && errors.descripcion && <div style={{ color: 'red' }}>{errors.descripcion}</div>}
-                </div>
-              </>
-            ) : null}
-            <div>
-              <button className="btn btn-primary" type="submit">Crear {element}</button>
-              {formularioEnviado && <p style={{ color: 'green' }}>{element} cargado con éxito!</p>}
+            <div className="row">
+              <div className=" w-100 text-center">
+                <button className="btn btn-primary  w-100" type="submit">
+                  Crear {element}
+                </button>
+                {formularioEnviado && (
+                  <p style={{ color: "green" }}>{element} cargado con éxito!</p>
+                )}
+              </div>
             </div>
           </form>
         )}
@@ -165,8 +180,11 @@ const AddEntityButton = ({ item = { type: "" } }) => {
 
   return (
     <>
-      <Button variant="success" onClick={handleShow}>
-        Agregar
+      <Button className="smartFontModal" variant="success" onClick={handleShow}>
+        <div>
+          <MdLibraryAdd className="m-1" />
+          <span className="p-1">Agregar</span>
+        </div>
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton></Modal.Header>
@@ -178,4 +196,3 @@ const AddEntityButton = ({ item = { type: "" } }) => {
   );
 };
 export default AddEntityButton;
-

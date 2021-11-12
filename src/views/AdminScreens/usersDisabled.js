@@ -16,7 +16,7 @@ export default function UsersDisabled() {
   }, []);
 
   return (
-    <Table striped bordered hover responsive>
+    <Table className="smartFontModal" striped bordered hover responsive>
       <thead>
         <tr>
           <th>#</th>
@@ -44,7 +44,7 @@ export default function UsersDisabled() {
                       onClick={() => {
                         authApi.updateUsers(user._id);
                         alert("Usuario Habilitado!");
-                        history.push("/UsersDisabled");
+                        history.replace("/UsersDisabled")
                       }}
                     >
                       Habilitar
@@ -57,7 +57,7 @@ export default function UsersDisabled() {
                       onClick={() => {
                         authApi.updateUsers(user._id);
                         alert("Usuario Deshabilitado!");
-                        history.push("/UsersDisabled");
+                        history.replace("/UsersDisabled")
                       }}
                     >
                       Deshabilitar

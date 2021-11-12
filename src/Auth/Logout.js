@@ -20,7 +20,7 @@ const LogoutButton = () => {
     <Button
       id="test"
       variant="danger"
-      className="btn-margin"
+      className="btn-margin smartFontModal"
       onClick={() => {
         closeSesion();
       }}
