@@ -5,6 +5,11 @@ import fiwareApi from "../../services/fiwareApi";
 import { Formik, Field } from "formik";
 import { FaPencilAlt } from "react-icons/fa";
 
+import imgIndicator from "../../assets/edit3.jpg";
+import imgEje from "../../assets/edit.jpg";
+import imgSubEje from "../../assets/edit2.jpg";
+import imgMuni from "../../assets/editmuni.jpg";
+
 //agregar POST
 function UpdateEntityModal({ item, handleClose }) {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
@@ -21,14 +26,46 @@ function UpdateEntityModal({ item, handleClose }) {
     setUpdate((state) => !state);
   }
 
+  function selectImg(type) {
+    switch (type) {
+      case "SubEje":
+        return (
+          <Image
+            src={imgSubEje}
+            fluid
+            className="rounded img-fluid mb-2 mt-2"
+          />
+        );
+      case "Eje":
+        return (
+          <Image
+            src={imgEje}
+            fluid
+            className="rounded img-fluid mb-2 mt-2"
+          />
+        );
+      case "Municipio":
+        return (
+          <Image
+            src={imgMuni}
+            fluid
+            className="rounded img-fluid mb-2 mt-2"
+          />
+        );
+      default:
+        return (
+          <Image
+            src={imgIndicator}
+            fluid
+            className= "rounded img-fluid mb-2 mt-2"
+          />
+        );
+    }
+  }
   return (
     <div className="container-login">
-      <Image
-        src="https://pbs.twimg.com/media/EGnVk29XYAMpxVX.jpg"
-        fluid
-        className="centered-image"
-      />
-
+     
+    {selectImg(item.type)}
       <Formik
         initialValues={{
           name: item.name.value,
@@ -190,7 +227,9 @@ const UpdateEntityButton = ({ item }) => {
         </div>
       </Button>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton></Modal.Header>
+        <Modal.Header closeButton>  <h1 className="text-center smartFontModal fs-3">
+            Editar {item.type}
+          </h1></Modal.Header>
         <Modal.Body>
           <UpdateEntityModal item={item} handleClose={handleClose} />
         </Modal.Body>

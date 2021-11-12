@@ -5,6 +5,10 @@ import { Formik, Field } from "formik";
 import firewareApi from "../../services/fiwareApi";
 import { UpdateContext } from "../../context/update-context";
 import { MdLibraryAdd } from "react-icons/md";
+import imgIndicator from "../../assets/indicadores.jpg";
+import imgEje from "../../assets/eje.jpg";
+import imgSubEje from "../../assets/subEje.jpg";
+import imgMuni from "../../assets/muniAdd.jpg";
 
 function AddEntityModal({ item, handleClose }) {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
@@ -23,6 +27,43 @@ function AddEntityModal({ item, handleClose }) {
     }
   }
 
+  function selectImg(type) {
+    switch (type) {
+      case "SubEje":
+        return (
+          <Image
+            src={imgIndicator}
+            fluid
+            className="rounded img-fluid mb-2 mt-2"
+          />
+        );
+      case "Eje":
+        return (
+          <Image
+            src={imgSubEje}
+            fluid
+            className="rounded img-fluid mb-2 mt-2"
+          />
+        );
+      case "Municipio":
+        return (
+          <Image
+          src={imgEje}
+          fluid
+          className="rounded img-fluid mb-2 mt-2"
+        />
+        );
+      default:
+        return (
+          <Image
+            src={imgMuni}
+            fluid
+            className= "rounded img-fluid mb-2 mt-2"
+          />
+        );
+    }
+  }
+
   const { setUpdate } = useContext(UpdateContext);
 
   async function handleSubmit(valores) {
@@ -37,12 +78,7 @@ function AddEntityModal({ item, handleClose }) {
 
   return (
     <div className="container-login">
-      <Image
-        src="https://pbs.twimg.com/media/EGnVk29XYAMpxVX.jpg"
-        fluid
-        className="centered-image"
-      />
-
+      {selectImg(item.type)}
       <Formik
         initialValues={{
           nombre: "",
@@ -127,8 +163,10 @@ function AddEntityModal({ item, handleClose }) {
                       <option value="Monto">Monto</option>
                     </Field>
                   </InputGroup>
-                  {values.tipoDato=== "Seleccione el tipo de dato..."&&(
-                    <div style={{ color: "red" }}>Por favor selecciona un tipo de dato</div>
+                  {values.tipoDato === "Seleccione el tipo de dato..." && (
+                    <div style={{ color: "red" }}>
+                      Por favor selecciona un tipo de dato
+                    </div>
                   )}
 
                   <div className="mb-3 w-100">
@@ -178,6 +216,19 @@ const AddEntityButton = ({ item = { type: "" } }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  function declararElement(type) {
+    switch (type) {
+      case "SubEje":
+        return "Indicador";
+      case "Eje":
+        return "SubEje";
+      case "Municipio":
+        return "Eje";
+      default:
+        return "Municipio";
+    }
+  }
+
   return (
     <>
       <Button className="smartFontModal" variant="success" onClick={handleShow}>
@@ -187,7 +238,11 @@ const AddEntityButton = ({ item = { type: "" } }) => {
         </div>
       </Button>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton></Modal.Header>
+        <Modal.Header closeButton>
+          <h1 className="text-center smartFontModal fs-3">
+            Nuevo {declararElement(item.type)}
+          </h1>
+        </Modal.Header>
         <Modal.Body>
           <AddEntityModal item={item} handleClose={handleClose} />
         </Modal.Body>

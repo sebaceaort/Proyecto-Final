@@ -44,3 +44,32 @@ h2, p {
     width: 50%;
 }
 
+.btn-add-user {
+    background-color:$blue-500;
+    color: white;
+    font-weight: bold;
+    border: none;
+    &:hover{
+        background-color:$blue-600;
+        color: rgb(206, 206, 206);
+    }
+}
+
+.btn-user {
+    font-family: 'Dosis', sans-serif;
+    font-size: 20px;
+    background-color:$yellow-500;
+    color: black;
+    font-weight: bold;
+    border: none;
+    &:hover{
+        background-color:$yellow-700;
+        color:white;
+    }
+}
+
+.select-rol{
+    height: 35%;
+}
+
+

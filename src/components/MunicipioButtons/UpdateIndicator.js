@@ -4,6 +4,7 @@ import { UpdateContext } from "../../context/update-context";
 import firewareApi from "../../services/fiwareApi";
 import { Formik } from "formik";
 import{GrIndicator} from"react-icons/gr"
+import img from "../../assets/indicador.jpg"
 
 const IndicatorDataButton = ({ item }) => {
   const [show, setShow] = useState(false);
@@ -31,9 +32,9 @@ const IndicatorDataButton = ({ item }) => {
     return (
       <div className="container-login p-3">
         <Image
-          src="https://pbs.twimg.com/media/EGnVk29XYAMpxVX.jpg"
+          src={img}
           fluid
-          className="centered-image"
+          className="rounded img-fluid mb-2 mt-2"
         />
 
         <Formik
@@ -112,7 +113,7 @@ const IndicatorDataButton = ({ item }) => {
         <div className="ms-2">  Cargar data indicador</div>      
       </Button>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton></Modal.Header>
+        <Modal.Header closeButton>   <h1 className="text-center smartFontModal fs-3">Carga de Indicador</h1></Modal.Header>
         <Modal.Body className="pr-2">
           <IndicatorDataModal />
         </Modal.Body>
