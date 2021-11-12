@@ -4,6 +4,7 @@ import { UpdateContext } from "../../context/update-context";
 import firewareApi from "../../services/fiwareApi";
 import { Formik } from "formik";
 import {GiStairsGoal} from "react-icons/gi"
+import img from "../../assets/meta2.png"
 
 const AddGoalButton = ({ item }) => {
   const [show, setShow] = useState(false);
@@ -30,9 +31,9 @@ const AddGoalButton = ({ item }) => {
     return (
       <div className="container-login">
         <Image
-          src="https://pbs.twimg.com/media/EGnVk29XYAMpxVX.jpg"
+          src= {img}
           fluid
-          className="centered-image"
+          className="rounded img-fluid mb-2 mt-2"
         />
 
         <Formik
@@ -141,7 +142,7 @@ const AddGoalButton = ({ item }) => {
         </div>
       </Button>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton></Modal.Header>
+        <Modal.Header closeButton><h1 className="text-center smartFontModal fs-3">Carga de Meta</h1></Modal.Header>
         <Modal.Body>
           <AddGoalModal />
         </Modal.Body>

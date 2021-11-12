@@ -46,7 +46,7 @@ const LoginButton = () => {
     }
 
     return (
-      <div className="container-login">
+      <div className="container-login smartFontModal">
         <Image
           src="https://pbs.twimg.com/media/EGnVk29XYAMpxVX.jpg"
           fluid
@@ -59,8 +59,8 @@ const LoginButton = () => {
             handleSubmit();
           }}
         >
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Nombre de usuario:</Form.Label>
+          <Form.Group className="mb-3" >
+            <Form.Label><b>Nombre de usuario:</b></Form.Label>
             <Form.Control
               required
               type="email"
@@ -71,8 +71,8 @@ const LoginButton = () => {
               }}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Contraseña</Form.Label>
+          <Form.Group className="mb-3" >
+            <Form.Label><b>Contraseña:</b></Form.Label>
             <Form.Control
               required
               type="password"
