@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import authApi from "../../services/authApi";
 
-
 export default function UsersDisabled() {
   const history = useHistory();
   const [users, setUsers] = useState([]);
