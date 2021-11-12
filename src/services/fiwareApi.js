@@ -276,6 +276,29 @@ async function getGraphData(subEjeId, refEje) {
   return arr;
 }
 
+async function getHistoricalDataByMunicipio(idMunicipio) {
+  let arr = [];
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
+
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  await fetch(`${api}/fiware/historical/`+idMunicipio, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      arr = res;
+    })
+    .catch((err) => console.log(err));
+
+  return arr;
+}
+
 async function getHistoricalData() {
   let arr = [];
   var myHeaders = new Headers();
@@ -292,7 +315,6 @@ async function getHistoricalData() {
   await fetch(`${api}/fiware/historical`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      console.log(res);
       arr = res;
     })
     .catch((err) => console.log(err));
@@ -306,6 +328,7 @@ export default {
   getDataByQuery,
   getDataByType,
   getHistoricalData,
+  getHistoricalDataByMunicipio,
   postEntity,
   deleteEntity,
   postNewGoal,
