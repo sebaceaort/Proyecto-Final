@@ -110,7 +110,7 @@ const IndicatorDataButton = ({ item }) => {
     <>
       <Button className="btn-load-indicator" onClick={handleShow}>
         <GrIndicator className="fs-4"/>
-        <div className="ms-2">  Cargar data indicador</div>      
+        <div className="ms-2">  Cargar datos indicador</div>      
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>   <h1 className="text-center smartFontModal fs-3">Carga de Indicador</h1></Modal.Header>

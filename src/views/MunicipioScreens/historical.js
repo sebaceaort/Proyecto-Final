@@ -15,7 +15,7 @@ export default function Historical() {
 
   async function getHistorical() {
     const historicalData = await fiwareApi.getHistoricalData();
-
+    console.log(historicalData)
     // const historicalData = await fiwareApi.getHistoricalDataByMunicipio(
     //   idMunicipio
     // );
@@ -26,14 +26,15 @@ export default function Historical() {
   useEffect(() => {
     getHistorical();
   }, []);
+  
 
-  const formatDate = (date) => {
-    let dia = date.slice(8, 10);
-    let mes = date.slice(5, 7);
-    let anio = date.slice(0, 4);
+  // const formatDate = (date) => {
+  //   let dia = date.slice(8, 10);
+  //   let mes = date.slice(5, 7);
+  //   let anio = date.slice(0, 4);
 
-    return dia + "-" + mes + "-" + anio;
-  };
+  //   return dia + "-" + mes + "-" + anio;
+  // };
 
   // const dateFilters = dateFilter({
   //   placeholder: 'custom placeholder',  // placeholder for date input
