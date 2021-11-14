@@ -49,7 +49,7 @@ function ChangePassModal({ handleClose }) {
           let errores = {};
 
           if (!valores.password) {
-            errores.password = "Por favor ingrese su contraseña actual ";
+            errores.password = "Por favor ingrese su contraseña actual";
           }
           if (valores.password === valores.newPassword) {
             errores.newPassword =
