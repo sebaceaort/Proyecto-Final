@@ -20,6 +20,10 @@ export default function UsersDisabled() {
     getUsers();
   }, []);
 
+   async function deleteUserById (user) {
+    await authApi.deleteUser(user,history)
+  }
+
   const FormModalUpdateUser = (user) => {
     console.log(user);
     return (
@@ -47,6 +51,7 @@ export default function UsersDisabled() {
             <th>Email</th>
             <th>Gestionar usuarios</th>
             <th>Actualizar datos</th>
+            <th>Eliminar usuario</th>
           </tr>
         </thead>
         <tbody>
@@ -61,11 +66,11 @@ export default function UsersDisabled() {
                   <td>
                     {(!user.usActive && (
                       <Button
-                        variant="primary"
+                        variant="success"
                         size="lg"
                         className={"full-width btnEnable"}
                         onClick={() => {
-                          authApi.updateUsers(user._id);
+                          authApi.changeStateUser(user._id);
                           alert("Usuario Habilitado!");
                           history.replace("/UsersDisabled");
                         }}
@@ -74,11 +79,11 @@ export default function UsersDisabled() {
                       </Button>
                     )) || (
                       <Button
-                        variant="danger"
+                        variant="secondary"
                         size="lg"
                         className={"full-width"}
                         onClick={() => {
-                          authApi.updateUsers(user._id);
+                          authApi.changePassword(user._id);
                           alert("Usuario Deshabilitado!");
                           history.replace("/UsersDisabled");
                         }}
@@ -90,7 +95,7 @@ export default function UsersDisabled() {
                 </>
                 <td>
                   <Button
-                    variant="warning"
+                    variant="primary"
                     size="lg"
                     className={"full-width"}
                     onClick={() => {
@@ -108,6 +113,19 @@ export default function UsersDisabled() {
                       <FormModalUpdateUser user={user} />
                     </Modal.Body>
                   </Modal>
+                </td>
+                <td>
+                  <Button
+                    variant="danger"
+                    size="lg"
+                    className={"full-width"}
+                    onClick={async () => {
+                      // console.log(user._id)
+                      await deleteUserById(user);
+                    }}
+                  >
+                    Eliminar
+                  </Button>
                 </td>
               </tr>
             );

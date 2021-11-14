@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import authApi from "../../services/authApi";
 import fiwareApi from "../../services/fiwareApi";
 import { Formik, Field } from "formik";
-import {FaUserPlus, FaUsersCog} from "react-icons/fa"
+import { FaUserPlus, FaUsersCog } from "react-icons/fa";
 
 export default function AddUser() {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
@@ -39,7 +39,6 @@ export default function AddUser() {
     getRoles();
     getMunicipios();
   }, []);
-
 
   return (
     <>
@@ -190,7 +189,7 @@ export default function AddUser() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 >
-                  <option >Selecciona un Rol</option>
+                  <option>Selecciona un Rol</option>
                   {roles[0]?.map((rol, i) => {
                     return (
                       <>
@@ -241,7 +240,7 @@ export default function AddUser() {
                 size="lg"
                 className="full-width btn-add-user"
               >
-                <FaUserPlus className="mb-1 fs-3"/>
+                <FaUserPlus className="mb-1 fs-3" />
                 <span className="ms-2">Registrar nuevo usuario</span>
               </Button>
               {formularioEnviado && (
@@ -261,9 +260,8 @@ export default function AddUser() {
             history.push("/UsersDisabled");
           }}
         >
-          <FaUsersCog className="fs-2"/>
+          <FaUsersCog className="fs-2" />
           <span className="ms-2"> Gestionar usuarios</span>
-         
         </Button>
       </div>
     </>

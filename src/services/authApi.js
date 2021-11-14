@@ -1,4 +1,4 @@
-const api = process.env.REACT_APP_MONGO_URL;
+const api = process.env.REACT_APP_MONGO_URL_DEV;
 
 async function login(usr, pass) {
   let user = "";
@@ -61,7 +61,7 @@ async function addUser(usr, name, lastname, pass, role, muni, history) {
     .then((result) => {
       console.log(result);
       alert("Usuario Creado con exito!");
-     history.push("/UsersDisabled")
+      history.push("/UsersDisabled");
     })
     .catch((error) => console.log("error", error));
 }
@@ -110,7 +110,7 @@ async function getAllUsers() {
   return dUsers;
 }
 
-async function updateUsers(userId) {
+async function changeStateUser(userId) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
@@ -186,13 +186,36 @@ async function changePassword(userEmail, valores) {
   return resp;
 }
 
+async function deleteUser(usr, history) {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
+
+  var requestOptions = {
+    method: "DELETE",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  fetch("http://localhost:3000/users/" + usr._id, requestOptions)
+    .then((result) => {
+      if(result.ok){
+        alert("Usuario eliminado con exito!");
+        history.push("/usersDisabled");
+      }
+    })
+    .catch((error) => alert(error.message));
+}
+
 //eslint-disable-next-line
 export default {
   login,
   addUser,
   getDisabledUsers,
-  updateUsers,
+  changeStateUser,
   getRoles,
   changePassword,
   getAllUsers,
+  deleteUser,
 };
