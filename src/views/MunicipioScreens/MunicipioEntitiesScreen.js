@@ -6,6 +6,7 @@ import { UserContext } from "../../context/user-context";
 import { UpdateContext } from "../../context/update-context";
 import { Redirect, useHistory } from "react-router-dom";
 import { GoGraph } from "react-icons/go";
+import { Roles } from "../../enums/Roles";
 
 export const MunicipioEntitiesScreen = () => {
   const [data, setData] = useState([]);
@@ -15,7 +16,7 @@ export const MunicipioEntitiesScreen = () => {
 
   useEffect(() => {
     const municipio = user.usMunicipio;
-    if (user.usRole !== "admin") {
+    if (user.usRole === Roles.municipio) {
       async function getEntities() {
         const entities = await fiwareApi.getDataByQuery(
           "refMunicipio==" + municipio

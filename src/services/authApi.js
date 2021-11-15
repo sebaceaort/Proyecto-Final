@@ -201,12 +201,52 @@ async function deleteUser(usr, history) {
   fetch("http://localhost:3000/users/" + usr._id, requestOptions)
     .then((result) => {
       if(result.ok){
-        alert("Usuario eliminado con exito!");
         history.push("/usersDisabled");
       }
     })
     .catch((error) => alert(error.message));
 }
+async function updateUser(valores, item) {
+  let resp;
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization", window.localStorage.getItem("token"));
+
+  var myBody = {
+    _id : item._id,
+    usEmail: valores.username,
+    usName: valores.name,
+    usLastName: valores.lastname,
+    usActive : item.usActive,
+    usRole : item.usRole,
+    usMunicipio : item.usMunicipio ? item.usMunicipio : "",
+
+  };
+
+  var requestOptions = {
+    method: "PUT",
+    headers: myHeaders,
+    body: JSON.stringify(myBody),
+    redirect: "follow",
+  };
+
+  await fetch(`${api}/users/`, requestOptions)
+    .then((response) => {
+      if (response.status !== 200) {
+        throw new Error("Ups! Algo a salido mal, intentelo de nuevo");
+      } else {
+        resp = response;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      throw error;
+    });
+
+  return resp;
+}
+
 
 //eslint-disable-next-line
 export default {
@@ -218,4 +258,5 @@ export default {
   changePassword,
   getAllUsers,
   deleteUser,
+  updateUser,
 };
