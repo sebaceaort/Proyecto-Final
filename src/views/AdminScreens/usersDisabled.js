@@ -1,17 +1,19 @@
-import { Table, Button, Modal, Form } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import authApi from "../../services/authApi";
 import DeleteUserButton from "../../components/AdminButtons/DeleteUserButton"
+import UpdateUserButton from "../../components/AdminButtons/EditUserButton";
 
 export default function UsersDisabled() {
   const history = useHistory();
-  const [show, setShow] = useState(false);
   const [users, setUsers] = useState([]);
-  const handleClose = () => setShow(false);
-  const handleShow = () => {
-    setShow(true);
-  };
+  
+  // const [show, setShow] = useState(false);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => {
+  //   setShow(true);
+  // };
 
   useEffect(() => {
     async function getUsers() {
@@ -22,21 +24,7 @@ export default function UsersDisabled() {
   }, []);
 
 
-  const FormModalUpdateUser = (user) => {
-    console.log(user);
-    return (
-      <Form>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>{user.usName}</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder={user.usName}
-            title={user.usName}
-          />
-        </Form.Group>
-      </Form>
-    );
-  };
+ 
 
   return (
     <>
@@ -54,6 +42,7 @@ export default function UsersDisabled() {
         </thead>
         <tbody>
           {users[0]?.map((user, i) => {
+            
             return (
               <tr key={user._id}>
                 <td>{i + 1}</td>
@@ -81,7 +70,7 @@ export default function UsersDisabled() {
                         size="lg"
                         className={"full-width"}
                         onClick={() => {
-                          authApi.changePassword(user._id);
+                          authApi.changeStateUser(user._id);
                           alert("Usuario Deshabilitado!");
                           history.replace("/UsersDisabled");
                         }}
@@ -92,25 +81,7 @@ export default function UsersDisabled() {
                   </td>
                 </>
                 <td>
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    className={"full-width"}
-                    onClick={() => {
-                      handleShow();
-                      console.log();
-                      // alert("Usuario Deshabilitado!");
-                      // history.replace("/UsersDisabled");
-                    }}
-                  >
-                    Actualizar
-                  </Button>
-                  <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton></Modal.Header>
-                    <Modal.Body>
-                      <FormModalUpdateUser user={user} />
-                    </Modal.Body>
-                  </Modal>
+                <UpdateUserButton user={user} />                
                 </td>
                 <td>
                   <DeleteUserButton user={user}/>

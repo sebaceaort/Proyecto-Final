@@ -11,7 +11,7 @@ import imgSubEje from "../../assets/EditImg/edit2.jpg";
 import imgMuni from "../../assets/EditImg/editmuni.jpg";
 import { Entities } from "../../enums/Entities";
 
-//agregar POST
+
 function UpdateEntityModal({ item, handleClose }) {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
   const entityType = item.type;
