@@ -10,7 +10,7 @@ import imgEje from "../../assets/edit.jpg";
 import imgSubEje from "../../assets/edit2.jpg";
 import imgMuni from "../../assets/editmuni.jpg";
 
-//agregar POST
+
 function UpdateEntityModal({ item, handleClose }) {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
   const entityType = item.type;
