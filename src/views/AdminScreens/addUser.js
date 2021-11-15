@@ -5,6 +5,7 @@ import authApi from "../../services/authApi";
 import fiwareApi from "../../services/fiwareApi";
 import { Formik, Field } from "formik";
 import { FaUserPlus, FaUsersCog } from "react-icons/fa";
+import { Roles } from "../../enums/Roles";
 
 export default function AddUser() {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
@@ -205,7 +206,7 @@ export default function AddUser() {
                 <div style={{ color: "red" }}>{errors.role}</div>
               )}
             </div>
-            {values.role !== "admin" && (
+            {values.role === Roles.municipio && (
               <div>
                 <label htmlFor="selectedMunicipio">
                   Ingrese el municipio correspondiente:{" "}

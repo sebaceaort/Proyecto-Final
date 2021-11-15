@@ -3,7 +3,7 @@ import fiwareApi from "../../services/fiwareApi";
 import { UserContext } from "../../context/user-context";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import filterFactory, { dateFilter } from 'react-bootstrap-table2-filter';
+import filterFactory from 'react-bootstrap-table2-filter';
 import { Loading } from "../../components";
 
 export default function Historical() {
@@ -13,8 +13,13 @@ export default function Historical() {
 
   let idMunicipio = user.usMunicipio;
 
+
+  useEffect(() => {
+    
   async function getHistorical() {
     const historicalData = await fiwareApi.getHistoricalData();
+
+    console.log(idMunicipio)
     console.log(historicalData)
     // const historicalData = await fiwareApi.getHistoricalDataByMunicipio(
     //   idMunicipio
@@ -22,10 +27,8 @@ export default function Historical() {
     setHistorical((oldHistorical) => [...oldHistorical, historicalData]);
     setLoading(true);
   }
-
-  useEffect(() => {
     getHistorical();
-  }, []);
+  }, [idMunicipio]);
   
 
   // const formatDate = (date) => {

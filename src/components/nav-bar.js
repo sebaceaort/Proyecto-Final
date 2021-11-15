@@ -4,6 +4,7 @@ import { NavLink as RouterNavLink } from "react-router-dom";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import AuthNav from "../Auth/AuthNav";
 import { BsFillPersonFill } from "react-icons/bs";
+import { Roles } from "../enums/Roles";
 
 const MainNav = (props) => (
   <Nav className="mr-auto smartFontModal">
@@ -26,7 +27,7 @@ const MainNav = (props) => (
           Perfil
         </Nav.Link>
 
-        {props.user.usRole !== "admin" && (
+        {props.user.usRole === Roles.municipio && (
           <>
             <Nav.Link
               as={RouterNavLink}
@@ -46,7 +47,7 @@ const MainNav = (props) => (
             </Nav.Link>
           </>
         )}
-        {props.user.usRole === "admin" ? (
+        {props.user.usRole === Roles.admin ? (
           <>
             <Nav.Link
               as={RouterNavLink}

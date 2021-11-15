@@ -2,6 +2,7 @@ import { Table, Button, Modal, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import authApi from "../../services/authApi";
+import DeleteUserButton from "../../components/AdminButtons/DeleteUserButton"
 
 export default function UsersDisabled() {
   const history = useHistory();
@@ -20,9 +21,6 @@ export default function UsersDisabled() {
     getUsers();
   }, []);
 
-   async function deleteUserById (user) {
-    await authApi.deleteUser(user,history)
-  }
 
   const FormModalUpdateUser = (user) => {
     console.log(user);
@@ -115,7 +113,8 @@ export default function UsersDisabled() {
                   </Modal>
                 </td>
                 <td>
-                  <Button
+                  <DeleteUserButton user={user}/>
+                  {/* <Button
                     variant="danger"
                     size="lg"
                     className={"full-width"}
@@ -125,7 +124,7 @@ export default function UsersDisabled() {
                     }}
                   >
                     Eliminar
-                  </Button>
+                  </Button> */}
                 </td>
               </tr>
             );

@@ -15,8 +15,12 @@ import {
   ProgressBar,
 } from "react-bootstrap";
 import { UserContext } from "../context/user-context";
+import { Roles } from "../enums/Roles";
 
 export const ShowChildrenItem = ({ item, setUpdate }) => {
+
+
+  
   const [actualPercentage, setactualPercentage] = useState(0);
   useEffect(() => {
     setactualPercentage((item.data?.value * 100) / item.goal?.value);
@@ -56,7 +60,7 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
               </Accordion.Header>
             </Card>
             <Accordion.Body>
-              {user.usRole === "admin" && (
+              {user.usRole === Roles.admin && (
                 <>
                   <div
                     style={{ display: "flex", justifyContent: "flex-start" }}
@@ -96,7 +100,7 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
           <Accordion defaultActiveKey="1">
             <Accordion.Item eventKey="1">
               <Accordion.Body>
-                {user.usRole === "admin" && (
+                {user.usRole === Roles.admin && (
                   <>
                     <div
                       style={{
@@ -119,7 +123,7 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
                       Descripcion: <b>{item.description.value}</b>
                     </div>
                     <hr />
-                    {user.usRole !== "admin" && (
+                    {user.usRole === Roles.municipio && (
                       <div>
                         <div>
                           <div>Indicador Actual</div>
@@ -151,7 +155,7 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
                       </div>
                     )}
                   </Card.Header>
-                  {user.usRole !== "admin" && (
+                  {user.usRole === Roles.municipio && (
                     <Container className="p-0">
                       <Row>
                         <Col>
