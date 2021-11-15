@@ -5,10 +5,12 @@ import { Formik, Field } from "formik";
 import firewareApi from "../../services/fiwareApi";
 import { UpdateContext } from "../../context/update-context";
 import { MdLibraryAdd } from "react-icons/md";
-import imgIndicator from "../../assets/indicadores.jpg";
-import imgEje from "../../assets/eje.jpg";
-import imgSubEje from "../../assets/subEje.jpg";
-import imgMuni from "../../assets/muniAdd.jpg";
+import imgIndicator from "../../assets/AddImg/indicadores.jpg";
+import imgEje from "../../assets/AddImg/eje.jpg";
+import imgSubEje from "../../assets/AddImg/subEje.jpg";
+import imgMuni from "../../assets/AddImg/muniAdd.jpg";
+import { Entities } from "../../enums/Entities";
+import { TextEntities } from "../../enums/TextEntities";
 
 function AddEntityModal({ item, handleClose }) {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
@@ -16,20 +18,20 @@ function AddEntityModal({ item, handleClose }) {
   const element = declararElement(item.type);
   function declararElement(type) {
     switch (type) {
-      case "SubEje":
-        return "Indicator";
-      case "Eje":
-        return "SubEje";
-      case "Municipio":
-        return "Eje";
+      case Entities.subeje:
+        return Entities.indicador;
+      case Entities.eje:
+        return Entities.subeje;
+      case Entities.municipio:
+        return Entities.eje;
       default:
-        return "Municipio";
+        return Entities.municipio;
     }
   }
 
   function selectImg(type) {
     switch (type) {
-      case "SubEje":
+      case Entities.subeje:
         return (
           <Image
             src={imgIndicator}
@@ -37,7 +39,7 @@ function AddEntityModal({ item, handleClose }) {
             className="rounded img-fluid mb-2 mt-2"
           />
         );
-      case "Eje":
+      case Entities.eje:
         return (
           <Image
             src={imgSubEje}
@@ -45,21 +47,13 @@ function AddEntityModal({ item, handleClose }) {
             className="rounded img-fluid mb-2 mt-2"
           />
         );
-      case "Municipio":
+      case Entities.municipio:
         return (
-          <Image
-          src={imgEje}
-          fluid
-          className="rounded img-fluid mb-2 mt-2"
-        />
+          <Image src={imgEje} fluid className="rounded img-fluid mb-2 mt-2" />
         );
       default:
         return (
-          <Image
-            src={imgMuni}
-            fluid
-            className= "rounded img-fluid mb-2 mt-2"
-          />
+          <Image src={imgMuni} fluid className="rounded img-fluid mb-2 mt-2" />
         );
     }
   }
@@ -95,7 +89,7 @@ function AddEntityModal({ item, handleClose }) {
           } else if (valores.nombre.trim() === 0) {
             errores.nombre = "Por favor ingrese un " + element + " no vacío";
           }
-          if (element === "Indicator") {
+          if (element === Entities.indicador) {
             if (!valores.descripcion) {
               errores.descripcion = "Por favor ingrese una descripción";
             } else if (!/^[a-zA-ZÀ-ÿ\s]{1,600}$/.test(valores.descripcion)) {
@@ -126,7 +120,11 @@ function AddEntityModal({ item, handleClose }) {
           <form className="row p-3 smartFontModal" onSubmit={handleSubmit}>
             <div className="row mb-3">
               <label htmlFor="nombre">
-                <b>Nombre del {element}:</b>
+                {element === Entities.indicador ? (
+                  <b>Nombre del {TextEntities.indicador}:</b>
+                ) : (
+                  <b>Nombre del {element}:</b>
+                )}
               </label>
               <div className="w-100">
                 <input
@@ -143,7 +141,7 @@ function AddEntityModal({ item, handleClose }) {
                   <div style={{ color: "red" }}>{errors.nombre}</div>
                 )}
               </div>
-              {element === "Indicator" && (
+              {element === Entities.indicador && (
                 <>
                   <label htmlFor="nombre">
                     <b>Tipo de dato</b>
@@ -218,14 +216,14 @@ const AddEntityButton = ({ item = { type: "" } }) => {
 
   function declararElement(type) {
     switch (type) {
-      case "SubEje":
-        return "Indicador";
-      case "Eje":
-        return "SubEje";
-      case "Municipio":
-        return "Eje";
+      case TextEntities.subeje:
+        return TextEntities.indicador;
+      case TextEntities.eje:
+        return TextEntities.subeje;
+      case TextEntities.municipio:
+        return TextEntities.eje;
       default:
-        return "Municipio";
+        return TextEntities.municipio;
     }
   }
 

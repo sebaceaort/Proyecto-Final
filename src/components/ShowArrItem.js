@@ -5,6 +5,7 @@ import { UserContext } from "../context/user-context";
 import AddEntityButton from "./AdminButtons/AddEntityButton";
 import DeleteEntityButton from "./AdminButtons/DeleteEntityButton";
 import EditEntityButton from "./AdminButtons/EditEntityButton";
+import { Roles } from "../enums/Roles";
 
 export const ShowArrItem = ({ item }) => {
   const [show, setShow] = useState(false);
@@ -23,7 +24,7 @@ export const ShowArrItem = ({ item }) => {
           </Accordion.Header>
           </Card>
           <Accordion.Body>
-            {user.usRole === "admin" && (
+            {user.usRole === Roles.admin && (
               <>
                 <div style={{ display: "flex", justifyContent: "flex-start" }}>
                   <AddEntityButton item={item} />

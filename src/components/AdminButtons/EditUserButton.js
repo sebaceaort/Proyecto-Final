@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
-import { Form, Button, Image, Modal } from "react-bootstrap";
-import { Formik, Field } from "formik";
+import React, { useState } from "react";
+import { Button, Modal } from "react-bootstrap";
+import { Formik} from "formik";
 import { FaPencilAlt } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import authApi from "../../services/authApi";
@@ -162,18 +162,17 @@ const UpdateUserButton = ({ user }) => {
   return (
     <>
       <Button
-        className="smartFontModal"
-        variant="secondary"
+        className="smartFontModal w-100"
+        variant="warning"
         onClick={handleShow}
       >
-        <div>
+        <div className="p-1">
           <FaPencilAlt className="mb-1" />
           <span className="p-1">Editar</span>
         </div>
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          {" "}
           <h1 className="text-center smartFontModal fs-3">Editar</h1>
         </Modal.Header>
         <Modal.Body>

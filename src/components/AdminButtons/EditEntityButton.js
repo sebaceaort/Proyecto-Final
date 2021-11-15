@@ -5,10 +5,11 @@ import fiwareApi from "../../services/fiwareApi";
 import { Formik, Field } from "formik";
 import { FaPencilAlt } from "react-icons/fa";
 
-import imgIndicator from "../../assets/edit3.jpg";
-import imgEje from "../../assets/edit.jpg";
-import imgSubEje from "../../assets/edit2.jpg";
-import imgMuni from "../../assets/editmuni.jpg";
+import imgIndicator from "../../assets/EditImg/edit3.jpg";
+import imgEje from "../../assets/EditImg/edit.jpg";
+import imgSubEje from "../../assets/EditImg/edit2.jpg";
+import imgMuni from "../../assets/EditImg/editmuni.jpg";
+import { Entities } from "../../enums/Entities";
 
 
 function UpdateEntityModal({ item, handleClose }) {
@@ -28,7 +29,7 @@ function UpdateEntityModal({ item, handleClose }) {
 
   function selectImg(type) {
     switch (type) {
-      case "SubEje":
+      case Entities.subeje:
         return (
           <Image
             src={imgSubEje}
@@ -36,7 +37,7 @@ function UpdateEntityModal({ item, handleClose }) {
             className="rounded img-fluid mb-2 mt-2"
           />
         );
-      case "Eje":
+      case Entities.eje:
         return (
           <Image
             src={imgEje}
@@ -44,7 +45,7 @@ function UpdateEntityModal({ item, handleClose }) {
             className="rounded img-fluid mb-2 mt-2"
           />
         );
-      case "Municipio":
+      case Entities.municipio:
         return (
           <Image
             src={imgMuni}
@@ -74,7 +75,7 @@ function UpdateEntityModal({ item, handleClose }) {
         }}
         validate={(valores) => {
           let errores = {};
-          if (entityType !== "Indicador") {
+          if (entityType !== Entities.indicador) {
             if (!valores.name) {
               errores.name = "Por favor ingrese un " + entityType;
             } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.name)) {
@@ -145,7 +146,7 @@ function UpdateEntityModal({ item, handleClose }) {
                 )}
               </div>
             </div>
-            {entityType === "Indicator" && (
+            {entityType === Entities.indicador && (
               <>
                 <label htmlFor="indicatorType">
                   <b>Tipo de dato</b>

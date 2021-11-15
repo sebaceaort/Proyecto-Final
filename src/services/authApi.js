@@ -201,7 +201,6 @@ async function deleteUser(usr, history) {
   fetch("http://localhost:3000/users/" + usr._id, requestOptions)
     .then((result) => {
       if(result.ok){
-        alert("Usuario eliminado con exito!");
         history.push("/usersDisabled");
       }
     })
