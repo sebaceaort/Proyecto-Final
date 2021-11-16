@@ -1,139 +1,144 @@
 import { useState, useEffect, useContext } from "react";
+import { Button } from "react-bootstrap";
 import fiwareApi from "../../services/fiwareApi";
 import { UserContext } from "../../context/user-context";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import filterFactory from 'react-bootstrap-table2-filter';
+import filterFactory, {
+  dateFilter,
+  textFilter,
+  numberFilter,
+  Comparator,
+} from "react-bootstrap-table2-filter";
 import { Loading } from "../../components";
 
 export default function Historical() {
   const [historical, setHistorical] = useState([]);
   const [loading, setLoading] = useState(false);
   const { user } = useContext(UserContext);
+  const [showFilters, setShowFilters] = useState(false);
 
   let idMunicipio = user.usMunicipio;
 
-
   useEffect(() => {
-    
-  async function getHistorical() {
-    const historicalData = await fiwareApi.getHistoricalData();
-
-    console.log(idMunicipio)
-    console.log(historicalData)
-    // const historicalData = await fiwareApi.getHistoricalDataByMunicipio(
-    //   idMunicipio
-    // );
-    setHistorical((oldHistorical) => [...oldHistorical, historicalData]);
-    setLoading(true);
-  }
+    async function getHistorical() {
+      const historicalData = await fiwareApi.getHistoricalDataByMunicipio(
+        idMunicipio
+      );
+      setHistorical((oldHistorical) => [...oldHistorical, historicalData]);
+      setLoading(true);
+    }
     getHistorical();
   }, [idMunicipio]);
-  
 
-  // const formatDate = (date) => {
-  //   let dia = date.slice(8, 10);
-  //   let mes = date.slice(5, 7);
-  //   let anio = date.slice(0, 4);
+  function loadDateFilter() {
+    let dateFilters = dateFilter({
+      placeholder: "Filtro...",
+      delay: 500,
+      style: {display: 'inline-grid'},
+    });
+    return showFilters ? dateFilters : "";
+  }
 
-  //   return dia + "-" + mes + "-" + anio;
-  // };
+  function loadTextFilter() {
+    let textFilters = textFilter({
+      placeholder: "Filtro...",
+      comparator: Comparator.LIKE,
+      caseSensitive: false,
+      style: {display: 'inline-grid'},
+      delay: 500,
+    });
+    return showFilters ? textFilters : "";
+  }
 
-  // const dateFilters = dateFilter({
-  //   placeholder: 'custom placeholder',  // placeholder for date input
-  //   style: { display: 'inline-grid' },  // custom the style on date filter
-  //   dateStyle: { backgroundColor: 'cadetblue', margin: '0px' },  // custom the style on date input
-  //   dateClassName: 'custom-date-class',  // custom the class on date input
-  //   id: 'id', // assign a unique value for htmlFor attribute, it's useful when you have same dataField across multiple table in on
-  // })
+  function loadNumberFilter() {
+    let numberFilters = numberFilter({
+      placeholder: "Filtro...",
+      delay: 500,
+      style: {display: 'inline-grid'},
+    });
+    return showFilters ? numberFilters : "";
+  }
 
   let columns = [
-    { dataField: "refEje", text: "EJE", sort: true },
-    { dataField: "refSubEje", text: "SUB EJE", sort: true },
-    { dataField: "indicatorName", text: "INDICADOR", sort: true },
-    { dataField: "data", text: "VALOR INDICADOR", sort: true },
-    { dataField: "indicatorDate", text: "FECHA MODIFICACION", sort: true},
-    { dataField: "goal", text: "META" },
-    { dataField: "goalDate", text: "FECHA META", sort: true},
+    { dataField: "refEje", text: "Eje", sort: true, filter: loadTextFilter() },
+    {
+      dataField: "refSubEje",
+      text: "Sub-Eje",
+      sort: true,
+      filter: loadTextFilter(),
+    },
+    {
+      dataField: "indicatorName",
+      text: "Indicador",
+      sort: true,
+      filter: loadTextFilter(),
+    },
+    { dataField: "data", text: "Valor indicador", sort: true, filter: loadNumberFilter() },
+    {
+      dataField: "indicatorDate",
+      text: "Fecha modificacion",
+      sort: true,
+      filter: loadDateFilter(),
+      formatter: (cell) => {
+        let dateObj = cell;
+        if (typeof cell !== "object") {
+          dateObj = new Date(cell);
+        }
+        return `${("0" + dateObj.getDate()).slice(-2)}/${(
+          "0" +
+          (dateObj.getMonth() + 1)
+        ).slice(-2)}/${dateObj.getFullYear()}`;
+      },
+    },
+    { dataField: "goal", text: "Meta", filter: loadNumberFilter() },
+    {
+      dataField: "goalDate",
+      text: "Fecha meta",
+      sort: true,
+      filter: loadDateFilter(),
+      formatter: (cell) => {
+        let dateObj = cell;
+        if (typeof cell !== "object") {
+          dateObj = new Date(cell);
+        }
+        return `${("0" + dateObj.getDate()).slice(-2)}/${(
+          "0" +
+          (dateObj.getMonth() + 1)
+        ).slice(-2)}/${dateObj.getFullYear()}`;
+      },
+    },
   ];
-
-  // const rowEvents = {
-  //   onload: (e, row, rowIndex) => {
-  //     console.log(e);
-  //     console.log(row);
-  //     console.log(rowIndex);
-  //   },
-  // };
 
   return (
     <div>
       {loading ? (
-        <BootstrapTable
-          keyField="_id"
-          data={historical[0]}
-          columns={columns}
-          pagination={paginationFactory()}
-          filter={ filterFactory() }
-          striped={true}
-          bordered={true}
-          hover={true}
-          condensed={true}
-        />
+        <>
+          <div>
+            <Button
+              onClick={() => {
+                setShowFilters(!showFilters);
+              }}
+            >
+              Activar Filtros
+            </Button>
+          </div>
+          <BootstrapTable
+            keyField="_id"
+            data={historical[0]}
+            columns={columns}
+            pagination={paginationFactory()}
+            filter={filterFactory()}
+            striped
+            bordered
+            hover
+            condensed
+            filterPosition="top"
+          />
+        </>
       ) : (
         <Loading />
       )}
     </div>
-    // <>
-    //   <Table striped bordered hover responsive>
-    //     <thead>
-    //       <tr>
-    //         <th>#</th>
-    //         <th>Eje</th>
-    //         <th>Sub Eje</th>
-    //         <th>Indicador</th>
-    //         <th>Valor Indicador</th>
-    //         <th>Fecha Modificacion</th>
-    //         <th>Valor Meta</th>
-    //         <th>Fecha Meta</th>
-    //       </tr>
-    //     </thead>
-    //     <tbody>
-    //       {historical[0]?.map((data, i) => {
-    //         return (
-    //           <tr key={i}>
-    //             <td>{i + 1}</td>
-    //             <td>{data.refEje}</td>
-    //             <td>{data.refSubEje}</td>
-    //             <td>{data.indicatorName}</td>
-    //             <td className="text-center">{data.data}%</td>
-    //             <td className="text-center">
-    //               {formatDate(data.indicatorDate)}
-    //             </td>
-    //             <td className="text-center">{data.goal}%</td>
-    //             <td className="text-center">{formatDate(data.goalDate)}</td>
-    //           </tr>
-    //         );
-    //       })}
-    //     </tbody>
-    //   </Table>
-
-    //   <Pagination>
-    //     <Pagination.First />
-    //     <Pagination.Prev />
-    //     <Pagination.Item>{1}</Pagination.Item>
-    //     <Pagination.Ellipsis />
-
-    //     <Pagination.Item>{10}</Pagination.Item>
-    //     <Pagination.Item>{11}</Pagination.Item>
-    //     <Pagination.Item active>{12}</Pagination.Item>
-    //     <Pagination.Item>{13}</Pagination.Item>
-    //     <Pagination.Item disabled>{14}</Pagination.Item>
-
-    //     <Pagination.Ellipsis />
-    //     <Pagination.Item>{20}</Pagination.Item>
-    //     <Pagination.Next />
-    //     <Pagination.Last />
-    //   </Pagination>
-    // </>
   );
 }
