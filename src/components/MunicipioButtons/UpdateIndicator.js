@@ -72,7 +72,7 @@ const IndicatorDataButton = ({ item }) => {
             <form className="row smartFontModal " onSubmit={handleSubmit}>
               <div className="row mb-3 ">
                 <label className="mb-2" htmlFor="monto">
-                  <b>Monto esperado</b>
+                  <b>Valor del indicador</b>
                 </label>
                 <div className=" w-100">
                   <input
@@ -80,7 +80,7 @@ const IndicatorDataButton = ({ item }) => {
                     type="Integer"
                     id="monto"
                     name="monto"
-                    placeholder="Ingrese el monto esperado"
+                    placeholder="Ingrese el valor"
                     value={values.monto}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -92,7 +92,7 @@ const IndicatorDataButton = ({ item }) => {
 
                 <div className="mt-3 w-100 text-center">
                   <button className="btn btn-primary w-100" type="submit">
-                    Cargar data indicador
+                    Cargar indicador
                   </button>
                   {formularioEnviado && (
                     <p style={{ color: "green" }}>Data cargada con éxito!</p>
