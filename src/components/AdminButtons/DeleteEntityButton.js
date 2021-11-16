@@ -35,7 +35,7 @@ function DeleteEntityModal({ item, handleClose }) {
         <Form.Label className="mb-3">
           <b>
             {" "}
-            ¿Está seguro que desea elimniar el {item.type} {item.name.value} ?
+            ¿Está seguro que desea eliminar el {item.type} {item.name.value} ?
           </b>
         </Form.Label>
         <Button
