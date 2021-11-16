@@ -60,7 +60,6 @@ async function addUser(usr, name, lastname, pass, role, muni, history) {
   fetch(`${api}/users`, requestOptions)
     .then((result) => {
       console.log(result);
-      alert("Usuario Creado con exito!");
       history.push("/UsersDisabled");
     })
     .catch((error) => console.log("error", error));
@@ -200,11 +199,14 @@ async function deleteUser(usr, history) {
 
   fetch("http://localhost:3000/users/" + usr._id, requestOptions)
     .then((result) => {
-      if(result.ok){
+      if (result.ok) {
         history.push("/usersDisabled");
       }
     })
-    .catch((error) => alert(error.message));
+    .catch((error) => {
+      alert(error.message);
+      throw error;
+    });
 }
 async function updateUser(valores, item) {
   let resp;
@@ -214,14 +216,13 @@ async function updateUser(valores, item) {
   myHeaders.append("Authorization", window.localStorage.getItem("token"));
 
   var myBody = {
-    _id : item._id,
+    _id: item._id,
     usEmail: valores.username,
     usName: valores.name,
     usLastName: valores.lastname,
-    usActive : item.usActive,
-    usRole : item.usRole,
-    usMunicipio : item.usMunicipio ? item.usMunicipio : "",
-
+    usActive: item.usActive,
+    usRole: item.usRole,
+    usMunicipio: item.usMunicipio ? item.usMunicipio : "",
   };
 
   var requestOptions = {
@@ -233,7 +234,7 @@ async function updateUser(valores, item) {
 
   await fetch(`${api}/users/`, requestOptions)
     .then((response) => {
-      if (response.status !== 200) {
+      if (!response.ok) {
         throw new Error("Ups! Algo a salido mal, intentelo de nuevo");
       } else {
         resp = response;
@@ -246,7 +247,6 @@ async function updateUser(valores, item) {
 
   return resp;
 }
-
 
 //eslint-disable-next-line
 export default {
