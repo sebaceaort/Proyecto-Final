@@ -16,11 +16,9 @@ import {
 } from "react-bootstrap";
 import { UserContext } from "../context/user-context";
 import { Roles } from "../enums/Roles";
+import { TipoIndicador } from "../enums/TipoIndicador";
 
 export const ShowChildrenItem = ({ item, setUpdate }) => {
-
-
-  
   const [actualPercentage, setactualPercentage] = useState(0);
   useEffect(() => {
     setactualPercentage((item.data?.value * 100) / item.goal?.value);
@@ -55,7 +53,14 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
         <Accordion defaultActiveKey="1">
           <Accordion.Item eventKey="0">
             <Card>
-              <Accordion.Header style={{ border: "3px solid #E7F1FF", borderRadius: "1%", borderColor: "#E7F1FF" }} onClick={handleClick}>
+              <Accordion.Header
+                style={{
+                  border: "3px solid #E7F1FF",
+                  borderRadius: "1%",
+                  borderColor: "#E7F1FF",
+                }}
+                onClick={handleClick}
+              >
                 {item.type} - <b>{item.name?.value}</b>
               </Accordion.Header>
             </Card>
@@ -83,7 +88,14 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
       <div>
         <Accordion defaultActiveKey="1">
           <Accordion.Item eventKey="0">
-            <Accordion.Header style={{ border: "3px solid #E7F1FF", borderRadius: "1%", borderColor: "#E7F1FF" }} onClick={handleClick}>
+            <Accordion.Header
+              style={{
+                border: "3px solid #E7F1FF",
+                borderRadius: "1%",
+                borderColor: "#E7F1FF",
+              }}
+              onClick={handleClick}
+            >
               <Container>
                 <Row>
                   <Col>
@@ -133,7 +145,16 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
                           <ProgressBar
                             animated
                             now={actualPercentage}
-                            label={`${item.data?.value}%`}
+                            label={`${
+                              item.indicatorType.value === TipoIndicador.monto
+                                ? "$"
+                                : ""
+                            }${item.data?.value} ${
+                              item.indicatorType.value ===
+                              TipoIndicador.porcentaje
+                                ? "%"
+                                : ""
+                            }`}
                             striped
                             variant={variantSelector(actualPercentage)}
                           />
@@ -147,7 +168,16 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
                           <ProgressBar
                             animated
                             now={100}
-                            label={`${item.goal?.value}%`}
+                            label={`${
+                              item.indicatorType.value === TipoIndicador.monto
+                                ? "$"
+                                : ""
+                            }${item.goal?.value}${
+                              item.indicatorType.value ===
+                              TipoIndicador.porcentaje
+                                ? "%"
+                                : ""
+                            }`}
                             striped
                             variant="success"
                           />
