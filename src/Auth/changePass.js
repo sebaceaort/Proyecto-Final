@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import { UserContext } from "../context/user-context";
 
 function ChangePassModal({ handleClose }) {
-  const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
+  const [formularioEnviado, cambiarFormularioEnviado] = useState(0);
   const { user } = useContext(UserContext);
   const history = useHistory();
   const { setUser } = useContext(UserContext);
@@ -21,13 +21,14 @@ function ChangePassModal({ handleClose }) {
     await authApi
       .changePassword(user.usEmail, valores)
       .then(() => {
-        handleClose();
-        alert("Su contraseña fue cambiada exitosamente");
-        logout();
+        cambiarFormularioEnviado(1);
+        setTimeout(() => cambiarFormularioEnviado(0), 1000);
+        setTimeout(() => handleClose(), 1000);
+        setTimeout(() => logout(), 1500);
       })
       .catch((error) => {
-        alert(error);
-        handleClose();
+        cambiarFormularioEnviado(2);
+        setTimeout(() => cambiarFormularioEnviado(0), 1000);
       });
   }
 
@@ -49,28 +50,35 @@ function ChangePassModal({ handleClose }) {
           let errores = {};
 
           if (!valores.password) {
-            errores.password = "Por favor ingrese su contraseña actual ";
+            errores.password = "Por favor ingrese una contraseña";
+          } else if (valores.password.replace(" ", "") !== valores.password) {
+            errores.password = "Por favor ingrese una contraseña sin espacios";
+          } else if (!/^[a-zA-ZÀ-ÿ0-9\s]{6,25}$/.test(valores.password)) {
+            errores.password = "La contraseña no puede contener caracteres especiales";
           }
-          if (valores.password === valores.newPassword) {
-            errores.newPassword =
-              "La contraseña nueva debe ser distinta a la actual";
-          }
+
           if (!valores.newPassword) {
-            errores.newPassword = "Por favor ingrese su nueva contraseña";
+            errores.newPassword = "Por favor ingrese una contraseña";
+          } else if (valores.newPassword.replace(" ", "") !== valores.newPassword) {
+            errores.newPassword = "Por favor ingrese una contraseña sin espacios";
+          } else if (!/^[a-zA-ZÀ-ÿ0-9\s]{6,25}$/.test(valores.newPassword)) {
+            errores.newPassword = "La contraseña no debe contener caracteres especiales";
+          } else if (valores.password === valores.newPassword) {
+            errores.newPassword = "La contraseña nueva debe ser distinta a la actual";
           }
           if (!valores.newPasswordConf) {
-            errores.newPasswordConf =
-              "Por favor ingrese otra vez la nueva contraseña";
-          }
-          if (valores.newPassword !== valores.newPasswordConf) {
-            errores.newPasswordConf = "Las nuevas contraseñas no coinciden";
+            errores.newPasswordConf = "Por favor repita la nueva contraseña";
+          } else if (valores.newPasswordConf.replace(" ", "") !== valores.newPasswordConf) {
+            errores.newPasswordConf = "Por favor ingrese una contraseña sin espacios";
+          } else if (!/^[a-zA-ZÀ-ÿ0-9\s]{6,25}$/.test(valores.newPasswordConf)) {
+            errores.newPasswordConf = "La contraseña no debe contener caracteres especiales";
+          } else if (!(valores.newPasswordConf === valores.newPassword)) {
+            errores.newPasswordConf = "Las contraseñas no coinciden";
           }
           return errores;
         }}
         onSubmit={async (valores, { resetForm }) => {
           resetForm();
-          cambiarFormularioEnviado(true);
-          setTimeout(() => cambiarFormularioEnviado(false), 1000);
           await handleSubmit(valores);
         }}
       >
@@ -151,7 +159,9 @@ function ChangePassModal({ handleClose }) {
                 <button className="btn btn-primary w-100" type="submit">
                   Cambiar Contraseña
                 </button>
-                {formularioEnviado}
+                {formularioEnviado===1 ? 
+                  <p style={{ color: "green" }}>La contraseña fue cambiada!</p>:formularioEnviado===2 ? 
+                  <p style={{ color: "red" }}>Hubo un fallo en el cambio de contraseña!</p> : null}
               </div>
             </div>
           </form>

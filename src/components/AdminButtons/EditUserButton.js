@@ -6,18 +6,19 @@ import { useHistory } from "react-router-dom";
 import authApi from "../../services/authApi";
 
 function UpdateUserModal({ item, handleClose }) {
-  const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
+  const [formularioEnviado, cambiarFormularioEnviado] = useState(0);
   const history = useHistory();
 
   async function handleSubmit(valores) {
     try {
       await authApi.updateUser(valores, item)
-      setTimeout(() => handleClose(), 500);
-      handleClose();
+      cambiarFormularioEnviado(1);
+      setTimeout(() => cambiarFormularioEnviado(0), 1000);
+      setTimeout(() => handleClose(), 1000);
       history.replace("/UsersDisabled");
     } catch (error) {
-      alert(error.message);
-      handleClose();
+      cambiarFormularioEnviado(2);
+      setTimeout(() => cambiarFormularioEnviado(0), 1000);
     }
   }
 
@@ -35,14 +36,14 @@ function UpdateUserModal({ item, handleClose }) {
           let errores = {};
           if (!valores.name) {
             errores.name = "Por favor ingrese un nombre";
-          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.name)) {
+          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,60}$/.test(valores.name)) {
             errores.name = "El nombre solo puede contener letras y espacios";
           } else if (valores.name.trim() === "") {
             errores.name = "Por favor ingrese un nombre que no este vacío";
           }
           if (!valores.lastname) {
             errores.lastname = "Por favor ingrese un apellido";
-          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.lastname)) {
+          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,60}$/.test(valores.lastname)) {
             errores.lastname =
               "El apellido solo puede contener letras y espacios";
           } else if (valores.lastname.trim() === "") {
@@ -65,9 +66,6 @@ function UpdateUserModal({ item, handleClose }) {
         }}
         onSubmit={(valores, { resetForm }) => {
           resetForm();
-          console.log("Formulario enviado");
-          cambiarFormularioEnviado(true);
-          setTimeout(() => cambiarFormularioEnviado(false), 1000);
           handleSubmit(valores);
         }}
       >
@@ -92,6 +90,7 @@ function UpdateUserModal({ item, handleClose }) {
                   value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  maxlength="60"
                 />
                 {touched.name && errors.name && (
                   <div style={{ color: "red" }}>{errors.name}</div>
@@ -110,6 +109,7 @@ function UpdateUserModal({ item, handleClose }) {
                   value={values.lastname}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  maxlength="60"
                 />
                 {touched.lastname && errors.lastname && (
                   <div style={{ color: "red" }}>{errors.lastname}</div>
@@ -128,6 +128,7 @@ function UpdateUserModal({ item, handleClose }) {
                   value={values.username}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  maxlength="75"
                 />
                 {touched.username && errors.username && (
                   <div style={{ color: "red" }}>{errors.username}</div>
@@ -140,9 +141,9 @@ function UpdateUserModal({ item, handleClose }) {
                 <button className="btn btn-primary  w-100" type="submit">
                   Editar
                 </button>
-                {formularioEnviado && (
-                  <p style={{ color: "green" }}>Cambiado con éxito!</p>
-                )}
+                {formularioEnviado===1 ? 
+                  <p style={{ color: "green" }}>Cambiado con éxito!</p>:formularioEnviado===2 ? 
+                  <p style={{ color: "red" }}>Hubo un fallo en la edición del usuario!</p> : null}
               </div>
             </div>
           </form>
