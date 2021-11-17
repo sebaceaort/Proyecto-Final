@@ -5,17 +5,14 @@ import { ShowChildrenItem } from "./ShowChildrenItem";
 
 export const ShowChildrens = ({ type, id }) => {
   const [data, setData] = useState([]);
-  const { update } = useContext(UpdateContext)
+  const { update } = useContext(UpdateContext);
   useEffect(() => {
     async function getEntities() {
       const entities = await fiwareApi.getDataByQuery("ref" + type + "==" + id);
       setData(entities);
-      //console.log("actualizo")
-    
     }
     getEntities();
-    
   }, [type, id, update]);
 
-  return data.map((item) => <ShowChildrenItem key={item.id} item={item}/>);
+  return data.map((item) => <ShowChildrenItem key={item.id} item={item} />);
 };

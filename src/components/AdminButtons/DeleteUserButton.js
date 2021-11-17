@@ -4,23 +4,20 @@ import authApi from "../../services/authApi";
 import { BsFillTrashFill } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
 
-
 function DeleteUserModal({ user, handleClose }) {
-console.log(user)
-const history = useHistory();
+  const history = useHistory();
 
   const [animate, setAnimate] = useState(false);
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
   const [formularioRechazado, cambiarFormularioRechazado] = useState(false);
-  
 
-  async function deleteUserById (user) {
-    await authApi.deleteUser(user,history)
+  async function deleteUserById(user) {
+    await authApi.deleteUser(user, history);
   }
 
   async function handleSubmit() {
     try {
-        await deleteUserById(user);
+      await deleteUserById(user);
 
       setTimeout(() => handleClose(), 3000);
     } catch (error) {
@@ -43,7 +40,8 @@ const history = useHistory();
       <Form.Group className="mb-3 text-center smartFontModal">
         <Form.Label className="mb-3">
           <b>
-            ¿Está seguro que desea elimniar al usuario {user.usName} {user.usLastName} ?
+            ¿Está seguro que desea elimniar al usuario {user.usName}{" "}
+            {user.usLastName} ?
           </b>
         </Form.Label>
         <Button
@@ -82,7 +80,11 @@ const DeleteEntityButton = ({ user }) => {
 
   return (
     <>
-      <Button className="smartFontModal w-100" variant="danger" onClick={handleShow}>
+      <Button
+        className="smartFontModal w-100"
+        variant="danger"
+        onClick={handleShow}
+      >
         <div className="p-1">
           <BsFillTrashFill className="m-1" />
           <span className="p-1">Eliminar</span>
