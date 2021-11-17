@@ -3,8 +3,8 @@ import { Button, Image, Modal } from "react-bootstrap";
 import { UpdateContext } from "../../context/update-context";
 import firewareApi from "../../services/fiwareApi";
 import { Formik } from "formik";
-import{GrIndicator} from"react-icons/gr"
-import img from "../../assets/indicador.jpg"
+import { GrIndicator } from "react-icons/gr";
+import img from "../../assets/indicador.jpg";
 
 const IndicatorDataButton = ({ item }) => {
   const [show, setShow] = useState(false);
@@ -34,11 +34,7 @@ const IndicatorDataButton = ({ item }) => {
 
     return (
       <div className="container-login p-3">
-        <Image
-          src={img}
-          fluid
-          className="rounded img-fluid mb-2 mt-2"
-        />
+        <Image src={img} fluid className="rounded img-fluid mb-2 mt-2" />
 
         <Formik
           initialValues={{
@@ -58,9 +54,6 @@ const IndicatorDataButton = ({ item }) => {
           }}
           onSubmit={(valores, { resetForm }) => {
             resetForm();
-            console.log("Formulario enviado");
-            // cambiarFormularioEnviado(true);
-            // setTimeout(() => cambiarFormularioEnviado(false), 1000);
             handleSubmit(valores);
           }}
         >
@@ -97,9 +90,13 @@ const IndicatorDataButton = ({ item }) => {
                   <button className="btn btn-primary w-100" type="submit">
                     Cargar indicador
                   </button>
-                  {formularioEnviado===1 ? 
-                  <p style={{ color: "green" }}>Data cargada con éxito!</p>:formularioEnviado===2 ? 
-                  <p style={{ color: "red" }}>Hubo un fallo en la carga de data!</p> : null}
+                  {formularioEnviado === 1 ? (
+                    <p style={{ color: "green" }}>Data cargada con éxito!</p>
+                  ) : formularioEnviado === 2 ? (
+                    <p style={{ color: "red" }}>
+                      Hubo un fallo en la carga de data!
+                    </p>
+                  ) : null}
                 </div>
               </div>
             </form>
@@ -112,11 +109,16 @@ const IndicatorDataButton = ({ item }) => {
   return (
     <>
       <Button className="btn-load-indicator" onClick={handleShow}>
-        <GrIndicator className="fs-4"/>
-        <div className="ms-2">  Cargar datos indicador</div>      
+        <GrIndicator className="fs-4" />
+        <div className="ms-2"> Cargar datos indicador</div>
       </Button>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>   <h1 className="text-center smartFontModal fs-3">Carga de Indicador</h1></Modal.Header>
+        <Modal.Header closeButton>
+          {" "}
+          <h1 className="text-center smartFontModal fs-3">
+            Carga de Indicador
+          </h1>
+        </Modal.Header>
         <Modal.Body className="pr-2">
           <IndicatorDataModal />
         </Modal.Body>

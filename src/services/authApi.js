@@ -59,7 +59,6 @@ async function addUser(usr, name, lastname, pass, role, muni, history) {
 
   fetch(`${api}/users`, requestOptions)
     .then((result) => {
-      console.log(result);
       history.push("/UsersDisabled");
     })
     .catch((error) => console.log("error", error));
@@ -123,7 +122,6 @@ async function changeStateUser(userId) {
 
   await fetch(`${api}/users/enable/` + userId, requestOptions)
     .then((response) => response.json())
-    .then((result) => console.log(result))
     .catch((error) => console.log("error", error));
 }
 
@@ -178,7 +176,6 @@ async function changePassword(userEmail, valores) {
       }
     })
     .catch((error) => {
-      console.log(error);
       throw error;
     });
 
@@ -241,7 +238,6 @@ async function updateUser(valores, item) {
       }
     })
     .catch((error) => {
-      console.log(error);
       throw error;
     });
 

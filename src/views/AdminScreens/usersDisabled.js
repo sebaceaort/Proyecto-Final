@@ -2,18 +2,12 @@ import { Table, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import authApi from "../../services/authApi";
-import DeleteUserButton from "../../components/AdminButtons/DeleteUserButton"
+import DeleteUserButton from "../../components/AdminButtons/DeleteUserButton";
 import UpdateUserButton from "../../components/AdminButtons/EditUserButton";
 
 export default function UsersDisabled() {
   const history = useHistory();
   const [users, setUsers] = useState([]);
-  
-  // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => {
-  //   setShow(true);
-  // };
 
   useEffect(() => {
     async function getUsers() {
@@ -22,9 +16,6 @@ export default function UsersDisabled() {
     }
     getUsers();
   }, []);
-
-
- 
 
   return (
     <>
@@ -42,7 +33,6 @@ export default function UsersDisabled() {
         </thead>
         <tbody>
           {users[0]?.map((user, i) => {
-            
             return (
               <tr key={user._id}>
                 <td>{i + 1}</td>
@@ -81,21 +71,10 @@ export default function UsersDisabled() {
                   </td>
                 </>
                 <td>
-                <UpdateUserButton user={user} />                
+                  <UpdateUserButton user={user} />
                 </td>
                 <td>
-                  <DeleteUserButton user={user}/>
-                  {/* <Button
-                    variant="danger"
-                    size="lg"
-                    className={"full-width"}
-                    onClick={async () => {
-                      // console.log(user._id)
-                      await deleteUserById(user);
-                    }}
-                  >
-                    Eliminar
-                  </Button> */}
+                  <DeleteUserButton user={user} />
                 </td>
               </tr>
             );

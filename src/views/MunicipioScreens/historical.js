@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import fiwareApi from "../../services/fiwareApi";
 import { UserContext } from "../../context/user-context";
 import BootstrapTable from "react-bootstrap-table-next";
+import { FaFilter } from "react-icons/fa";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import filterFactory, {
   dateFilter,
@@ -74,10 +75,10 @@ export default function Historical() {
       sort: true,
       filter: loadTextFilter(),
     },
-    { dataField: "data", text: "Valor indicador", sort: true, filter: loadNumberFilter() },
+    { dataField: "data", text: "Valor", sort: true, filter: loadNumberFilter() },
     {
       dataField: "indicatorDate",
-      text: "Fecha modificacion",
+      text: "Fecha ",
       sort: true,
       filter: loadDateFilter(),
       formatter: (cell) => {
@@ -91,7 +92,7 @@ export default function Historical() {
         ).slice(-2)}/${dateObj.getFullYear()}`;
       },
     },
-    { dataField: "goal", text: "Meta", filter: loadNumberFilter() },
+    { dataField: "goal", text: "Valor meta", filter: loadNumberFilter() },
     {
       dataField: "goalDate",
       text: "Fecha meta",
@@ -120,7 +121,7 @@ export default function Historical() {
                 setShowFilters(!showFilters);
               }}
             >
-              Activar Filtros
+             <FaFilter /> Activar Filtros
             </Button>
           </div>
           <BootstrapTable

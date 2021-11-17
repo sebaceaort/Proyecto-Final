@@ -40,8 +40,7 @@ export default function AddUser() {
     } catch (error) {
       cambiarFormularioEnviado(2);
       setTimeout(() => cambiarFormularioEnviado(0), 1000);
-     }
-
+    }
   }
 
   useEffect(() => {
@@ -58,6 +57,14 @@ export default function AddUser() {
     getRoles();
     getMunicipios();
   }, []);
+
+  function validateSelectedMuncipio(municipio) {
+    return municipios[0].find((m) => m.id === municipio);
+  }
+
+  function validateSelectedRole(role) {
+    return roles[0].find((r) => r.name === role)
+  }
 
   return (
     <>
@@ -78,7 +85,8 @@ export default function AddUser() {
               if (!valores.name) {
                 errores.name = "Por favor ingrese un nombre";
               } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.name)) {
-                errores.name = "El nombre solo puede contener letras y espacios";
+                errores.name =
+                  "El nombre solo puede contener letras y espacios";
               } else if (valores.name.trim() === "") {
                 errores.name = "Por favor ingrese un nombre que no este vacío";
               }
@@ -100,31 +108,46 @@ export default function AddUser() {
               ) {
                 errores.username = "El formato de email no es correcto";
               } else if (valores.username.trim() === "") {
-                errores.username = "Por favor ingrese un email que no este vacío";
+                errores.username =
+                  "Por favor ingrese un email que no este vacío";
               }
               if (!valores.password) {
                 errores.password = "Por favor ingrese una contraseña";
-              } else if (valores.password.replace(" ", "") !== valores.password) {
-                errores.password = "Por favor ingrese una contraseña sin espacios";
+              } else if (
+                valores.password.replace(" ", "") !== valores.password
+              ) {
+                errores.password =
+                  "Por favor ingrese una contraseña sin espacios";
               } else if (!/^[a-zA-ZÀ-ÿ0-9\s]{6,25}$/.test(valores.password)) {
-                errores.password = "La contraseña no debe contener caracteres especiales";
+                errores.password =
+                  "La contraseña no debe contener caracteres especiales";
               }
               if (valores.role === "") {
                 errores.role = "Por favor selecciona un rol";
               } else if (valores.role === "Selecciona un Rol") {
                 errores.role = "Por favor selecciona un rol";
               }
+              else if (!validateSelectedRole(valores.role)) {
+                errores.role =
+                  "El rol seleccionado es invalido";
+              }
               if (valores.role === "municipio") {
                 if (valores.selectedMunicipio === "") {
-                  errores.selectedMunicipio = "Por favor selecciona un municipio"
+                  errores.selectedMunicipio =
+                    "Por favor selecciona un municipio";
                 } else if (valores.selectedMunicipio === "Municipios...") {
-                  errores.selectedMunicipio = "Por favor selecciona un municipio"
+                  errores.selectedMunicipio =
+                    "Por favor selecciona un municipio";
+                } else if (!validateSelectedMuncipio(valores.selectedMunicipio)) {
+                  errores.selectedMunicipio =
+                    "El municipio seleccionado es invalido";
                 }
               }
               return errores;
             }}
             onSubmit={(valores, { resetForm }) => {
               resetForm();
+
               handleSubmit(valores);
             }}
           >
@@ -265,7 +288,9 @@ export default function AddUser() {
                       </Field>
                     </InputGroup>
                     {touched.selectedMunicipio && errors.selectedMunicipio && (
-                      <div style={{ color: "red" }}>{errors.selectedMunicipio}</div>
+                      <div style={{ color: "red" }}>
+                        {errors.selectedMunicipio}
+                      </div>
                     )}
                   </div>
                 )}
@@ -280,9 +305,13 @@ export default function AddUser() {
                     <span className="ms-2">Registrar nuevo usuario</span>
                   </Button>
 
-                  {formularioEnviado === 1 ?
-                  <p style={{ color: "green" }}>Usuario creado con éxito!</p> : formularioEnviado === 2 ?
-                    <p style={{ color: "red" }}>Hubo un problema al crear el usuario!</p> : null}
+                  {formularioEnviado === 1 ? (
+                    <p style={{ color: "green" }}>Usuario creado con éxito!</p>
+                  ) : formularioEnviado === 2 ? (
+                    <p style={{ color: "red" }}>
+                      Hubo un problema al crear el usuario!
+                    </p>
+                  ) : null}
                 </div>
               </form>
             )}

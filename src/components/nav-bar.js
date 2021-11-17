@@ -8,16 +8,16 @@ import { Roles } from "../enums/Roles";
 
 const MainNav = (props) => (
   <Nav className="mr-auto smartFontModal">
-    <Nav.Link
-      as={RouterNavLink}
-      to="/"
-      exact
-      activeClassName="router-link-exact-active"
-    >
-      Home
-    </Nav.Link>
     {props.user ? (
       <>
+        <Nav.Link
+          as={RouterNavLink}
+          to="/"
+          exact
+          activeClassName="router-link-exact-active"
+        >
+          Home
+        </Nav.Link>
         <Nav.Link
           as={RouterNavLink}
           to="/profile"
@@ -89,8 +89,11 @@ const NavBar = () => {
           {user && (
             <>
               <div className="smartFontModal" style={{ marginLeft: "5px" }}>
-                <BsFillPersonFill className="mb-1"/>
-                <span> {user.usName} {user.usLastName}</span>
+                <BsFillPersonFill className="mb-1" />
+                <span>
+                  {" "}
+                  {user.usName} {user.usLastName}
+                </span>
               </div>
             </>
           )}

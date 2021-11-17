@@ -20,7 +20,7 @@ const LoginButton = () => {
       try {
         return await login.login(usr, pass);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
 
@@ -42,7 +42,7 @@ const LoginButton = () => {
         cleanUp = setTimeout(() => setValidation(0), 2000);
         setAnimate(false);
       }
-      clearInterval(cleanUp)
+      clearInterval(cleanUp);
     }
 
     return (

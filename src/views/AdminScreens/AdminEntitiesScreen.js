@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Redirect } from "react-router-dom";
 import { ShowArr } from "../../components/ShowArr";
 import fiwareApi from "../../services/fiwareApi";
 import { Container, Row, Col, Card } from "react-bootstrap";
@@ -6,6 +7,7 @@ import { UserContext } from "../../context/user-context";
 import AddEntityButton from "../../components/AdminButtons/AddEntityButton";
 import { UpdateContext } from "../../context/update-context";
 import { Roles } from "../../enums/Roles";
+import { Entities } from "../../enums/Entities";
 
 export const AdminEntitiesScreen = () => {
   const [data, setData] = useState([]);
@@ -15,16 +17,12 @@ export const AdminEntitiesScreen = () => {
   useEffect(() => {
     if (user.usRole === Roles.admin) {
       async function getEntities() {
-        const entities = await fiwareApi.getDataByType("Municipio");
+        const entities = await fiwareApi.getDataByType(Entities.municipio);
         setData(entities);
       }
       getEntities();
     } else {
-      async function getEntities() {
-        const entities = await fiwareApi.getDataByType("Municipio");
-        setData(entities);
-      }
-      getEntities();
+      <Redirect to="/muni-data" />;
     }
     return () => {};
   }, [update, user.usRole]);
