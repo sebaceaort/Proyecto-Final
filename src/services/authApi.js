@@ -59,7 +59,7 @@ async function addUser(usr, name, lastname, pass, role, muni, history) {
 
   fetch(`${api}/users`, requestOptions)
     .then((result) => {
-      history.push("/UsersDisabled");
+      history.push("/userManagement");
     })
     .catch((error) => console.log("error", error));
 }

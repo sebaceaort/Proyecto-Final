@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-//import { BsFillCaretRightFill, BsFillCaretDownFill } from "react-icons/bs";
-import { ShowChildrens } from "./ShowChildrens";
+import { ShowDataListChildren } from "./ShowDataListChildren";
 import AddGoalButton from "./MunicipioButtons/UpdateGoal";
 import IndicatorDataButton from "./MunicipioButtons/UpdateIndicator";
 import AddEntityButton from "./AdminButtons/AddEntityButton";
@@ -17,14 +16,16 @@ import {
 import { UserContext } from "../context/user-context";
 import { Roles } from "../enums/Roles";
 import { TipoIndicador } from "../enums/TipoIndicador";
+import { Entities } from "../enums/Entities";
 
-export const ShowChildrenItem = ({ item, setUpdate }) => {
-  const [actualPercentage, setactualPercentage] = useState(0);
-  useEffect(() => {
-    setactualPercentage((item.data?.value * 100) / item.goal?.value);
-  }, [item]);
+export const ShowDataListChildrenItem = ({ item, setUpdate }) => {
+  const [actualPercentage, setActualPercentage] = useState(0);
   const [show, setShow] = useState(false);
   const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    setActualPercentage((item.data?.value * 100) / item.goal?.value);
+  }, [item]);
 
   const formatDate = (date) => {
     let dia = date.slice(8, 10);
@@ -46,8 +47,8 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
   const handleClick = () => {
     setShow(!show);
   };
-  //style={{ border: "2px solid", borderRadius: "1%", borderColor: "#0C63E4" }} -> Line 53
-  if (item.type !== "Indicator") {
+
+  if (item.type !== Entities.indicador) {
     return (
       <div>
         <Accordion defaultActiveKey="1">
@@ -80,7 +81,7 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
           </Accordion.Item>
         </Accordion>
 
-        {show && <ShowChildrens type={item?.type} id={item?.id} />}
+        {show && <ShowDataListChildren type={item?.type} id={item?.id} />}
       </div>
     );
   } else {
@@ -162,7 +163,6 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
                         <hr />
                         <div>
                           <div>Meta</div>
-
                           {formatDate(item.goalDate?.value)}
                           <hr />
                           <ProgressBar
@@ -189,13 +189,10 @@ export const ShowChildrenItem = ({ item, setUpdate }) => {
                     <Container className="p-0">
                       <Row>
                         <Col>
-                          <IndicatorDataButton
-                            item={item}
-                            setUpdate={setUpdate}
-                          />
+                          <IndicatorDataButton item={item} />
                         </Col>
                         <Col>
-                          <AddGoalButton item={item} setUpdate={setUpdate} />
+                          <AddGoalButton item={item} />
                         </Col>
                       </Row>
                     </Container>

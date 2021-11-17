@@ -26,7 +26,6 @@ const MainNav = (props) => (
         >
           Perfil
         </Nav.Link>
-
         {props.user.usRole === Roles.municipio && (
           <>
             <Nav.Link

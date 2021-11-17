@@ -1,6 +1,6 @@
 import Home from "./CommonsScreens/home";
 import Profile from "./CommonsScreens/profile";
 import AddUser from "./AdminScreens/addUser";
-import UsersDisabled from "./AdminScreens/usersDisabled";
+import UserManagement from "./AdminScreens/UserManagement";
 
-export { Home, Profile, AddUser, UsersDisabled };
+export { Home, Profile, AddUser, UserManagement };

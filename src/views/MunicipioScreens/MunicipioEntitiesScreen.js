@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { ShowArr } from "../../components/ShowArr";
+import { ShowDataList } from "../../components/ShowDataList";
 import fiwareApi from "../../services/fiwareApi";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { UserContext } from "../../context/user-context";
@@ -46,7 +46,7 @@ export const MunicipioEntitiesScreen = () => {
                 <GoGraph /> Ver grafico
               </Button>
               <Card.Body>
-                <ShowArr array={data} />
+                <ShowDataList array={data} />
               </Card.Body>
             </Card>
           </Col>

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
-import { Formik} from "formik";
+import { Button, Modal, Image } from "react-bootstrap";
+import { Formik } from "formik";
 import { FaPencilAlt } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import authApi from "../../services/authApi";
+import EditUser from "../../assets/EditImg/editUser.jpeg";
 
 function UpdateUserModal({ item, handleClose }) {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(0);
@@ -11,26 +12,25 @@ function UpdateUserModal({ item, handleClose }) {
 
   async function handleSubmit(valores) {
     try {
-      await authApi.updateUser(valores, item)
+      await authApi.updateUser(valores, item);
       cambiarFormularioEnviado(1);
       setTimeout(() => cambiarFormularioEnviado(0), 1000);
       setTimeout(() => handleClose(), 1000);
-      history.replace("/UsersDisabled");
+      history.replace("/userManagement");
     } catch (error) {
       cambiarFormularioEnviado(2);
       setTimeout(() => cambiarFormularioEnviado(0), 1000);
     }
   }
 
-  
   return (
     <div className="container-login">
-      {/* AGREGAR IMAGEN */}
+      <Image src={EditUser} fluid className="rounded img-fluid mb-2 mt-2" />
       <Formik
         initialValues={{
           name: item.usName,
           lastname: item.usLastName,
-          username: item.usEmail,          
+          username: item.usEmail,
         }}
         validate={(valores) => {
           let errores = {};
@@ -135,15 +135,19 @@ function UpdateUserModal({ item, handleClose }) {
                 )}
               </div>
             </div>
-            
+
             <div className="row">
               <div className=" w-100 text-center">
                 <button className="btn btn-primary  w-100" type="submit">
                   Editar
                 </button>
-                {formularioEnviado===1 ? 
-                  <p style={{ color: "green" }}>Cambiado con éxito!</p>:formularioEnviado===2 ? 
-                  <p style={{ color: "red" }}>Hubo un fallo en la edición del usuario!</p> : null}
+                {formularioEnviado === 1 ? (
+                  <p style={{ color: "green" }}>Cambiado con éxito!</p>
+                ) : formularioEnviado === 2 ? (
+                  <p style={{ color: "red" }}>
+                    Hubo un fallo en la edición del usuario!
+                  </p>
+                ) : null}
               </div>
             </div>
           </form>
@@ -158,7 +162,6 @@ const UpdateUserButton = ({ user }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const item = user;
-  
 
   return (
     <>

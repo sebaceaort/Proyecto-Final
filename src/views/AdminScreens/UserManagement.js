@@ -1,21 +1,27 @@
 import { Table, Button } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "../../context/user-context";
 import { useHistory } from "react-router-dom";
 import authApi from "../../services/authApi";
 import DeleteUserButton from "../../components/AdminButtons/DeleteUserButton";
 import UpdateUserButton from "../../components/AdminButtons/EditUserButton";
+import { ImUserMinus, ImUserPlus } from "react-icons/im";
 
-export default function UsersDisabled() {
+export default function UserManagement() {
   const history = useHistory();
   const [users, setUsers] = useState([]);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     async function getUsers() {
       const allUsers = await authApi.getAllUsers();
-      setUsers((oldUsers) => [...oldUsers, allUsers]);
+      setUsers((oldUsers) => [
+        ...oldUsers,
+        allUsers.filter((us) => us.usEmail !== user.usEmail),
+      ]);
     }
     getUsers();
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -26,6 +32,7 @@ export default function UsersDisabled() {
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Email</th>
+            <th>Rol</th>
             <th>Gestionar usuarios</th>
             <th>Actualizar datos</th>
             <th>Eliminar usuario</th>
@@ -39,6 +46,7 @@ export default function UsersDisabled() {
                 <td>{user.usName}</td>
                 <td>{user.usLastName}</td>
                 <td>{user.usEmail}</td>
+                <td>{user.usRole}</td>
                 <>
                   <td>
                     {(!user.usActive && (
@@ -49,10 +57,10 @@ export default function UsersDisabled() {
                         onClick={() => {
                           authApi.changeStateUser(user._id);
                           alert("Usuario Habilitado!");
-                          history.replace("/UsersDisabled");
+                          history.replace("/userManagement");
                         }}
                       >
-                        Habilitar
+                        <ImUserPlus className="mb-1"/> Habilitar
                       </Button>
                     )) || (
                       <Button
@@ -62,10 +70,10 @@ export default function UsersDisabled() {
                         onClick={() => {
                           authApi.changeStateUser(user._id);
                           alert("Usuario Deshabilitado!");
-                          history.replace("/UsersDisabled");
+                          history.replace("/userManagement");
                         }}
                       >
-                        Deshabilitar
+                        <ImUserMinus className="mb-1"/> Deshabilitar
                       </Button>
                     )}
                   </td>

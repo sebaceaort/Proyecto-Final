@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { ShowChildrens } from "./ShowChildrens";
+import { ShowDataListChildren } from "./ShowDataListChildren";
 import { Accordion, Card } from "react-bootstrap";
 import { UserContext } from "../context/user-context";
 import AddEntityButton from "./AdminButtons/AddEntityButton";
@@ -7,7 +7,7 @@ import DeleteEntityButton from "./AdminButtons/DeleteEntityButton";
 import EditEntityButton from "./AdminButtons/EditEntityButton";
 import { Roles } from "../enums/Roles";
 
-export const ShowArrItem = ({ item }) => {
+export const ShowDataListItem = ({ item }) => {
   const [show, setShow] = useState(false);
   const handleClick = () => {
     setShow(!show);
@@ -19,9 +19,9 @@ export const ShowArrItem = ({ item }) => {
       <Accordion defaultActiveKey="1">
         <Accordion.Item eventKey="0">
           <Card>
-          <Accordion.Header onClick={handleClick}>
-            {type} - <b>{name.value}</b>
-          </Accordion.Header>
+            <Accordion.Header onClick={handleClick}>
+              {type} - <b>{name.value}</b>
+            </Accordion.Header>
           </Card>
           <Accordion.Body>
             {user.usRole === Roles.admin && (
@@ -36,7 +36,7 @@ export const ShowArrItem = ({ item }) => {
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
-      {show && <ShowChildrens type={type} id={id} />}
+      {show && <ShowDataListChildren type={type} id={id} />}
     </div>
   );
 };

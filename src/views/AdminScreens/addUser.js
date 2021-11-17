@@ -323,7 +323,7 @@ export default function AddUser() {
               size="lg"
               className="full-width btn-user "
               onClick={() => {
-                history.push("/UsersDisabled");
+                history.push("/userManagement");
               }}
             >
               <FaUsersCog className="fs-2" />

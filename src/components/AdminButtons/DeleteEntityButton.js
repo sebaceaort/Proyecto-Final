@@ -3,15 +3,16 @@ import { Form, Button, Modal, Spinner } from "react-bootstrap";
 import firewareApi from "../../services/fiwareApi";
 import { UpdateContext } from "../../context/update-context";
 import { BsFillTrashFill } from "react-icons/bs";
+
 function DeleteEntityModal({ item, handleClose }) {
   const { setUpdate } = useContext(UpdateContext);
   const [animate, setAnimate] = useState(false);
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
   const [formularioRechazado, cambiarFormularioRechazado] = useState(false);
+
   async function handleSubmit() {
     try {
       await firewareApi.deleteEntity(item.type, item.id);
-
       setTimeout(() => handleClose(), 3000);
       setUpdate((state) => !state);
     } catch (error) {
@@ -34,8 +35,7 @@ function DeleteEntityModal({ item, handleClose }) {
       <Form.Group className="mb-3 text-center smartFontModal">
         <Form.Label className="mb-3">
           <b>
-            {" "}
-            ¿Está seguro que desea eliminar el {item.type} {item.name.value} ?
+            ¿Está seguro que desea eliminar el {item.type} {item.name.value}?
           </b>
         </Form.Label>
         <Button

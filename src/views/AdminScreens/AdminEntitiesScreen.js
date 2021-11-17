@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
-import { ShowArr } from "../../components/ShowArr";
+import { ShowDataList } from "../../components/ShowDataList";
 import fiwareApi from "../../services/fiwareApi";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { UserContext } from "../../context/user-context";
@@ -38,7 +38,7 @@ export const AdminEntitiesScreen = () => {
                 <div className="mb-2">
                   {user.usRole === Roles.admin && <AddEntityButton />}
                 </div>
-                <ShowArr array={data} />
+                <ShowDataList array={data} />
               </Card.Body>
             </Card>
           </Col>

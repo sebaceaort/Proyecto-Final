@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UpdateContext } from "../context/update-context";
 import fiwareApi from "../services/fiwareApi";
-import { ShowChildrenItem } from "./ShowChildrenItem";
+import { ShowDataListChildrenItem } from "./ShowDataListChildrenItem";
 
-export const ShowChildrens = ({ type, id }) => {
+export const ShowDataListChildren = ({ type, id }) => {
   const [data, setData] = useState([]);
   const { update } = useContext(UpdateContext);
   useEffect(() => {
@@ -14,5 +14,5 @@ export const ShowChildrens = ({ type, id }) => {
     getEntities();
   }, [type, id, update]);
 
-  return data.map((item) => <ShowChildrenItem key={item.id} item={item} />);
+  return data.map((item) => <ShowDataListChildrenItem key={item.id} item={item} />);
 };

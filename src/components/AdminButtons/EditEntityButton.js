@@ -4,19 +4,17 @@ import { UpdateContext } from "../../context/update-context";
 import fiwareApi from "../../services/fiwareApi";
 import { Formik, Field } from "formik";
 import { FaPencilAlt } from "react-icons/fa";
-
 import imgIndicator from "../../assets/EditImg/edit3.jpg";
 import imgEje from "../../assets/EditImg/edit.jpg";
 import imgSubEje from "../../assets/EditImg/edit2.jpg";
 import imgMuni from "../../assets/EditImg/editmuni.jpg";
 import { Entities } from "../../enums/Entities";
-
+import { TipoIndicador } from "../../enums/TipoIndicador";
 
 function UpdateEntityModal({ item, handleClose }) {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(0);
-  const entityType = item.type;
-
   const { setUpdate } = useContext(UpdateContext);
+  const entityType = item.type;
 
   async function handleSubmit(valores) {
     try {
@@ -27,7 +25,7 @@ function UpdateEntityModal({ item, handleClose }) {
     } catch (error) {
       cambiarFormularioEnviado(2);
       setTimeout(() => cambiarFormularioEnviado(0), 1000);
-     }
+    }
     setUpdate((state) => !state);
   }
 
@@ -43,19 +41,11 @@ function UpdateEntityModal({ item, handleClose }) {
         );
       case Entities.eje:
         return (
-          <Image
-            src={imgEje}
-            fluid
-            className="rounded img-fluid mb-2 mt-2"
-          />
+          <Image src={imgEje} fluid className="rounded img-fluid mb-2 mt-2" />
         );
       case Entities.municipio:
         return (
-          <Image
-            src={imgMuni}
-            fluid
-            className="rounded img-fluid mb-2 mt-2"
-          />
+          <Image src={imgMuni} fluid className="rounded img-fluid mb-2 mt-2" />
         );
       default:
         return (
@@ -69,7 +59,6 @@ function UpdateEntityModal({ item, handleClose }) {
   }
   return (
     <div className="container-login">
-
       {selectImg(item.type)}
       <Formik
         initialValues={{
@@ -105,9 +94,12 @@ function UpdateEntityModal({ item, handleClose }) {
             } else if (valores.description.trim() === 0) {
               errores.description =
                 "Por favor ingrese una descripcion no vacía";
-            } else if (!/^[a-zA-ZÀ-ÿ.,+-\s]{1,650}$/.test(valores.description)) {
+            } else if (
+              !/^[a-zA-ZÀ-ÿ.,+-\s]{1,650}$/.test(valores.description)
+            ) {
               errores.description =
-                "La descripcion solo puede contener letras, espacios, puntos,  comas,  '+' y '-'";}
+                "La descripcion solo puede contener letras, espacios, puntos,  comas,  '+' y '-'";
+            }
           }
 
           return errores;
@@ -161,10 +153,10 @@ function UpdateEntityModal({ item, handleClose }) {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   >
-                    <option value="Numero">Número</option>
-                    <option value="Indice">Indice</option>
-                    <option value="Porcentaje">Porcentaje</option>
-                    <option value="Monto">Monto</option>
+                    <option value={TipoIndicador.numero}>Número</option>
+                    <option value={TipoIndicador.indice}>Indice</option>
+                    <option value={TipoIndicador.porcentaje}>Porcentaje</option>
+                    <option value={TipoIndicador.monto}>Monto</option>
                   </Field>
                 </InputGroup>
 
@@ -199,9 +191,15 @@ function UpdateEntityModal({ item, handleClose }) {
                 <button className="btn btn-primary  w-100" type="submit">
                   Editar {entityType}
                 </button>
-                {formularioEnviado===1 ? 
-                  <p style={{ color: "green" }}>{entityType} cambiado con éxito!</p>:formularioEnviado===2 ? 
-                  <p style={{ color: "red" }}>Hubo un fallo en la edición de {entityType}!</p> : null}
+                {formularioEnviado === 1 ? (
+                  <p style={{ color: "green" }}>
+                    {entityType} cambiado con éxito!
+                  </p>
+                ) : formularioEnviado === 2 ? (
+                  <p style={{ color: "red" }}>
+                    Hubo un fallo en la edición de {entityType}!
+                  </p>
+                ) : null}
               </div>
             </div>
           </form>
@@ -229,9 +227,11 @@ const UpdateEntityButton = ({ item }) => {
         </div>
       </Button>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>  <h1 className="text-center smartFontModal fs-3">
-          Editar {item.type}
-        </h1></Modal.Header>
+        <Modal.Header closeButton>
+          <h1 className="text-center smartFontModal fs-3">
+            Editar {item.type}
+          </h1>
+        </Modal.Header>
         <Modal.Body>
           <UpdateEntityModal item={item} handleClose={handleClose} />
         </Modal.Body>
