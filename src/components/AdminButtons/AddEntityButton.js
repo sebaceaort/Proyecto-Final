@@ -11,6 +11,7 @@ import imgSubEje from "../../assets/AddImg/subEje.jpg";
 import imgMuni from "../../assets/AddImg/muniAdd.jpg";
 import { Entities } from "../../enums/Entities";
 import { TextEntities } from "../../enums/TextEntities";
+import { TipoIndicador } from "../../enums/TipoIndicador";
 
 function AddEntityModal({ item, handleClose }) {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(0);
@@ -86,7 +87,7 @@ function AddEntityModal({ item, handleClose }) {
           let errores = {};
           if (!valores.nombre) {
             errores.nombre = "Por favor ingrese un " + element;
-          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,60}$/.test(valores.nombre)) {
+          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,100}$/.test(valores.nombre)) {
             errores.nombre =
               "El " + element + " solo puede contener letras y espacios";
           } else if (valores.nombre.trim() === 0) {
@@ -99,7 +100,7 @@ function AddEntityModal({ item, handleClose }) {
               errores.descripcion =
                 "Por favor ingrese una descripcion no vacía";
             } else if (
-              !/^[a-zA-ZÀ-ÿ0-9.,+-\s]{1,650}$/.test(valores.descripcion)
+              !/^[a-zA-ZÀ-ÿ0-9:;.,+-\s]{1,650}$/.test(valores.descripcion)
             ) {
               errores.descripcion =
                 "La descripcion solo puede contener letras, espacios, puntos,  comas,  '+' y '-'";
@@ -145,7 +146,7 @@ function AddEntityModal({ item, handleClose }) {
                   value={values.nombre}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  maxlength="60"
+                  maxlength="100"
                 />
                 {touched.nombre && errors.nombre && (
                   <div style={{ color: "red" }}>{errors.nombre}</div>
@@ -165,10 +166,10 @@ function AddEntityModal({ item, handleClose }) {
                       onBlur={handleBlur}
                     >
                       <option>Seleccione el tipo de dato...</option>
-                      <option value="Numero">Número</option>
-                      <option value="Indice">Indice</option>
-                      <option value="Porcentaje">Porcentaje</option>
-                      <option value="Monto">Monto</option>
+                      <option value={TipoIndicador.numero}>Número</option>
+                      <option value={TipoIndicador.indice}>Indice</option>
+                      <option value={TipoIndicador.porcentaje}>Porcentaje</option>
+                      <option value={TipoIndicador.monto}>Monto</option>
                     </Field>
                   </InputGroup>
                   {errors.tipoDato && (

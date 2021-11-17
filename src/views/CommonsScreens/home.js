@@ -1,4 +1,3 @@
-import "react-json-pretty/themes/monikai.css";
 import { Container, Col, Row, Image } from "react-bootstrap";
 
 export default function Home() {
@@ -19,7 +18,7 @@ export default function Home() {
           </Col>
         </Row>
         <Row className="text-center mb-3 mt-4">
-          <h2 className="flex-row align-self-center fs-1 p-2 m-3">
+          <h2 className="flex-row align-self-center fs-1 p-2 m-2">
             ¿Que es el instuto Ciudades del Futuro?
           </h2>
           <p className="flex-row m-2">
@@ -52,7 +51,7 @@ export default function Home() {
           </Col>
           <Col className="d-flex flex-column">
             <h2 className="flex-row align-self-center fs-1 p-2 m-3">Valores</h2>
-            <p>
+            <p className="flex-row m-2">
               Vocación Pública - Transparencia - Eficiencia - Innovación -
               Igualdad - Creatividad - Servicio - Responsabilidad
             </p>

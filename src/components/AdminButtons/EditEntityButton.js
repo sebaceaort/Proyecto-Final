@@ -71,7 +71,7 @@ function UpdateEntityModal({ item, handleClose }) {
           if (entityType !== Entities.indicador) {
             if (!valores.name) {
               errores.name = "Por favor ingrese un " + entityType;
-            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,60}$/.test(valores.name)) {
+            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,100}$/.test(valores.name)) {
               errores.name =
                 "El " + entityType + " solo puede contener letras y espacios";
             } else if (valores.name.trim() === 0) {
@@ -83,7 +83,7 @@ function UpdateEntityModal({ item, handleClose }) {
           } else {
             if (!valores.name) {
               errores.name = "Por favor ingrese un " + entityType;
-            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,60}$/.test(valores.name)) {
+            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,100}$/.test(valores.name)) {
               errores.name =
                 "El " + entityType + " solo puede contener letras y espacios";
             } else if (valores.name.trim() === 0) {
@@ -95,7 +95,7 @@ function UpdateEntityModal({ item, handleClose }) {
               errores.description =
                 "Por favor ingrese una descripcion no vacía";
             } else if (
-              !/^[a-zA-ZÀ-ÿ0-9.,+-\s]{1,650}$/.test(valores.description)
+              !/^[a-zA-ZÀ-ÿ0-9:;.,+-\s]{1,650}$/.test(valores.description)
             ) {
               errores.description =
                 "La descripcion solo puede contener letras, espacios, puntos,  comas,  '+' y '-'";
@@ -133,7 +133,7 @@ function UpdateEntityModal({ item, handleClose }) {
                   value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  maxlength="60"
+                  maxlength="100"
                 />
                 {touched.name && errors.name && (
                   <div style={{ color: "red" }}>{errors.name}</div>
