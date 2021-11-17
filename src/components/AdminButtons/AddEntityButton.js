@@ -13,7 +13,7 @@ import { Entities } from "../../enums/Entities";
 import { TextEntities } from "../../enums/TextEntities";
 
 function AddEntityModal({ item, handleClose }) {
-  const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
+  const [formularioEnviado, cambiarFormularioEnviado] = useState(0);
 
   const element = declararElement(item.type);
   function declararElement(type) {
@@ -63,9 +63,12 @@ function AddEntityModal({ item, handleClose }) {
   async function handleSubmit(valores) {
     try {
       await firewareApi.postEntity(valores, element, item.id);
-      setTimeout(() => handleClose(), 1000);
+      cambiarFormularioEnviado(1);
+      setTimeout(() => cambiarFormularioEnviado(0), 1000);
+      setTimeout(() => handleClose(), 1500);
     } catch (error) {
-      alert("Ups! Algo salió mal!");
+      cambiarFormularioEnviado(2);
+      setTimeout(() => cambiarFormularioEnviado(0), 1000);
     }
     setUpdate((state) => !state);
   }
@@ -83,7 +86,7 @@ function AddEntityModal({ item, handleClose }) {
           let errores = {};
           if (!valores.nombre) {
             errores.nombre = "Por favor ingrese un " + element;
-          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,50}$/.test(valores.nombre)) {
+          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,60}$/.test(valores.nombre)) {
             errores.nombre =
               "El " + element + " solo puede contener letras y espacios";
           } else if (valores.nombre.trim() === 0) {
@@ -92,9 +95,6 @@ function AddEntityModal({ item, handleClose }) {
           if (element === Entities.indicador) {
             if (!valores.descripcion) {
               errores.descripcion = "Por favor ingrese una descripción";
-            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,600}$/.test(valores.descripcion)) {
-              errores.descripcion =
-                "La descripción solo puede contener letras y espacios";
             } else if (valores.descripcion.trim() === 0) {
               errores.descripcion =
                 "Por favor ingrese una descripcion no vacía";
@@ -104,8 +104,6 @@ function AddEntityModal({ item, handleClose }) {
         }}
         onSubmit={(valores, { resetForm }) => {
           resetForm();
-          cambiarFormularioEnviado(true);
-          setTimeout(() => cambiarFormularioEnviado(false), 1000);
           handleSubmit(valores);
         }}
       >
@@ -136,6 +134,7 @@ function AddEntityModal({ item, handleClose }) {
                   value={values.nombre}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  maxlength="60"
                 />
                 {touched.nombre && errors.nombre && (
                   <div style={{ color: "red" }}>{errors.nombre}</div>
@@ -183,6 +182,7 @@ function AddEntityModal({ item, handleClose }) {
                         value={values.descripcion}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        maxlength="600"
                       />
                       {touched.descripcion && errors.descripcion && (
                         <div style={{ color: "red" }}>{errors.descripcion}</div>
@@ -197,9 +197,9 @@ function AddEntityModal({ item, handleClose }) {
                 <button className="btn btn-primary  w-100" type="submit">
                   Crear {element}
                 </button>
-                {formularioEnviado && (
-                  <p style={{ color: "green" }}>{element} cargado con éxito!</p>
-                )}
+                {formularioEnviado === 1 ?
+                  <p style={{ color: "green" }}>{element} cargado con éxito!</p> : formularioEnviado === 2 ?
+                    <p style={{ color: "red" }}>Hubo un fallo en la creación de {element}!</p> : null}
               </div>
             </div>
           </form>

@@ -13,7 +13,7 @@ import { Entities } from "../../enums/Entities";
 
 
 function UpdateEntityModal({ item, handleClose }) {
-  const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
+  const [formularioEnviado, cambiarFormularioEnviado] = useState(0);
   const entityType = item.type;
 
   const { setUpdate } = useContext(UpdateContext);
@@ -21,9 +21,13 @@ function UpdateEntityModal({ item, handleClose }) {
   async function handleSubmit(valores) {
     try {
       await fiwareApi.updateEntity(valores, item.id);
-      setTimeout(() => handleClose(), 500);
-      handleClose();
-    } catch (error) {}
+      cambiarFormularioEnviado(1);
+      setTimeout(() => cambiarFormularioEnviado(0), 1000);
+      setTimeout(() => handleClose(), 1000);
+    } catch (error) {
+      cambiarFormularioEnviado(2);
+      setTimeout(() => cambiarFormularioEnviado(0), 1000);
+     }
     setUpdate((state) => !state);
   }
 
@@ -58,15 +62,15 @@ function UpdateEntityModal({ item, handleClose }) {
           <Image
             src={imgIndicator}
             fluid
-            className= "rounded img-fluid mb-2 mt-2"
+            className="rounded img-fluid mb-2 mt-2"
           />
         );
     }
   }
   return (
     <div className="container-login">
-     
-    {selectImg(item.type)}
+
+      {selectImg(item.type)}
       <Formik
         initialValues={{
           name: item.name.value,
@@ -78,7 +82,7 @@ function UpdateEntityModal({ item, handleClose }) {
           if (entityType !== Entities.indicador) {
             if (!valores.name) {
               errores.name = "Por favor ingrese un " + entityType;
-            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.name)) {
+            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,60}$/.test(valores.name)) {
               errores.name =
                 "El " + entityType + " solo puede contener letras y espacios";
             } else if (valores.name.trim() === 0) {
@@ -90,7 +94,7 @@ function UpdateEntityModal({ item, handleClose }) {
           } else {
             if (!valores.name) {
               errores.name = "Por favor ingrese un " + entityType;
-            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.name)) {
+            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,60}$/.test(valores.name)) {
               errores.name =
                 "El " + entityType + " solo puede contener letras y espacios";
             } else if (valores.name.trim() === 0) {
@@ -98,9 +102,6 @@ function UpdateEntityModal({ item, handleClose }) {
             }
             if (!valores.description) {
               errores.description = "Por favor ingrese una descripción";
-            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,150}$/.test(valores.description)) {
-              errores.description =
-                "La descripción solo puede contener letras y espacios";
             } else if (valores.description.trim() === 0) {
               errores.description =
                 "Por favor ingrese una descripcion no vacía";
@@ -112,8 +113,6 @@ function UpdateEntityModal({ item, handleClose }) {
         onSubmit={(valores, { resetForm }) => {
           resetForm();
           console.log("Formulario enviado");
-          cambiarFormularioEnviado(true);
-          setTimeout(() => cambiarFormularioEnviado(false), 1000);
           handleSubmit(valores);
         }}
       >
@@ -140,6 +139,7 @@ function UpdateEntityModal({ item, handleClose }) {
                   value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  maxlength="60"
                 />
                 {touched.name && errors.name && (
                   <div style={{ color: "red" }}>{errors.name}</div>
@@ -182,6 +182,7 @@ function UpdateEntityModal({ item, handleClose }) {
                         value={values.description}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        maxlength="600"
                       />
                       {touched.description && errors.description && (
                         <div style={{ color: "red" }}>{errors.description}</div>
@@ -196,11 +197,9 @@ function UpdateEntityModal({ item, handleClose }) {
                 <button className="btn btn-primary  w-100" type="submit">
                   Editar {entityType}
                 </button>
-                {formularioEnviado && (
-                  <p style={{ color: "green" }}>
-                    {entityType} cambiado con éxito!
-                  </p>
-                )}
+                {formularioEnviado===1 ? 
+                  <p style={{ color: "green" }}>{entityType} cambiado con éxito!</p>:formularioEnviado===2 ? 
+                  <p style={{ color: "red" }}>Hubo un fallo en la edición de {entityType}!</p> : null}
               </div>
             </div>
           </form>
@@ -229,8 +228,8 @@ const UpdateEntityButton = ({ item }) => {
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>  <h1 className="text-center smartFontModal fs-3">
-            Editar {item.type}
-          </h1></Modal.Header>
+          Editar {item.type}
+        </h1></Modal.Header>
         <Modal.Body>
           <UpdateEntityModal item={item} handleClose={handleClose} />
         </Modal.Body>

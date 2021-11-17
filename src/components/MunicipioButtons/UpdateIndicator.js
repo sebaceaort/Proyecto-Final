@@ -10,7 +10,7 @@ const IndicatorDataButton = ({ item }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
+  const [formularioEnviado, cambiarFormularioEnviado] = useState(0);
 
   function IndicatorDataModal() {
     const { setUpdate } = useContext(UpdateContext);
@@ -23,8 +23,11 @@ const IndicatorDataButton = ({ item }) => {
 
       if (data) {
         setTimeout(() => handleClose(), 1000);
+        cambiarFormularioEnviado(1);
+        setTimeout(() => cambiarFormularioEnviado(0), 1000);
       } else {
-        alert("Error");
+        cambiarFormularioEnviado(2);
+        setTimeout(() => cambiarFormularioEnviado(0), 1000);
       }
       setUpdate((state) => !state);
     }
@@ -56,8 +59,8 @@ const IndicatorDataButton = ({ item }) => {
           onSubmit={(valores, { resetForm }) => {
             resetForm();
             console.log("Formulario enviado");
-            cambiarFormularioEnviado(true);
-            setTimeout(() => cambiarFormularioEnviado(false), 1000);
+            // cambiarFormularioEnviado(true);
+            // setTimeout(() => cambiarFormularioEnviado(false), 1000);
             handleSubmit(valores);
           }}
         >
@@ -94,9 +97,9 @@ const IndicatorDataButton = ({ item }) => {
                   <button className="btn btn-primary w-100" type="submit">
                     Cargar indicador
                   </button>
-                  {formularioEnviado && (
-                    <p style={{ color: "green" }}>Data cargada con éxito!</p>
-                  )}
+                  {formularioEnviado===1 ? 
+                  <p style={{ color: "green" }}>Data cargada con éxito!</p>:formularioEnviado===2 ? 
+                  <p style={{ color: "red" }}>Hubo un fallo en la carga de data!</p> : null}
                 </div>
               </div>
             </form>

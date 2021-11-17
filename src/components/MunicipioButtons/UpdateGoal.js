@@ -10,7 +10,7 @@ const AddGoalButton = ({ item }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
+  const [formularioEnviado, cambiarFormularioEnviado] = useState(0);
   function AddGoalModal() {
     const { setUpdate } = useContext(UpdateContext);
 
@@ -22,9 +22,12 @@ const AddGoalButton = ({ item }) => {
 
       if (data) {
         setTimeout(() => handleClose(), 500);
+        cambiarFormularioEnviado(1);
+        setTimeout(() => cambiarFormularioEnviado(0), 500);
         setUpdate((state) => !state);
       } else {
-        alert("Error");
+        cambiarFormularioEnviado(2);
+        setTimeout(() => cambiarFormularioEnviado(0), 1000);
       }
     }
 
@@ -65,9 +68,6 @@ const AddGoalButton = ({ item }) => {
           }}
           onSubmit={(valores, { resetForm }) => {
             resetForm();
-            console.log("Formulario enviado");
-            cambiarFormularioEnviado(true);
-            setTimeout(() => cambiarFormularioEnviado(false), 1000);
             handleSubmit(valores);
           }}
         >
@@ -92,6 +92,7 @@ const AddGoalButton = ({ item }) => {
                     value={values.monto}
                     onChange={handleChange}
                     onBlur={handleBlur}
+                    maxlength="12"
                   />
                   {touched.monto && errors.monto && (
                     <div style={{ color: "red" }}>{errors.monto}</div>
@@ -121,9 +122,9 @@ const AddGoalButton = ({ item }) => {
                   <button className="btn btn-primary w-100" type="submit">
                     Crear meta
                   </button>
-                  {formularioEnviado && (
-                    <p style={{ color: "green" }}>Meta cargada con éxito!</p>
-                  )}
+                  {formularioEnviado===1 ? 
+                  <p style={{ color: "green" }}>Meta cargada con éxito!</p>:formularioEnviado===2 ? 
+                  <p style={{ color: "red" }}>Hubo un fallo en la carga de la meta!</p> : null}
                 </div>
               </div>
             </form>
