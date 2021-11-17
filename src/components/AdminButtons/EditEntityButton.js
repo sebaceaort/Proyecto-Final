@@ -105,7 +105,9 @@ function UpdateEntityModal({ item, handleClose }) {
             } else if (valores.description.trim() === 0) {
               errores.description =
                 "Por favor ingrese una descripcion no vacía";
-            }
+            } else if (!/^[a-zA-ZÀ-ÿ.,+-\s]{1,650}$/.test(valores.description)) {
+              errores.description =
+                "La descripcion solo puede contener letras, espacios, puntos,  comas,  '+' y '-'";}
           }
 
           return errores;
@@ -182,7 +184,7 @@ function UpdateEntityModal({ item, handleClose }) {
                         value={values.description}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        maxlength="600"
+                        maxlength="650"
                       />
                       {touched.description && errors.description && (
                         <div style={{ color: "red" }}>{errors.description}</div>

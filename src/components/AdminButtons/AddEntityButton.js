@@ -98,7 +98,9 @@ function AddEntityModal({ item, handleClose }) {
             } else if (valores.descripcion.trim() === 0) {
               errores.descripcion =
                 "Por favor ingrese una descripcion no vacía";
-            }
+            } else if (!/^[a-zA-ZÀ-ÿ.,+-\s]{1,650}$/.test(valores.descripcion)) {
+              errores.descripcion =
+                "La descripcion solo puede contener letras, espacios, puntos,  comas,  '+' y '-'";}
           }
           return errores;
         }}
@@ -182,7 +184,7 @@ function AddEntityModal({ item, handleClose }) {
                         value={values.descripcion}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        maxlength="600"
+                        maxlength="650"
                       />
                       {touched.descripcion && errors.descripcion && (
                         <div style={{ color: "red" }}>{errors.descripcion}</div>
