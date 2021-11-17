@@ -1,4 +1,4 @@
-const api = process.env.REACT_APP_MONGO_URL_DEV;
+const api = process.env.REACT_APP_MONGO_URL;
 
 async function login(usr, pass) {
   let user = "";
@@ -194,10 +194,10 @@ async function deleteUser(usr, history) {
     redirect: "follow",
   };
 
-  fetch("http://localhost:3000/users/" + usr._id, requestOptions)
+  fetch(`${api}/users/` + usr._id, requestOptions)
     .then((result) => {
       if (result.ok) {
-        history.push("/usersDisabled");
+        history.push("/userManagement");
       }
     })
     .catch((error) => {
