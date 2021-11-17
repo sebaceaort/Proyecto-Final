@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, InputGroup } from "react-bootstrap";
+import { Button, InputGroup, Card } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import authApi from "../../services/authApi";
 import fiwareApi from "../../services/fiwareApi";
@@ -43,6 +43,9 @@ export default function AddUser() {
 
   return (
     <>
+    <Card>
+      <Card.Header>Alta de usuarios</Card.Header>
+      <Card.Body>
       <Formik
         initialValues={{
           name: "",
@@ -86,6 +89,9 @@ export default function AddUser() {
           } else if (valores.password.replace(" ", "") !== valores.password) {
             errores.password = "Por favor ingrese una contraseña sin espacios";
           }
+          else if (!/^[a-zA-ZÀ-ÿ0-9\s]{6,25}$/.test(valores.password)) {
+            errores.password = "La contraseña no debe contener caracteres especiales";
+          }
           if (valores.role === "Selecciona un Rol") {
             errores.role = "Por favor selecciona un rol";
           }
@@ -116,10 +122,11 @@ export default function AddUser() {
                   type="text"
                   id="name"
                   name="name"
-                  placeholder="Ingrese el nombre"
+                  placeholder="Nombre..."
                   value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  maxlength="60"
                 />
                 {touched.name && errors.name && (
                   <div style={{ color: "red" }}>{errors.name}</div>
@@ -134,10 +141,11 @@ export default function AddUser() {
                   type="text"
                   id="lastname"
                   name="lastname"
-                  placeholder="Ingrese el apellido"
+                  placeholder="Apellido..."
                   value={values.lastname}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  maxlength="60"
                 />
                 {touched.lastname && errors.lastname && (
                   <div style={{ color: "red" }}>{errors.lastname}</div>
@@ -152,10 +160,12 @@ export default function AddUser() {
                   type="email"
                   id="username"
                   name="username"
-                  placeholder="Ingrese el email"
+                  placeholder="Email..."
                   value={values.username}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  maxLength="80"
+                  minLength="7"
                 />
                 {touched.username && errors.username && (
                   <div style={{ color: "red" }}>{errors.username}</div>
@@ -170,10 +180,12 @@ export default function AddUser() {
                   type="password"
                   id="password"
                   name="password"
-                  placeholder="Ingrese una contraseña"
+                  placeholder="Contraseña..."
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  minLength="6"
+                  maxlength="20"
                 />
                 {touched.password && errors.password && (
                   <div style={{ color: "red" }}>{errors.password}</div>
@@ -190,11 +202,11 @@ export default function AddUser() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 >
-                  <option>Selecciona un Rol</option>
+                  <option readonly>Selecciona un Rol</option>
                   {roles[0]?.map((rol, i) => {
                     return (
                       <>
-                        <option key={role.id} value={role.name}>
+                        <option readonly key={role.id} value={role.name}>
                           {rol.name}
                         </option>
                       </>
@@ -219,10 +231,10 @@ export default function AddUser() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   >
-                    <option>Municipios...</option>
+                    <option readonly>Municipios...</option>
                     {municipios[0]?.map((muni) => {
                       return (
-                        <option key={muni.id} value={muni.id}>
+                        <option readonly key={muni.id} value={muni.id}>
                           {muni.name.value}
                         </option>
                       );
@@ -251,7 +263,7 @@ export default function AddUser() {
           </form>
         )}
       </Formik>
-
+     
       <div>
         <Button
           variant="warning"
@@ -265,6 +277,8 @@ export default function AddUser() {
           <span className="ms-2"> Gestionar usuarios</span>
         </Button>
       </div>
+      </Card.Body>
+      </Card>
     </>
   );
 }

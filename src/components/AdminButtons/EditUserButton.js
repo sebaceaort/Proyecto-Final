@@ -16,7 +16,7 @@ function UpdateUserModal({ item, handleClose }) {
       handleClose();
       history.replace("/UsersDisabled");
     } catch (error) {
-      alert("Error");
+      alert(error.message);
       handleClose();
     }
   }

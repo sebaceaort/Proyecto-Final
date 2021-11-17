@@ -5,7 +5,7 @@ import login from "../services/authApi";
 
 const LoginButton = () => {
   const [show, setShow] = useState(false);
-  const [validation, setValidation] = useState(0)
+  const [validation, setValidation] = useState(0);
   const { setUser } = useContext(UserContext);
 
   const handleClose = () => setShow(false);
@@ -26,23 +26,23 @@ const LoginButton = () => {
 
     async function handleSubmit() {
       const data = await doLogin(username, password);
+      let cleanUp;
       if (data) {
         if (data.usActive) {
           setUser(data);
           window.localStorage.setItem("user", JSON.stringify(data));
           handleClose();
         } else {
-          setValidation(1)
-          setTimeout(() => setValidation(0), 2000)
+          setValidation(1);
+          cleanUp = setTimeout(() => setValidation(0), 2000);
           setAnimate(false);
-          // alert("Usuario Inhabilitado, contactese con un administrador");
         }
       } else {
-        setValidation(2)
-        setTimeout(() => setValidation(0), 2000)
+        setValidation(2);
+        cleanUp = setTimeout(() => setValidation(0), 2000);
         setAnimate(false);
-        // alert("Usuario o contraseña incorrectos");
       }
+      clearInterval(cleanUp)
     }
 
     return (
@@ -59,8 +59,10 @@ const LoginButton = () => {
             handleSubmit();
           }}
         >
-          <Form.Group className="mb-3" >
-            <Form.Label><b>Nombre de usuario:</b></Form.Label>
+          <Form.Group className="mb-3">
+            <Form.Label>
+              <b>Nombre de usuario:</b>
+            </Form.Label>
             <Form.Control
               required
               type="email"
@@ -71,8 +73,10 @@ const LoginButton = () => {
               }}
             />
           </Form.Group>
-          <Form.Group className="mb-3" >
-            <Form.Label><b>Contraseña:</b></Form.Label>
+          <Form.Group className="mb-3">
+            <Form.Label>
+              <b>Contraseña:</b>
+            </Form.Label>
             <Form.Control
               required
               type="password"
@@ -104,8 +108,13 @@ const LoginButton = () => {
               {!animate ? "Iniciar Sesion" : "Loading..."}
             </Button>
           </Form.Group>
-          {validation===2 ? <p style={{ color: 'red' }}>Usuario o contraseña incorrectos</p> : validation===1 ? <p style={{ color: 'red' }}>Usuario Inhabilitado, contactese con un administrador</p> : null}
-
+          {validation === 2 ? (
+            <p style={{ color: "red" }}>Usuario o contraseña incorrectos</p>
+          ) : validation === 1 ? (
+            <p style={{ color: "red" }}>
+              Usuario Inhabilitado, contactese con un administrador
+            </p>
+          ) : null}
         </Form>
       </div>
     );
