@@ -98,9 +98,18 @@ function AddEntityModal({ item, handleClose }) {
             } else if (valores.descripcion.trim() === 0) {
               errores.descripcion =
                 "Por favor ingrese una descripcion no vacía";
-            } else if (!/^[a-zA-ZÀ-ÿ.,+-\s]{1,650}$/.test(valores.descripcion)) {
+            } else if (
+              !/^[a-zA-ZÀ-ÿ0-9.,+-\s]{1,650}$/.test(valores.descripcion)
+            ) {
               errores.descripcion =
-                "La descripcion solo puede contener letras, espacios, puntos,  comas,  '+' y '-'";}
+                "La descripcion solo puede contener letras, espacios, puntos,  comas,  '+' y '-'";
+            }
+            if (
+              valores.tipoDato === "" ||
+              valores.tipoDato === "Seleccione el tipo de dato..."
+            ) {
+              errores.tipoDato = "Debe seleccionar un tipo de dato";
+            }
           }
           return errores;
         }}
@@ -162,7 +171,7 @@ function AddEntityModal({ item, handleClose }) {
                       <option value="Monto">Monto</option>
                     </Field>
                   </InputGroup>
-                  {values.tipoDato === "Seleccione el tipo de dato..." && (
+                  {errors.tipoDato && (
                     <div style={{ color: "red" }}>
                       Por favor selecciona un tipo de dato
                     </div>
@@ -199,9 +208,13 @@ function AddEntityModal({ item, handleClose }) {
                 <button className="btn btn-primary  w-100" type="submit">
                   Crear {element}
                 </button>
-                {formularioEnviado === 1 ?
-                  <p style={{ color: "green" }}>{element} cargado con éxito!</p> : formularioEnviado === 2 ?
-                    <p style={{ color: "red" }}>Hubo un fallo en la creación de {element}!</p> : null}
+                {formularioEnviado === 1 ? (
+                  <p style={{ color: "green" }}>{element} cargado con éxito!</p>
+                ) : formularioEnviado === 2 ? (
+                  <p style={{ color: "red" }}>
+                    Hubo un fallo en la creación de {element}!
+                  </p>
+                ) : null}
               </div>
             </div>
           </form>

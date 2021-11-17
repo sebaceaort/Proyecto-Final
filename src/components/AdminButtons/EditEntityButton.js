@@ -95,7 +95,7 @@ function UpdateEntityModal({ item, handleClose }) {
               errores.description =
                 "Por favor ingrese una descripcion no vacía";
             } else if (
-              !/^[a-zA-ZÀ-ÿ.,+-\s]{1,650}$/.test(valores.description)
+              !/^[a-zA-ZÀ-ÿ0-9.,+-\s]{1,650}$/.test(valores.description)
             ) {
               errores.description =
                 "La descripcion solo puede contener letras, espacios, puntos,  comas,  '+' y '-'";
