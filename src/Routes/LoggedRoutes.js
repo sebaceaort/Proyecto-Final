@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Route, Switch } from "react-router-dom";
 import { UserContext } from "../context/user-context";
-import { AddUser, UsersDisabled } from "../views";
+import { AddUser, UserManagement } from "../views";
 import { MunicipioRoutes } from "./MunicipioRoutes";
 import { PrivateAdminRoutes } from "./PrivateAdminRoutes";
 
@@ -17,8 +17,8 @@ export const LoggedRoutes = () => {
       />
       <PrivateAdminRoutes
         rol={user?.usRole}
-        path="/UsersDisabled"
-        component={UsersDisabled}
+        path="/userManagement"
+        component={UserManagement}
       />
       <Route path="/" component={MunicipioRoutes} />
     </Switch>

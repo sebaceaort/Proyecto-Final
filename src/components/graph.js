@@ -1,27 +1,29 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Bar, Line, PolarArea, Radar } from "react-chartjs-2";
 import fiwareApi from "../services/fiwareApi";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
+import { UserContext } from "../context/user-context";
 
 const DoughnutChart = () => {
- 
   const [ejes, setEjes] = useState([]);
   const [subEjes, setSubEjes] = useState([]);
   const [kpi, setKpi] = useState([]);
   const [labels, setLabels] = useState([]);
   const [datos, setDatos] = useState([]);
   const [type, setType] = useState("");
-  const [ancho, setAncho] = useState(0)
+  const [ancho, setAncho] = useState(0);
+
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     async function getData() {
-      const datos = await fiwareApi.getGraphLabels("urn:ngsi-ld:Municipio:1");
+      const datos = await fiwareApi.getGraphLabels(user.usMunicipio);
       setEjes(datos);
     }
     getData();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     ejes.forEach(async (eje) => {
@@ -31,6 +33,10 @@ const DoughnutChart = () => {
 
   useEffect(() => {
     setAncho(window.innerWidth);
+
+    /**
+     * Setea un array compuesto por objetos que posee el promedio discriminado por sub ejes
+     */
     async function getKpi() {
       subEjes.forEach(async (subEje) => {
         await fiwareApi
@@ -42,6 +48,11 @@ const DoughnutChart = () => {
   }, [subEjes]);
 
   useEffect(() => {
+    /**
+     * @param {Array} ejes
+     * @param {Array} kpi
+     * @returns {Array} Devuelve un array que posee la relacion entre el nombre del eje y el promedio (Indicador/Meta) de todos sus indicadores
+     */
     function dataFinal(ejes, kpi) {
       const labelandkpi = ejes.map((eje) => {
         let arrAux = [];
@@ -54,7 +65,11 @@ const DoughnutChart = () => {
       return labelandkpi;
     }
     const dataFin = dataFinal(ejes, kpi);
-    setLabels(dataFin.map((e) => {return e.label.length > 13 ? e.label.substring(0,10) :  e.label}));
+    setLabels(
+      dataFin.map((e) => {
+        return e.label.length > 13 ? e.label.substring(0, 10) : e.label;
+      })
+    );
     setDatos(dataFin.map((e) => e.kpi));
   }, [ejes, kpi]);
 
@@ -94,10 +109,10 @@ const DoughnutChart = () => {
       case "Linea":
         return <Line data={data} />;
       case "Polar":
-          return <PolarArea data={data} />;
+        return <PolarArea data={data} />;
 
-      default: return <Bar data={data} />
-       
+      default:
+        return <Bar data={data} />;
     }
   };
   return (
@@ -124,10 +139,11 @@ const DoughnutChart = () => {
           </div>
         </div>
         <div className="w-100 d-flex justify-content-center alinght-items-center">
-          {(type === "Radar" || type === "Polar" )&& ancho>=1024? (
+          {(type === "Radar" || type === "Polar") && ancho >= 1024 ? (
             <div
               className="justify-content-center alinght-items-center"
-              style={{  width: "50%" }}            >
+              style={{ width: "50%" }}
+            >
               {graphType(type)}
             </div>
           ) : (

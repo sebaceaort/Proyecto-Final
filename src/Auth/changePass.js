@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { Button, Image, Modal } from "react-bootstrap";
-
 import { Formik } from "formik";
 import authApi from "../services/authApi";
 import { useHistory } from "react-router-dom";
@@ -11,6 +10,7 @@ function ChangePassModal({ handleClose }) {
   const { user } = useContext(UserContext);
   const history = useHistory();
   const { setUser } = useContext(UserContext);
+
   const logout = () => {
     setUser(null);
     window.localStorage.clear("user");
@@ -54,24 +54,36 @@ function ChangePassModal({ handleClose }) {
           } else if (valores.password.replace(" ", "") !== valores.password) {
             errores.password = "Por favor ingrese una contraseña sin espacios";
           } else if (!/^[a-zA-ZÀ-ÿ0-9\s]{6,25}$/.test(valores.password)) {
-            errores.password = "La contraseña no puede contener caracteres especiales";
+            errores.password =
+              "La contraseña no puede contener caracteres especiales";
           }
 
           if (!valores.newPassword) {
             errores.newPassword = "Por favor ingrese una contraseña";
-          } else if (valores.newPassword.replace(" ", "") !== valores.newPassword) {
-            errores.newPassword = "Por favor ingrese una contraseña sin espacios";
+          } else if (
+            valores.newPassword.replace(" ", "") !== valores.newPassword
+          ) {
+            errores.newPassword =
+              "Por favor ingrese una contraseña sin espacios";
           } else if (!/^[a-zA-ZÀ-ÿ0-9\s]{6,25}$/.test(valores.newPassword)) {
-            errores.newPassword = "La contraseña no debe contener caracteres especiales";
+            errores.newPassword =
+              "La contraseña no debe contener caracteres especiales";
           } else if (valores.password === valores.newPassword) {
-            errores.newPassword = "La contraseña nueva debe ser distinta a la actual";
+            errores.newPassword =
+              "La contraseña nueva debe ser distinta a la actual";
           }
           if (!valores.newPasswordConf) {
             errores.newPasswordConf = "Por favor repita la nueva contraseña";
-          } else if (valores.newPasswordConf.replace(" ", "") !== valores.newPasswordConf) {
-            errores.newPasswordConf = "Por favor ingrese una contraseña sin espacios";
-          } else if (!/^[a-zA-ZÀ-ÿ0-9\s]{6,25}$/.test(valores.newPasswordConf)) {
-            errores.newPasswordConf = "La contraseña no debe contener caracteres especiales";
+          } else if (
+            valores.newPasswordConf.replace(" ", "") !== valores.newPasswordConf
+          ) {
+            errores.newPasswordConf =
+              "Por favor ingrese una contraseña sin espacios";
+          } else if (
+            !/^[a-zA-ZÀ-ÿ0-9\s]{6,25}$/.test(valores.newPasswordConf)
+          ) {
+            errores.newPasswordConf =
+              "La contraseña no debe contener caracteres especiales";
           } else if (!(valores.newPasswordConf === valores.newPassword)) {
             errores.newPasswordConf = "Las contraseñas no coinciden";
           }
@@ -159,9 +171,13 @@ function ChangePassModal({ handleClose }) {
                 <button className="btn btn-primary w-100" type="submit">
                   Cambiar Contraseña
                 </button>
-                {formularioEnviado===1 ? 
-                  <p style={{ color: "green" }}>La contraseña fue cambiada!</p>:formularioEnviado===2 ? 
-                  <p style={{ color: "red" }}>Hubo un fallo en el cambio de contraseña!</p> : null}
+                {formularioEnviado === 1 ? (
+                  <p style={{ color: "green" }}>La contraseña fue cambiada!</p>
+                ) : formularioEnviado === 2 ? (
+                  <p style={{ color: "red" }}>
+                    Hubo un fallo en el cambio de contraseña!
+                  </p>
+                ) : null}
               </div>
             </div>
           </form>

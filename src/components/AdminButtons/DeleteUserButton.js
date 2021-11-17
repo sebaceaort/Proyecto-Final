@@ -18,7 +18,6 @@ function DeleteUserModal({ user, handleClose }) {
   async function handleSubmit() {
     try {
       await deleteUserById(user);
-
       setTimeout(() => handleClose(), 3000);
     } catch (error) {
       setAnimate(false);
@@ -41,7 +40,7 @@ function DeleteUserModal({ user, handleClose }) {
         <Form.Label className="mb-3">
           <b>
             ¿Está seguro que desea elimniar al usuario {user.usName}{" "}
-            {user.usLastName} ?
+            {user.usLastName}?
           </b>
         </Form.Label>
         <Button

@@ -33,6 +33,7 @@ export default function Home() {
             patrimonio natural y cultural.
           </p>
         </Row>
+        <hr />
         <Row>
           <Col className="d-flex flex-column">
             <h2 className="flex-row align-self-center fs-1 p-2 m-3">Mision</h2>
